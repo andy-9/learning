@@ -21,3 +21,12 @@
 ## Image
 * is a package or template
 * used to create a container
+* handed over from dev to ops (is guaranteed to run)
+
+## Docker Editions
+* Community Edition (free products) & Enterprise Edition (Enterprise Add-ons)
+
+## Docker commands
+* `sudo docker version`
+* `docker run docker/whalesay cowsay 'Muh, muh!'` for https://hub.docker.com/r/docker/whalesay
+
