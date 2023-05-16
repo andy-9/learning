@@ -61,9 +61,9 @@ Verify:
 `sudo docker run hello-world`
 
 ### Containers
-* list running containers: `docker ps`
+* list of running containers: `docker ps`
 
-* list running *and* exited containers: `docker ps -a`
+* list of running *and* exited containers: `docker ps -a`
 * stop container `docker stop <name_of_container>` or `docker stop <name_of_id`
 * remove container: `docker rm <name_of_container>`
 
@@ -71,11 +71,18 @@ Verify:
 * list images: `docker images`
 
 * download image: `docker pull <name_of_image>`
-* remove image: `docker rmi <name_of_image>`
+* remove image: `docker rmi <name_of_image>` (stop & remove container before)
 * run nginx instance: `docker run nginx` (pulls image from Docker Hub if not present locally)
-* run image attached: `docker run <name_of_image>` (see output)
-* run image in detached/background mode: `docker run -d <name_of_image>`
-* run image again attached: `docker attach <first_few_chars_of_container_id>`
+* run container from image attached: `docker run <name_of_image>` (see output)
+* run container from image in detached/background mode: `docker run -d <name_of_image>`
+* run container from image again attached: `docker attach <first_few_chars_of_container_id>`
 
-### Other commands
-* execute a command, e.g. print content of the hosts-file: `docker exec <name_of_container> cat /etc/hosts`
+### Flags
+* force `-f` or `--force`
+* automatically login to container: `-it`
+
+### Specific commands (examples):
+* fun bash command on CentOS Linux: `docker run -it centos bash`
+* run container from centos image for 20 sec: `docker run -d centos sleep 20`
+* print content of the hosts-file: `docker exec <name_of_container> cat /etc/hosts`
+* execute a command inside a running containter: `docker exec <container_id> <command>`, e.g. `docker exec 377561ba1e39 cat /etc/*release*`
