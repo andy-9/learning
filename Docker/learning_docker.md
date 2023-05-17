@@ -131,7 +131,7 @@ Login: `docker login`
 
 ## Port mapping
 * Find IP-address and port: `docker inspect <id_of_container>`  
-* Map port inside docker container to a free port on docker host: `docker run -p <host_port>:<container_port>`.  
+* Map port inside docker container to a free port on docker host: `docker run -p <host_port>:<container_port> <name_of_mage>`.  
 e.g. map port 80 on docker (local) host to port 5000 on the docker container: `docker run -p 80:5000 kodekloud/webapp`  
 * This way it is possible to run multiple instances of an application and map them to different ports on the docker host: `docker run -p 8000:5000 kodekloud/webapp`  
 * Or run instances of different applications on different ports: `docker run -p 3306:3306 mysql`  
