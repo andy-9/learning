@@ -104,10 +104,12 @@ Verify:
 <br>
 
 ### Flags
+* detached `-d `
 * force `-f` or `--force`
 * give container name: `--name <name>`
 * interactive mode: `i` (docker runs by default in a non-interactive mode)
 * attached to terminal in interactive mode: `-it` (for prompts, login, ...)
+* other user: `-u <user_name>`
 
 <br>
 
@@ -122,11 +124,14 @@ Verify:
 <br>
 
 ## Port mapping
-Map port inside docker container to a free port on docker host.  
-Map port 80 on docker (local) host to port 5000 on the docker container: `docker run -p 80:5000 kodekloud/webapp`  
+Find IP-address and port: `docker inspect <id_of_container>`  
+Map port inside docker container to a free port on docker host: `docker run -p <host_port>:<container_port>`.  
+e.g. map port 80 on docker (local) host to port 5000 on the docker container: `docker run -p 80:5000 kodekloud/webapp`  
 This way it is possible to run multiple instances of an application and map them to different ports on the docker host: `docker run -p 8000:5000 kodekloud/webapp`  
 Or run instances of different applications on different ports: `docker run -p 3306:3306 mysql`  
-You cannot map to the same port on the docker host.
+You cannot map to the same port on the docker host.  
+
+<br>
 
 ## Volume mapping
 If data should persist when container is removed, map directory outside container on docker host to a directory inside the container: `docker run -v <dir_host>:<dir_container> <image>`  
