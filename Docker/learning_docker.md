@@ -17,6 +17,7 @@
 * meant to run a specific task or process (host instance of web server or db, carry out a computation, ...)
 * are completely isolated environments
 * share the same OS kernel (not meant to host an OS)
+* --> are isolated groups of processes running on a single host, which fulfill a set of “common” features
 * application + libraries + dependencies
 * can easily provision applications and scale them
 * run several instances of the same app for load balancing. If one fails, destroy and launch new one.
