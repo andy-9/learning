@@ -116,6 +116,7 @@ Login: `docker login`
 * tag: `-t`
 * attached to terminal in interactive mode: `-it` (for prompts, login, ...)
 * other user: `-u <user_name>`
+* Run container named `blue-app` using image `kodekloud/simple-webapp`, set environment variable `APP_COLOR` to `blue`, host port ist `38282`, the app listens on port `8080`: `docker run APP_COLOR=blue -p 38282:8080 --name blue-app kodecloud/simple-webapp`
 
 <br>
 
@@ -200,3 +201,13 @@ e.g.: `docker run -v /opt/datadir:/var/lib/mysql mysql`
 
    Build image with name 'test_image': `docker build . -t test_image`
    Run image: `docker run test_image`
+
+   <br>
+
+## Environment variables
+`-e <NAME_OF_VARIABLE>=<value>`  
+e.g. `docker run -e APP_COLOR=blue simple-webapp-color`
+
+Inspect environment variables: `docker inspect <name_of_container>` ("Config": {
+   "Env": ...
+})
