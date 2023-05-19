@@ -268,6 +268,25 @@ imaginary example: `docker run --entrypoint sleep2.0 unbuntu-sleeper 10`
 <br>
 
 ## Docker compose
+
+**`Docker compose` does not get installed automatically!**
+
+Install:
+```
+DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+mkdir -p $DOCKER_CONFIG/cli-plugins
+curl -SL https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+```
+
+check version: `docker compose version`
+
+Update:
+```
+sudo apt-get update
+sudo apt-get install docker-compose-plugin
+```
+
 Instead of
 ```
 docker run mmumshad/simple-webapp
@@ -293,7 +312,7 @@ Link containers together (**deprecated!**): `--link <name_of_container>:<name_of
 
 <br>
 
-### Specific example
+### Specific example 1
 ```
 docker run -d --name=redis redis
 docker run -d --name=db postgres:9.4
@@ -328,10 +347,10 @@ worker:
       - redis
 ```
 
-bring up entire stack: `docker-compose up`
-
 `build: <directory>`  
 `directory` contains application code and a Dockerfile with instructions to build the docker image.
+
+**Bring up entire stack: `docker-compose up`**
 
 <br>
 
@@ -339,13 +358,13 @@ bring up entire stack: `docker-compose up`
 It's important to specify the version on top of the .yml-file.
 
 Differences v1 to v2:
-* `version: 2` on top of file
+* `version: '2'` on top of file
 * `links` not necessary any more (bridged network created for this application and attaches all containers to this network - they can communicate to each other)
 * new `depends_on` property for prioritization/dependency
 
 e.g.
    ```
-   version: 2
+   version: '2'
    services:
       redis:
          image: redis
@@ -384,6 +403,37 @@ e.g.
 <br>
 
 Differences v2 to v3:
-* `version: 3` on top of file
+* `version: '3'` on top of file
 * support for `docker swarm`
 
+<br>
+
+### Specific example 2
+`cat > docker-compose.yml`
+
+```
+version: '3'
+services:
+
+  redis:
+    image: redis
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  vote:
+    image: voting-app
+    ports: 
+      - 5000:80
+
+  worker:
+    image: worker-app
+
+  result:
+    image: result-app
+    ports: 
+      - 5001:80
+```
