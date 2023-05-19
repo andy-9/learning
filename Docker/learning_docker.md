@@ -265,3 +265,124 @@ Modify/overwrite entrypoint: `docker run --entrypoint <command> <image> <command
 imaginary example: `docker run --entrypoint sleep2.0 unbuntu-sleeper 10`
 
 <br>
+
+## Docker compose
+Instead of
+```
+docker run mmumshad/simple-webapp
+docker run mongodb
+docker run redis:alpine
+docker run ansible
+```
+
+`docker-compose.yml`:
+```
+services:
+   web:
+      image: "mmumshad/simple-webapp
+   database:
+      image: "mongodb"
+   messaging:
+      image: "redis:alpine"
+   orchestration:
+      image: "ansible"
+```
+
+Link containers together (**deprecated!**): `--link <name_of_container>:<name_of_host>`
+
+<br>
+
+### Specific example
+```
+docker run -d --name=redis redis
+docker run -d --name=db postgres:9.4
+docker run -d --name=vote -p 5000:80 --link redis:redis voting-app
+docker run -d --name=result -p 5001:80 --link db:db result-app
+docker run -d --name=worker --link db:db --link redis:redis worker
+```
+
+-->
+`docker-compose.yml`
+```
+redis:
+   image: redis
+db:
+   image: postgres:9.4
+vote:
+   build: ./vote
+   ports:
+      - 5000:80
+   links:
+      - redis
+result:
+   build: ./result
+   ports:
+      - 5001:80
+   links:
+      - db
+worker:
+   build: ./worker
+   links:
+      - db
+      - redis
+```
+
+bring up entire stack: `docker-compose up`
+
+`build: <directory>`  
+`directory` contains application code and a Dockerfile with instructions to build the docker image.
+
+<br>
+
+### Versions
+It's important to specify the version on top of the .yml-file.
+
+Differences v1 to v2:
+* `version: 2` on top of file
+* `links` not necessary any more (bridged network created for this application and attaches all containers to this network - they can communicate to each other)
+* new `depends_on` property for prioritization/dependency
+
+e.g.
+   ```
+   version: 2
+   services:
+      redis:
+         image: redis
+         networks:
+            - back-end
+      db:
+         image: postgres:9.4
+         networks:
+            - back-end
+      vote:
+         build: ./vote
+         ports:
+            - 5000:80
+         networks:
+            - front-end
+            - back-end
+      result:
+         build: ./result
+         ports:
+            - 5001:80
+         networks:
+            - front-end
+            - back-end
+      worker:
+         build: ./worker
+         networks:
+            - back-end
+
+   networks:
+      front-end: 
+      back-end: 
+   ```
+
+`networks` to contain traffic, e.g. separate user-generated traffic from internal traffic.
+
+<br>
+
+Differences v2 to v3:
+* `version: 3` on top of file
+* support for `docker swarm`
+
