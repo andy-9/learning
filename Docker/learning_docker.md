@@ -87,6 +87,7 @@ Login: `docker login`
 * list of running containers: `docker ps`
 
 * list of running *and* exited containers: `docker ps -a`
+* keep container running: add `tail -f /dev/null` at the end
 * stop container `docker stop <name_of_container>` or `docker stop <name_of_id`
 * remove container: `docker rm <name_of_container>`
 * more details about a container: `docker inspect <name_of_container>`
