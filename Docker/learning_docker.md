@@ -14,13 +14,13 @@
 
 ## Containers
 * are running instances of images
-* meant to host a specific task or process
+* meant to run a specific task or process (host instance of web server or db, carry out a computation, ...)
 * are completely isolated environments
 * share the same OS kernel (not meant to host an OS)
 * application + libraries + dependencies
 * can easily provision applications and scale them
 * run several instances of the same app for load balancing. If one fails, destroy and launch new one.
-* only lives as long as the process inside it is alive
+* only live as long as the process inside them are alive - exit after task is done or container crashes
 
 <br>
 
@@ -110,13 +110,16 @@ Login: `docker login`
 
 ### Flags
 * detached `-d `
+* environment variable `-e`
+* modify entrypoint: `--entrypoint <command>`
 * force `-f` or `--force`
-* give container name: `--name <name>`
 * interactive mode: `i` (docker runs by default in a non-interactive mode)
-* tag: `-t`
 * attached to terminal in interactive mode: `-it` (for prompts, login, ...)
+* give container name: `--name <name>`
+* port mapping: `-p`
+* tag: `-t`
 * other user: `-u <user_name>`
-* Run container named `blue-app` using image `kodekloud/simple-webapp`, set environment variable `APP_COLOR` to `blue`, host port ist `38282`, the app listens on port `8080`: `docker run APP_COLOR=blue -p 38282:8080 --name blue-app kodecloud/simple-webapp`
+* volume mapping: `-v`
 
 <br>
 
@@ -125,8 +128,7 @@ Login: `docker login`
 * run container from centos image for 20 sec: `docker run -d centos sleep 20`
 * print content of the hosts-file: `docker exec <name_of_container> cat /etc/hosts`
 * execute a command inside a running container: `docker exec <container_id> <command>`, e.g. `docker exec 377561ba1e39 cat /etc/*release*`
-* port mapping: `-p`
-* volume mapping: `-v`
+* Run container named `blue-app` using image `kodekloud/simple-webapp`, set environment variable `APP_COLOR` to `blue`, host port ist `38282`, the app listens on port `8080`: `docker run APP_COLOR=blue -p 38282:8080 --name blue-app kodecloud/simple-webapp`
 
 <br>
 
@@ -211,3 +213,55 @@ e.g. `docker run -e APP_COLOR=blue simple-webapp-color`
 Inspect environment variables: `docker inspect <name_of_container>` ("Config": {
    "Env": ...
 })
+
+<br>
+
+## CMD and ENTRYPOINT
+Specify a different command to start the container:  
+`docker run <image> <command>`  
+e.g. `docker run ubuntu sleep 5`
+
+```
+FROM Ubuntu
+CMD sleep 5
+```
+
+Or:
+```
+CMD ["sleep", "5"]
+```
+
+`docker run ubuntu-sleeper sleep 10`  
+--> Command at startup: `sleep 10`
+
+<br>
+
+Invoke command automatically, just pass the number of seconds:  
+```
+FROM Ubuntu
+ENTRYPOINT ["sleep"]
+```
+
+The ENTRYPOINT instruction is like the command instruction:  
+`docker run ubuntu-sleeper 10`  
+--> Command at startup: `sleep 10`
+
+<br>
+
+Configure default value:
+```
+FROM Ubuntu
+ENTRYPOINT ["sleep"]
+CMD ["5"]
+```
+`docker run ubuntu-sleeper` runs in fact `docker run ubuntu-sleeper sleep 5`  
+`docker run ubuntu-sleeper 10` runs `docker run ubuntu-sleeper sleep 10`
+
+**Always specify the ENTRYPOINT and CMD instructions in a JSON-format!**
+
+<br>
+
+Modify/overwrite entrypoint: `docker run --entrypoint <command> <image> <command>`  
+imaginary example: `docker run --entrypoint sleep2.0 unbuntu-sleeper 10`
+
+<br>
