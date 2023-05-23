@@ -55,7 +55,8 @@
 
 ### Setup
 * Docker version: `sudo docker version`
-* Create whale image: `docker run docker/whalesay cowsay 'Muh, muh!'` for https://hub.docker.com/r/docker/whalesay
+* Show disc consumption (without duplicates) of images, containers and local volumes: `docker system df`
+* Show disc consumption (with duplicates) of images, containers and local volumes: `docker sysem df -v`
 * Uninstall old versions: `sudo apt-get remove docker docker-engine docker.io containerd runc`
 * Setup repo:
    ```
@@ -126,6 +127,7 @@ Login: `docker login`
 * detached `-d `
 * environment variable `-e`
 * modify entrypoint: `--entrypoint <command>`
+* specify name of Dockerfile: `-f <name_of_Dockerfile>`
 * force `-f` or `--force`
 * remote: `-H=<remote-docker-engine>:<port>`
 * interactive mode: `i` (docker runs by default in a non-interactive mode)
@@ -133,6 +135,7 @@ Login: `docker login`
 * restrict memory usage in MB:`--memory=<number>m`
 * mount volume: `--mount` (add several key-value-pairs!)
 * give container name: `--name <name>`
+* network configurations: `--network`
 * port mapping: `-p`
 * restart: `--restart <no>(default)|<always>|<unless-stopped>|<on-failure>`
 * tag: `-t`
@@ -144,6 +147,7 @@ Login: `docker login`
 ### Specific commands (examples):
 * fun bash command on CentOS Linux: `docker run -it centos bash`
 * run container from centos image for 20 sec: `docker run -d centos sleep 20`
+* Create whale image: `docker run docker/whalesay cowsay 'Muh, muh!'` for https://hub.docker.com/r/docker/whalesay
 * print content of the hosts-file: `docker exec <name_of_container> cat /etc/hosts`
 * execute a command inside a running container: `docker exec <container_id> <command>`, e.g. `docker exec 377561ba1e39 cat /etc/*release*`
 * Run container named `blue-app` using image `kodekloud/simple-webapp`, set environment variable `APP_COLOR` to `blue`, host port ist `38282`, the app listens on port `8080`: `docker run APP_COLOR=blue -p 38282:8080 --name blue-app kodecloud/simple-webapp`
@@ -225,12 +229,14 @@ e.g.: `docker run -v /opt/datadir:/var/lib/mysql mysql`
    <br>
 
 ## Environment variables
-`-e <NAME_OF_VARIABLE>=<value>`  
-e.g. `docker run -e APP_COLOR=blue simple-webapp-color`
+* `-e <NAME_OF_VARIABLE>=<value>`  
+  e.g. `docker run -e APP_COLOR=blue simple-webapp-color`
 
-Inspect environment variables: `docker inspect <name_of_container>` ("Config": {
-   "Env": ...
-})
+* Set password for db: `docker run -d --name <name_of_container> -e <NAME_OF_VARIABLE>=<password> mysql`
+* Inspect environment variables: `docker inspect <name_of_container>`  
+   ("Config": {  
+      "Env": ...  
+   })
 
 <br>
 
@@ -511,7 +517,11 @@ services:
 <br>
 
 ## Docker storage
-* Docker stores data on local filesystem at `/var/lib/docker`
+* Docker stores data on local filesystem at `/var/lib/docker`  
+  Subdirectories:  
+  - `diff/`: contents of each layer, each stored in a separate subdir  
+  - `layers/`: metadata about how image layers are stacked  
+  - `mnt/`:  mount points, one per image or container layer, which are used to assemble and mount the unified filesystem for a container
 
 * Layered architecture:
   - image layers are read only
@@ -539,3 +549,32 @@ services:
 
 <br>
 
+## Docker networking
+* 3 networks:  
+  - Bridge: default network a container gets attached to, private internal network on the host, port usually `172.17.x.x`
+  - none: containers not attached to any network, no acces to external network or other containers (isolated network)
+  - host: associate the container to the host network (this takes out the network isolation, no port mapping necessary, not possible to run multiple web containers on the same host on the same port)
+
+* attach container to another network with `--network` parameter  
+  e.g. `docker run Ubuntu --network=none`
+* By default Docker creates only one internal Bridge network  
+  Create own internal network with the name `custom-isolated-network`:
+  ```
+  docker network create \
+      --driver bridge \
+      --subnet 182.18.0.0/16
+      custom-isolated-network
+  ```
+* gateway: e.g. `--gateway 182.18.0.1`
+* list networks: `docker network ls`
+* show networks settings: `docker inspect <container_name>`
+* inspect network: `docker network inspect <name_of_network>`
+* embedded DNS - containers can reach each other using their names  
+  e.g. webserver wants to access database: `mysql.connect(mysql)`  
+  built-in DNS server always runs at `127.0.0.11`
+* Specific example: Deploy a web application named `webapp` using the `kodekloud/simple-webapp-mysql` image. Expose the port to 38080 on the host. The application makes use of two environment variable:
+  - 1: `DB_Host` with the value `mysql-db`
+  - 2: `DB_Password` with the value `db_pass123`
+Make sure to attach it to the newly created network called `wp-mysql-network`.  
+Also make sure to link the `MySQL` and the `webapp` container.  
+`docker run --network=wp-mysql-network -e DB_Host=mysql-db -e DB_Password=db_pass123 -p 38080:8080 --name webapp --link mysql-db:mysql-db -d kodekloud/simple-webapp-mysql`
