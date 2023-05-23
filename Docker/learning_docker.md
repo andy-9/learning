@@ -41,6 +41,11 @@
 
 <br>
 
+## Repository
+* a collection of images
+
+<br>
+
 ## Docker Editions
 * Community Edition (free products) & Enterprise Edition (Enterprise Add-ons)
 
@@ -106,6 +111,11 @@ Login: `docker login`
 * run specific version: `docker run <name_of_image>:<tag>` (no tag: default is `latest`)
 * remove image: `docker rmi <name_of_image>` (stop & remove all dependent containers before)
 * remove image with tag: `docker rmi <name_of_image:tag>`
+* remove unused images: `docker image prune`
+  options:  
+  `--all`, `-a`: all  
+  `--filter`: filter values, e.g. `--filter until=<timestamp>`  
+  `--force`, `-f`: do not prompt for confirmation
 * history: `docker history <name_of_image>`
 
 <br>
@@ -119,6 +129,7 @@ Login: `docker login`
 * attached to terminal in interactive mode: `-it` (for prompts, login, ...)
 * give container name: `--name <name>`
 * port mapping: `-p`
+* restart: `--restart <no>(default)|<always>|<unless-stopped>|<on-failure>`
 * tag: `-t`
 * other user: `-u <user_name>`
 * volume mapping: `-v`
@@ -438,3 +449,33 @@ services:
     ports: 
       - 5001:80
 ```
+
+<br>
+
+## Docker Registry
+* central repository (cloud) of all docker images
+* DockerHub is a hosted registry solution by Docker Inc.  
+  Besides public and private repositories, it also provides: automated builds and integration with source control solutions like Github and Bitbucket etc.
+
+* image: `docker.io/nginx/nginx`  
+  `docker.io`: registry (Docker Hub)  
+  `nginx`: user/account  
+  `nginx`: image/repo
+* Other registries, e.g. `gcr.io` (google)
+* private registry:
+  ```
+  docker login private-registry.io
+  docker run private-registry.io/apps/internal-app
+  ```
+* Deploy private registry:  
+  (`registry:2` is the name of the image)
+  ```
+  docker run -d -p 5000:5000 --name <registry> <registry:2>
+  docker image tag <my-image> localhost:5000/<my-image>
+  docker push localhost:5000/<my-image>
+  ```
+* Pull private image:
+  ```
+  docker pull localhost:5000/<my-image>
+  docker pull 192.168.56.100:5000/<my-image>
+  ```
