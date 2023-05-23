@@ -1,8 +1,8 @@
 # Docker
 
 ## Why?
-* to prevent matrix from hell (= compatibility/dependency issues, long setup time, different dev/test/prod environments)
-* --> containerize apps and run each service with its own dependencies in separate containers
+* to prevent matrix from hell (= compatibility/dependency issues, long setup time, different dev/test/prod environments)  
+  --> containerize apps and run each service with its own dependencies in separate containers
 
 <br>
 
@@ -90,7 +90,7 @@ Login: `docker login`
 <br>
 
 ### Containers
-* list of running containers: `docker ps`
+* list of running containers: `docker ps` (ps = processes)
 
 * list of running *and* exited containers: `docker ps -a`
 * keep container running: add `tail -f /dev/null` at the end
@@ -102,6 +102,7 @@ Login: `docker login`
 <br>
 
 ### Images
+* list information about the Docker installed on particular system: `docker info`
 * list images: `docker images`
 
 * download image: `docker pull <name_of_image>`
@@ -121,18 +122,22 @@ Login: `docker login`
 <br>
 
 ### Flags
+* restrict CPU use: `--cpus=<number_between_0_and_1>`
 * detached `-d `
 * environment variable `-e`
 * modify entrypoint: `--entrypoint <command>`
 * force `-f` or `--force`
+* remote: `-H=<remote-docker-engine>:<port>`
 * interactive mode: `i` (docker runs by default in a non-interactive mode)
 * attached to terminal in interactive mode: `-it` (for prompts, login, ...)
+* restrict memory usage in MB:`--memory=<number>m`
+* mount volume: `--mount` (add several key-value-pairs!)
 * give container name: `--name <name>`
 * port mapping: `-p`
 * restart: `--restart <no>(default)|<always>|<unless-stopped>|<on-failure>`
 * tag: `-t`
 * other user: `-u <user_name>`
-* volume mapping: `-v`
+* volume mapping: `-v` (better use `--mount`!)
 
 <br>
 
@@ -479,3 +484,58 @@ services:
   docker pull localhost:5000/<my-image>
   docker pull 192.168.56.100:5000/<my-image>
   ```
+
+<br>
+
+## Docker engine
+* docker engine: host with docker installed on it
+
+* 3 different components: Docker Daemon, REST API, Docker CLI
+  - Docker Daemon: background processes that manages Docker objects (e.g. images, containers, volumes, networks)
+  - REST API Server: API interface that programs can use to talk to the daemon and provide instructions
+  - Docker CLI: CLI to perform actions (containers, images, ...)  
+    Can be on another system (e.g. laptop): `docker -H=<remote-docker-engine>:<port>`, e.g. run nginx container on remote docker host: `docker -H=10.123.2.1:2375 run nginx`
+
+<br>
+
+### Containerization
+* Use namespaces to isolate workspace: Process ID, Mount, Network, InterProcess, ...
+
+* Namespace PID: When Linux boots it starts with one process ID (PID): 1. This is the root process that kicks off every other process.
+* PID is unique
+* PIDs in container (PID: 1, PID: 2) are actually just another processes in the base Linux system (PID: 5, PID: 6). The container PIDs are just visible within the container.
+* The underlying Docker host as well as the containers share the same system resources (e.g. CPU, memory)
+* There is no restriction as to how much CPU or memory a container can use.  
+  But it is possible to restrict with `cgroups` (control groups): `docker run --cpus=.5 ubuntu` (max. of 50 % CPU) or `docker run --memory=100m ubuntu` (max. of 100 MB memory)
+
+<br>
+
+## Docker storage
+* Docker stores data on local filesystem at `/var/lib/docker`
+
+* Layered architecture:
+  - image layers are read only
+  - container layer is read and write (e.g. temp-files, logs or files modified by user) --> will be destroyed when container is destroyed
+  - copy-on-write: files from image layers can be modified within the container - but they are only a copy of the original file in the image
+* How to persist this data? --> create a volume under: `docker volume create data_volume`  
+   path will be:  `/var/lib/docker/volumes/data_volume`
+* Run container and mount volume: `docker run -v <volume_name>:<location_inside_container> <image>`,  
+  e.g. `docker run -v data_volume:/var/lib/mysql mysql`  
+  The data will persist even if container is destroyed.  
+  This is called **volume mounting** (mount volume from the `volumes`-directory).  
+  It is enough to run only the last command (and not the `create`-command) - volume gets created automatically if it is not there yet.  
+* Store data on another path than the default one: specify path to directory  
+  e.g. `docker run -v /data/mysql:/var/lib/mysql mysql`   
+  This is called **bind mounting** (mount directory from any location on the Docker host).  
+* New and better way to write is with `--mount`  
+  e.g.: `docker run --mount type=bind,source=/data/mysql,target=/var/lib/mysql mysql`  
+  `type` of the mount (`bind`, `volume` or `tmpfs`)  
+  `source` is the location on my host  
+  `target` is the location on my container  
+  optional `readonly`: mount into container as read-only  
+  optional `bind-propagation`: changes the bind propagation (`rprivate`, `private`, `rshared`, `shared`, `rslave`, `slave`)
+* Who is responsible for all these operations? The **storage drivers**  
+  e.g. AUFS, ZFS, BTRFS, Device Mapper, Overlay, Overlay2
+
+<br>
+
