@@ -8,27 +8,14 @@ There are seven migration strategies for moving applications to the cloud, known
 
 <br>
 
-## Content:
-[7rs](#7rs)  
-[important](#important)  
-[retire](#retire)  
-[retain](#retain)  
-[rehost](#rehost)  
-[relocate](#relocate)  
-[repurchase](#repurchase)  
-[replatform](#replatform)  
-[refactor](#refactor)  
-
-<br>
-
 ## <a name='7rs'></a>7 Rs:
-* Retire
-* Retain
-* Rehost
-* Relocate
-* Repurchase
-* Replatform
-* Refactor or re-architect
+* [Retire](#retire)
+* [Retain](#retain)
+* [Rehost](#rehost)
+* [Relocate](#relocate)
+* [Repurchase](#repurchase)
+* [Replatform](#replatform)
+* [Refactor](#refactor) or re-architect
 
 Common strategies for large migrations include rehost, replatform, relocate, and retire.  
 Refactor is not recommended for large migrations because it involves modernizing the application during the migration.
