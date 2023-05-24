@@ -1,5 +1,5 @@
 # AWS migration strategies
-https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html
+<a href=https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html target="_blank">AWS migration strategies</a>
 
 <br>
 
@@ -8,7 +8,19 @@ There are seven migration strategies for moving applications to the cloud, known
 
 <br>
 
-## 7 Rs:
+[7rs](#7rs)  
+[important](#important)  
+[retire](#retire)  
+[retain](#retain)  
+[rehost](#rehost)  
+[relocate](#relocate)  
+[repurchase](#repurchase)  
+[replatform](#replatform)  
+[refactor](#refactor)  
+
+<br>
+
+## <a name='7rs'>7 Rs:</a>
 * Retire
 * Retain
 * Rehost
@@ -22,7 +34,7 @@ Refactor is not recommended for large migrations because it involves modernizing
 
 <br>
 
-##  Important information
+## <a name='important'>Important information</a>
 * Zombie applications: average CPU and memory usage below 5 %
 * Idle applications: average CPU and memory usage between 5 and 20 % over a period of 90 days
 * Cloud optimization can save time and money
@@ -33,7 +45,8 @@ Refactor is not recommended for large migrations because it involves modernizing
 
 <br>
 
-## 1. Retire
+<!-- ## <a name='retire'>1. Retire</a> -->
+## <a name='retire'></a>1. Retire
 * For decommissioning or archiving applications
 * Use cases:
   - no business value in retaining or moving to cloud
