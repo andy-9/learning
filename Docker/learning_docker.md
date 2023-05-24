@@ -578,3 +578,22 @@ services:
 Make sure to attach it to the newly created network called `wp-mysql-network`.  
 Also make sure to link the `MySQL` and the `webapp` container.  
 `docker run --network=wp-mysql-network -e DB_Host=mysql-db -e DB_Password=db_pass123 -p 38080:8080 --name webapp --link mysql-db:mysql-db -d kodekloud/simple-webapp-mysql`
+
+<br>
+
+## Docker on Windows
+Linux container on Windows host:
+* use either: Docker toolbox (uses VirtualBox)
+* or: Docker Desktop for Windows (uses MS Hyper-V)
+* only possible to use either one!
+* Docker Desktop for Windows also supports Windows containers  
+  Container types:
+  - Windows Server
+  - Hyper-V isolation (each container is run within a highly optimized virtual machine guaranteeing complete kernel isolation between containers and host)
+  
+<br>
+
+## Docker on Mac
+Linux container on Mac host:
+* use either: Docker toolbox (uses VirtualBox)
+* or: Docker Desktop for Mac (uses HyperKit)
