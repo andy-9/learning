@@ -597,3 +597,57 @@ Linux container on Windows host:
 Linux container on Mac host:
 * use either: Docker toolbox (uses VirtualBox)
 * or: Docker Desktop for Mac (uses HyperKit)
+
+<br>
+
+## Container Orchestration - Docker Swarm & Kubernetes
+* Container orchestration: set of tools and scripts that can help host containers in a production environment
+* Typically multiple docker hosts that can host containers
+* Even if one fails the app is still accessible
+* Some orchestration solutions help to automatically scale up or down (containers and hosts), also networking between containers across different hosts, load balancing, user request, sharing storage, support for config management and security
+* Orchestration solutions:
+  - Docker Swarm
+  - kubernetes (google)
+  - MESOS (Apache)
+
+<br>
+
+### Docker Swarm
+* Combine multiple Docker machines together into a single cluster - Docker swarm takes care of distributing the services or app instances into separate hosts for high availability and load balancing and across different systems and hardware
+* Necessary to have multiple hosts with Docker on them  
+  Then designate one host to be the manager (Swarm manager):  
+  `docker swarm init --advertise-addr 192.168.1.12`
+  Then join worker nodes:  
+  `docker swarm join --token <token>`
+* Docker services are one or more instances of a single application or service that runs across the nodes in the swarm cluster
+  ```
+  docker run my-web-server
+  docker service create --replicas=3 -p 8080:80 --network frontend my-web-server
+  ```
+
+<br>
+
+### Docker Kubernetes
+* Kubernetes uses Docker host to host apps in the form of Docker containers
+* A cluster is a set of nodes grouped together
+* Master/Manager is a node with a Kubernetes control plain component. Watches over the nodes in the cluster and is responsible for the actual orchestration of containers on the worker nodes.
+* Installing Kubernetes installs the following components:
+  - API Server (acts as frontend)
+  - etcd Sever (key-value-store)
+  - kubelet service (agent that uns on each node in the cluster, responsible for making sure the containers run as expected)
+  - Container Runtime (underlying software to run containers, e.g. Docker engine)
+  - Controller (brain behind the orchestration)
+  - Scheduler (distributing work or containers across multiple nodes)
+* Kubernetes CLI: `kubectl` (kubecontrol)  
+  Run 1000 nodes:
+  ```
+  docker run my-web-server
+  kubectl run --replicas=1000 my-web-server
+  ```
+  Scale up to 2000: `kubectl scale --replicas=2000 my-web-server`  
+  Rolling upgrade: `kubectl rolling-update my-web-server --image=web-server:2`  
+  Roll back images if something goes wrong: `kubectl rolling-update my-web-server --rollback`  
+* Deploy app on cluster: `kubectl run hello-minikube`  
+  View information about the cluster: `kubectl cluster-info`  
+  List all the nodes part of the cluster: `kubectl get nodes`  
+  Run 1000 instances of app across 1000 nodes: `kubectl run my-web-app --image=my-web-app --replicas=1000`

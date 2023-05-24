@@ -1,4 +1,7 @@
 # AWS migration strategies
+https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html
+
+<br>
 
 A migration strategy is the approach used to migrate a workload into the AWS Cloud.  
 There are seven migration strategies for moving applications to the cloud, known as the 7 Rs.
