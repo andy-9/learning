@@ -17,9 +17,6 @@ There are seven migration strategies for moving applications to the cloud, known
 * [Replatform](#replatform)
 * [Refactor](#refactor) or re-architect
 
-Common strategies for large migrations include rehost, replatform, relocate, and retire.  
-Refactor is not recommended for large migrations because it involves modernizing the application during the migration.
-
 <br>
 
 ## <a name='important'></a>Important information
@@ -30,6 +27,8 @@ Refactor is not recommended for large migrations because it involves modernizing
   - accessibility from anywhere
   - no infrastructure to maintain
   - pay-as-you-go pricing models
+* Common strategies for large migrations include rehost, replatform, relocate, and retire.  
+  Refactor is not recommended for large migrations because it involves modernizing the application during the migration.
 
 <br>
 
