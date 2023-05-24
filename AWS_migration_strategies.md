@@ -1,5 +1,5 @@
 # AWS migration strategies
-Link to source: <a href=https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html target="_blank">AWS migration strategies</a>
+Link to source: <a href=https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html target="_blank" rel="noopener">AWS migration strategies</a>
 
 <br>
 
@@ -8,6 +8,7 @@ There are seven migration strategies for moving applications to the cloud, known
 
 <br>
 
+## Content:
 [7rs](#7rs)  
 [important](#important)  
 [retire](#retire)  
@@ -20,7 +21,7 @@ There are seven migration strategies for moving applications to the cloud, known
 
 <br>
 
-## <a name='7rs'>7 Rs:</a>
+## <a name='7rs'></a>7 Rs:
 * Retire
 * Retain
 * Rehost
@@ -34,7 +35,7 @@ Refactor is not recommended for large migrations because it involves modernizing
 
 <br>
 
-## <a name='important'>Important information</a>
+## <a name='important'></a>Important information
 * Zombie applications: average CPU and memory usage below 5 %
 * Idle applications: average CPU and memory usage between 5 and 20 % over a period of 90 days
 * Cloud optimization can save time and money
@@ -45,7 +46,7 @@ Refactor is not recommended for large migrations because it involves modernizing
 
 <br>
 
-## <a name='retire'>1. Retire</a>
+## <a name='retire'></a>1. Retire
 * For decommissioning or archiving applications
 * Use cases:
   - no business value in retaining or moving to cloud
@@ -56,7 +57,7 @@ Refactor is not recommended for large migrations because it involves modernizing
 
 <br>
 
-## <a name='retain'>2. Retain</a>
+## <a name='retain'></a>2. Retain
 * For keeping in source environment, not ready to migrate
 * Use cases:
   - remain in compliance with data residency requirements
@@ -71,7 +72,7 @@ Refactor is not recommended for large migrations because it involves modernizing
 
 <br>
 
-## <a name='rehost'>3. Rehost</a>
+## <a name='rehost'></a>3. Rehost
 * **Lift and shift**  
   --> move apps from source environment/on-premises to AWS cloud without changes
 * Possible to migrate a large number of machines from multiple source platforms (physical, virtual, cloud)
@@ -85,7 +86,7 @@ Refactor is not recommended for large migrations because it involves modernizing
 
 <br>
 
-## <a name='relocate'>4. Relocate</a>
+## <a name='relocate'></a>4. Relocate
 * Transfer a large number of servers from on-premises to cloud
 * Move instances or objects to a different virtual private cloud (VPC), AWS region or account
 * Quickest way to migrate - no impact on overall architecture of app
@@ -93,7 +94,7 @@ Refactor is not recommended for large migrations because it involves modernizing
 
 <br>
 
-## <a name='repurchase'>5. Repurchase</a>
+## <a name='repurchase'></a>5. Repurchase
 * **Drop and shop**  
   --> replace app with different version or product
 * Use cases:
@@ -103,7 +104,7 @@ Refactor is not recommended for large migrations because it involves modernizing
 
 <br>
 
-## <a name='replatform'>6. Replatform</a>
+## <a name='replatform'></a>6. Replatform
 * **lift, tinker, and shift**  
   or: **lift and reshape**  
   --> move app to cloud with some optimization  
@@ -118,7 +119,7 @@ Refactor is not recommended for large migrations because it involves modernizing
 
 <br>
 
-## <a name='refactor'>7. Refactor or re-architect</a>
+## <a name='refactor'></a>7. Refactor or re-architect
 * Move app to cloud + modify its architecture, improve agility, performance + scalability
 * The most complex of the migration strategies  
   It can be complicated to manage for a large number of applications  
