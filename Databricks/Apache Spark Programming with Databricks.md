@@ -1,6 +1,10 @@
 # Apache Spark Programming with Databricks
 
 ## Dataframes
+Tables are equivalent to Apache Spark DataFrames.  
+A DataFrame is an immutable, distributed collection of data organized into named columns.
+
+<br>
 
 ### Databricks ecosystem
 
@@ -11,6 +15,8 @@
   - Simple: unify your data, analytics, and AI on one common platform for all data use cases
   - Open: open source standards and formats
   - Collaborative: Unify your data teams (data engineers/scientists/analysts) to collaborate across the entire data and AI workflow
+
+<br>
 
 ### Spark overview
 * De-facto standard unified analytics enginge for big data processing with built-in modules for streaming, SQL, ML, graph processing
@@ -52,6 +58,41 @@
     - slot
   - Each executor has a number of slots. Each slot can be assigned a task.
 
+<br>
+
+### Transformations, Actions and Executions
+#### Lazy evaluation
+* Spark waits until the last moment to execute a series of operations.
+* Instead of modifying the data immediately when you express some operation, you build up a plan of transformations that you will apply to your source data. That plan is executed when you call an action.
+* Lazy evaluation makes it easier to parallelize operations and allows Spark to apply various optimizations.
+
+#### Transformations
+* are at the core of how you express your business logic in Spark. They are the instructions you use to modify a DataFrame to get the results that you want. We call them lazy because they will not be completed at the time you write and execute the code in a cell  - they will only get executed once you have called an action.
+* 2 types of transformation:
+  - Narrow: data required to compute the records in a single partition reside in at most one partition of the parent dataset; work can be computed and reported back to the executor without changing the way data is partitioned over the system
+  - Wide: data required to compute the records in a single partition may reside in many partitions of the parent dataset; require that data be redistributed over the system - this is called a shuffle
+* Shuffles are triggered when data needs to move between executors
+
+#### Actions
+* Statements that are computed *and* executed when they are encountered in the developer's code. They are not postponed or wait for other code constructs. While transformations are lazy, actions are eager.
+
+#### Examples
+* Transformations (lazy):
+  - select
+  - distinct
+  - groupBy
+  - sum
+  - orderBy
+  - filter
+  - limit
+* Actions
+  - show
+  - count
+  - collect
+  - save
+
+<br>
+
 ### Databricks overview
 - <a href="https://docs.databricks.com/notebooks/notebooks-use.html#language-magic" target="_blank">Magic commands</a>: `%python`, `%scala`, `%sql`, `%r`, `%sh`, `%md`
 - <a href="https://docs.databricks.com/dev-tools/databricks-utils.html" target="_blank">DBUtils</a>: `dbutils.fs` (`%fs`), `dbutils.notebooks` (`%run`), `dbutils.widgets`
@@ -63,6 +104,8 @@
   displayHTML(html)
   ```
 - Render cell as <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank">Markdown</a> using the magic command: `%md`  
+
+<br>
 
 ### Access DBFS (Databricks File System)
 The <a href="https://docs.databricks.com/data/databricks-file-system.html" target="_blank">Databricks File System</a> (DBFS) is a virtual file system that allows you to treat cloud object storage as though it were local files and directories on the cluster.
@@ -76,6 +119,8 @@ The <a href="https://docs.databricks.com/data/databricks-file-system.html" targe
   display(files)
   ```
 
+<br>
+
 ### Create table
 * Run <a href="https://docs.databricks.com/spark/latest/spark-sql/language-manual/index.html#sql-reference" target="_blank">Databricks SQL Commands</a> to create a table named `events` using BedBricks event files on DBFS.
   ```
@@ -83,6 +128,8 @@ The <a href="https://docs.databricks.com/data/databricks-file-system.html" targe
   CREATE TABLE IF NOT EXISTS events USING parquet OPTIONS (path "/mnt/training/ecommerce/events/events.parquet");
   ```
 * View db name: `print(databaseName)`
+
+<br>
 
 ### Query table and plot results
 * ```
@@ -95,6 +142,8 @@ The <a href="https://docs.databricks.com/data/databricks-file-system.html" targe
   FROM events
   GROUP BY traffic_source
   ```
+
+<br>
 
 ### Add notebook parameters with widgets
 * Widgets are ways we can add parameters
