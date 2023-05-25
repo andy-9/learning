@@ -78,3 +78,23 @@ Hierarchy into which work is subdivided:
 <br>
 
 ## Shuffling
+* Shuffling is the process of rearranging data withing a cluster between stages
+* Triggered by wide operations (comparing against entire data set):
+  - Re-partitioning
+  - ByKey operations (except counting)
+  - Joins, the worse being cross joins
+  - Sorting
+  - Distinct (e.g. reduce duplicates)
+  - GroupBy
+* Narrow operations (can execute without any regard to the rest of the data, e.g. transforming `red` to `FF0000`):
+  - Filter
+  - Count
+  - Coalesce
+  - Union
+  - Sample
+  - Map
+* Try to group wide operations together for the best automatic optimization
+  - Aim for: `narrow`, `narrow`, `wide`, `wide`, `wide`, `narrow`
+  - Avoid:  `narrow`, `wide`, `narrow`, `wide`, `narrow`, `wide`  
+  This is one of the most significant, yet often unavoidable, cause of performance degradation  
+  Just because it's slow, it doesn't mean that it's bad
