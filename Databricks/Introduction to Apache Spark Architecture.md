@@ -1,6 +1,6 @@
 # Introduction to Apache Spark Architecture
 
-## General concepts
+## High-level components
 * **Driver**: instructor, runs the Spark app, assigns tasks to slots in an executor, coordinates the work between tasks  
   receives the result if any  
   doesn't touch the data  
@@ -41,7 +41,11 @@
 
 <br>
 
-**Workflow**: Driver grabs single partition --> partition creates task --> task is assigned to a slot --> slot on the executor will execute whatever operations were dictated to it by the driver
+**Workflow**:  
+Driver grabs single partition  
+  --> partition creates task  
+  --> task is assigned to a slot  
+  --> slot on the executor will execute whatever operations were dictated to it by the driver
 
 <br>
 
@@ -53,3 +57,24 @@ Hierarchy into which work is subdivided:
 
 <br>
 
+## Stages
+* Spark architecture concept: Stages
+  - Stage 1:
+    - local filter
+    - local count
+    - local distinct
+    - local sort
+    - local aggregate
+  - Stage 2:
+    - global count
+    - global distinct
+    - global sort
+    - global aggregate
+* Stage Boundry: Every task in current stage needs to be completed before moving on to the next stage
+* One long-running task can delay an entire stage from completing
+* Spark 3.x can run some stages in parallel (e.g. inputs to a join)
+* The shuffle between two stages is one of the most expensive operations in Apache Spark
+
+<br>
+
+## Shuffling
