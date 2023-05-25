@@ -71,7 +71,7 @@ Spark uses clusters of machines to process big data by breaking a large task int
 * Execute a set of transformations against a partition as directed to by the driver  
 * Driver has a slot on which it assigns a task to execute that one thread
 * Core refers to the hardware  
-  Thread  refers to thread pooling  
+  Thread refers to thread pooling  
   Slot is spot on which the driver can assign a task (most accurate term). Some slots may have tasks, others my be open/waiting
 
 ### Spark Job (with only 1 stage)
@@ -119,3 +119,10 @@ Spark uses clusters of machines to process big data by breaking a large task int
   - Avoid:  `narrow`, `wide`, `narrow`, `wide`, `narrow`, `wide`  
   This is one of the most significant, yet often unavoidable, cause of performance degradation  
   Just because it's slow, it doesn't mean that it's bad
+
+<br>
+
+## Performance
+* parallelism (assign work to multiple VMs)
+* lazy evaluation (build up plan for data optimization)
+* optimization process (Catalyst Optimizer)

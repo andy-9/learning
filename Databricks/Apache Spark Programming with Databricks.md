@@ -93,6 +93,40 @@ A DataFrame is an immutable, distributed collection of data organized into named
 
 <br>
 
+### Pipelining
+Lazy evaluation allows Spark to optimize the entire pipeline of computations as opposed to the individual pieces. This makes it exceptionally fast for certain types of computation because it can perform all relevant computations at once, rather than having to do one operation for all pieces of data and then the following operation. Additionally, Apache Spark can keep results in-memory.
+
+<br>
+
+### Catalyst Optimizer
+Automatically finds the most efficient plan for applying your transformations and actions.
+1. User input: SQL Query or DataFrame
+2. Unresolved Logical Plan: Logical plan for how to resolve data (yet unresolved)
+   - Analysis: column and table names are validated against the catalog
+   - Catalog: metadata
+   - Logical plan gets resolved
+3. Logical Plan
+   - Logical Optimization: first set of optimizations - reordering the sequence of commands
+4. Optimized Logical Plan
+   - Physical Planning: represents what the query engine will actually do after all optimizations have been applied
+5. Physical Plans
+6. Cost Model: Each physical plan is evaluated according to its cost model. The best performing model is selected. This gives us the selected physical plan.
+7. Selected Physical Plan
+   - Code generation: compiled to Java bytecode and executed
+8. RDDs (resilient distributed dataset: collection of elements partitioned across the nodes of the cluster that can be operated on in parallel)
+
+<br>
+
+### Caching
+* moving data around is expensive, both in time and money  
+  --> avoid overhead by caching
+* Caching will place a DataFrame or table into temporary storage  
+  --> makes subsequent reads faster
+* Caching itself is an expensive operation - use only if dataset is to be reused
+* Once data is cached, the Catalyst Optimizer will only reach back to the location where the data was cached
+
+<br>
+
 ### Databricks overview
 - <a href="https://docs.databricks.com/notebooks/notebooks-use.html#language-magic" target="_blank">Magic commands</a>: `%python`, `%scala`, `%sql`, `%r`, `%sh`, `%md`
 - <a href="https://docs.databricks.com/dev-tools/databricks-utils.html" target="_blank">DBUtils</a>: `dbutils.fs` (`%fs`), `dbutils.notebooks` (`%run`), `dbutils.widgets`
