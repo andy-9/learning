@@ -116,3 +116,7 @@ There are seven migration strategies for moving applications to the cloud, known
   - nobody knows how to maintain legacy app or cource code is unavailable
   - app is difficult to test
   - security and compliance: when moving a database to the cloud, maybe need to extract some tables with sensitive data and retain those tables on premises
+
+<br>
+
+![7Rs Decisiontree Basemodel from AWS](7Rs-DecisionTree-baseModel.png)
