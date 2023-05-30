@@ -77,9 +77,12 @@ A DataFrame is an immutable, distributed collection of data organized into named
 ### Access DBFS (Databricks File System)
 The <a href="https://docs.databricks.com/data/databricks-file-system.html" target="_blank">Databricks File System</a> (DBFS) is a virtual file system that allows you to treat cloud object storage as though it were local files and directories on the cluster.
 
-* Run file system commands on DBFS using the magic command: `%fs`
-* output everything in DBFS: `%fs ls`
+* Run file system commands on DBFS using the magic command: `%fs` (short for `dbutils.fs`)
+* output everything in DBFS: `%fs ls`  
+  output specific dir, e.g.: `%fs ls /databricks-dataset/`  
+  output head of file, e.g.: `%fs head /databricks-datasets/README.md`
 * show mount points: `%fs mounts`
+* show help: `%fs help`
 * %md Visualize results in a table using the Databricks <a href="https://docs.databricks.com/notebooks/visualizations/index.html#display-function-1" target="_blank">display</a> function:
   ```
   files = dbutils.fs.ls("/databricks-datasets")
