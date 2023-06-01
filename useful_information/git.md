@@ -1,18 +1,18 @@
 # Git Commands
 
-#### Verify Git (version)
+Verify Git (version)
 
 ```
 $ git --version
 ```
 
-#### Set your name:
+Set your name:
 
 ```
 $ git config --global user.name "<Your Name>"
 ```
 
-#### Set your email:
+Set your email:
 
 ```
 $ git config --global user.email "<youremail@example.com>"
@@ -76,7 +76,7 @@ If you have **GitHub for Windows** on your computer, a remote named `origin` is 
 $ git remote set-url origin <URLFROMGITHUB>
 ```
 
-
+<br>
 
 ## Make a new folder
 
@@ -98,29 +98,29 @@ the items in a folder:
 $ ls
 ```
 
+<br>
 
+## Create GitHub repository
 
-### Create GitHub repository
-
-##### Initializing empty git repository:
+Initializing empty git repository:
 
 ```
 git init
 ```
 
-##### Connect folder to github repository:
+Connect folder to github repository:
 
 ```
 git remote add origin [https://github.com/andy-9/portfolio.git]
 ```
 
-##### Check status
+Check status
 
 ```
 $ git status
 ```
 
-##### Add
+Add
 
 file to commit (aka save):
 
@@ -134,7 +134,7 @@ To add all files changes
 $ git add .
 ```
 
-##### Commit
+Commit
 
 those changes to the repository's history with a short description of the updates:
 
@@ -152,9 +152,9 @@ git push origin andy -f		the `-f` forces the pushing
 git push heroku HEAD:master	upload to heroku
 ```
 
+<br>
 
-
-### Forks
+## Forks
 
 When you **fork** a repository, you're creating a copy of it on your GitHub account. Your fork begins its life as a **remote** repository. Forks are used for creating your own version of a project or contributing back fixes or features to the original project.
 
@@ -162,7 +162,9 @@ Once a project is forked, you then **clone** (aka copy) it from GitHub to your c
 
 cd into the target folder, then
 
-##### clone:
+<br>
+
+## Clone
 
 ```
 git clone	// establishes connection between the repository on github and my computer
@@ -180,13 +182,15 @@ Go into the folder for the fork it created (in this case, named 'patchwork')
 $ cd patchwork
 ```
 
-##### Connect to the Original Repository:
+<br>
+
+## Connect to the Original Repository:
 
 ```
 $ git remote add upstream https://github.com/jlord/patchwork.git
 ```
 
-##### Add remote connections:
+Add remote connections:
 
 ```
 $ git remote add
@@ -198,7 +202,7 @@ $ git remote add <REMOTENAME> <URL>
 
 
 
-##### cloning @Spiced
+### cloning @Spiced
 
 cd into directory where you want to store your project
 
@@ -208,142 +212,108 @@ git checkout -b andy origin/master // (andy = name-of-branch)
 npm install
 ```
 
+<br>
 
-
-### Branches
+## Branches
 
 Git repositories use branches to isolate work when needed. It's common practice when working on a project or with others on a project to create a **branch** to keep your changes in until they are ready. This way you can do your work while the main, commonly named 'master', branch stays stable. When your branch is ready, you merge it back into 'master'.
 
 GitHub will automatically serve and host static website files in branches named 'gh-pages'. Since the project you forked creates a website, its main branch is 'gh-pages' instead of 'master'. All sites like this can be found using this pattern for the URL:
-
 ```
 http://githubusername.github.io/repositoryname
 ```
 
-##### See branches:
-
+See branches:
 ```
 $ git branch
 ```
 
-##### Create and switch to this branch
-
-in one line:
-
+Create and switch to this branch in one line:
 ```
 $ git checkout [branch name]
 ```
 
-##### Create new branch (if it doesn't exist yet):
-
+Create new branch (if it doesn't exist yet):
 ```
 git checkout -b [branch name]
 ```
 
-##### Establish new branch and automatically have it set to pull from master
-
+Establish new branch and automatically have it set to pull from master
 ```
 git checkout -b [name] origin/master
 ```
 
-##### Rename a branch
-
-you're currently on:
-
+Rename a branch you're currently on:
 ```
 $ git branch -m
 ```
 
-##### Verify
-
-what branch you're working on
-
+Verify what branch you're working on
 ```
 $ git status
 ```
 
-##### Merge
-
-a branch into current branch
-
+Merge a branch into current branch
 ```
 git merge <BRANCHNAME>
 ```
 
-##### Delete
-
-a local branch
-
+Delete a local branch (you have to be in another branch to do this!)
 ```
 git branch -d [branch]
 ```
 
 a local branch on a remote
-
 ```
 git remote remove [branch] (z.B. "heroku")
 ```
 
 Delete a remote branch
-
 ```
 git push <REMOTENAME> --delete <BRANCHNAME>
 ```
 
+<br>
 
-
-### Remotes
-
-##### See remotes
-
+## Remotes
+See remotes
 ```
 git remote
 ```
 
-##### See full URL
-
+See full URL
 ```
 git remote -v
 ```
 
-##### Pull in changes
-
-from a remote branch
-
+Pull in changes from a remote branch:
 ```
 $ git pull <REMOTENAME> <REMOTEBRANCH>
 ```
 
-##### See changes
-
-to the remote before you pull in
-
+See changes to the remote before you pull in:
 ```
 $ git fetch --dry-run
 ```
 
-##### Rename remote
-
+Rename remote:
 ```
 git remote rename [bisheriger Name] [neuer Name]
 ```
 
-**Set a URL to a remote**
-
+Set a URL to a remote:
 ```
 $ git remote set-url <REMOTENAME> <URL>
 ```
 
-**Push changes**
-
+Push changes:
 ```
 $ git push <REMOTENAME> <BRANCH>
 ```
 
+<br>
 
-
-### Pull Requests
-
+## Pull Requests
 Visit the original repository you forked on GitHub, in this case [http://github.com/jlord/patchwork](https://github.com/jlord/patchwork).
 
 Often GitHub will detect when you've pushed a branch to a fork, and display a 'Compare & pull request' button at the top of both the original and forked repositories. If you see this for your 'add-username' branch, you can click it to continue. If not:
@@ -356,10 +326,9 @@ Often GitHub will detect when you've pushed a branch to a fork, and display a 'C
 - Add a title and description to the changes you're suggesting the original author pull in.
 - Click 'Send pull request'!
 
+<br>
 
-
-### Go back in Git-history
-
+## Go back in Git-history
 ```
 git log
 git checkout [id von commit] // localhost zeigt commit von damals
@@ -374,88 +343,70 @@ dateiname mit veränderung der zeilen vergleich:
 gid diff --stat [name]
 ```
 
+<br>
 
-
-### Restore last commit
-
+## Restore last commit
 ```
 git reset .
 git clean -df
 git checkout -- .
 ```
 
+<br>
 
-
-### Useful commands
-
-##### dependabot
-
-dependabot macht automatisch pull requests mit software updates, wenn es sieht, dass software nicht aktuell ist.
-
-To do: Wenn ich lokal  (auf dem master branch) `git pull master` ohne Probleme ausführen kann, kann ich mergen und direkt nochmal `git pull master` ausführen und alles sollte in Butter sein.
-
-
-
-##### remove previously committed file which is now in `.gitignore`
-
-```
-git rm --cached /path/to/file
-```
-
-
-
-##### update local file strucure (on computer) with repo on GitHub
-
-```
-git pull origin master
-```
-
-
-
-##### `npm install`
-
-`npm install` to download all the packages
-
-##### See differences
+## See differences  
 
 In terminal, you can view the difference between the file now and how it was at your last commit.
-
 ```
 $ git diff
-```
-
-##### `git log`, `git reflog` (see commits)
-
-```
 git log					see commits
-git reflog				see branch-switches
+git reflog				
 ```
+The git log command only shows us history, but `reflog` shows everything that we have done in the repo, see branch-switches.
 
-##### `git stash`
+<br>
 
+## stashing
 ```
 git stash					nicht commitete lokale Änderungen für später merken
 git stash pop				die letzte dieser änderungen wieder hervorholen
 ```
 
-##### Undo all committed changes
+<br>
 
+## Undo all committed changes
 ```
 git reset --hard
 ```
 
+<br>
 
---------------------------
+## Get a nice view
+of all commits and history of repo (this command is  frequently used!):
+```
+git log –-all -–graph –-decorate –-oneline
+```
+(it is like the view of GitExtentions)
 
-# NOCH NICHT EINGEARBEITET
+<br>
 
-# get a nice view of all (all branches) commits and history of repo (this command is frequently used!):
-              git log –-all -–graph –-decorate –-oneline            (it is like the view of GitExtentions)
- 
-git reflog                          (the git log command only shows us history, but reflog shows everything that we have done in the repo)
- 
-Branching:
-# delete a branch (you have to be in another branch to do this!)
-              git branch -d <branch_name>
-# create and change to created branch directly:
-              git checkout -b <’branch_name’>                         (use the ‘ for the name)
+## Useful commands
+### dependabot
+
+dependabot macht automatisch pull requests mit software updates, wenn es sieht, dass software nicht aktuell ist.
+
+### merging / `git pull master`
+To do: Wenn ich lokal  (auf dem master branch) `git pull master` ohne Probleme ausführen kann, kann ich mergen und direkt nochmal `git pull master` ausführen und alles sollte in Butter sein.
+
+### remove previously committed file which is now in `.gitignore`
+```
+git rm --cached /path/to/file
+```
+
+### update local file strucure (on computer) with repo on GitHub
+```
+git pull origin main
+```
+
+### `npm install`  
+`npm install` to download all the packages
