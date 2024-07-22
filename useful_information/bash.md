@@ -1,75 +1,21 @@
 # BASH COMMANDS
 
-## BASIC COMMANDS
-
-### Create file
-
-`<filename>.sh`
+A shell is a computer program that takes commands, interprets them, and passes them to the operating system to process. So, it’s an interface between the user and the operating system, through which a user can interact with the computer.  
+Bash = Bourne Again Shell. Bash is a superset of `sh`. It's a command language processor and a shell.
 
 ### Run file
 
-`bash filename.sh`
-
-### Search command history
-
-`Ctrl+r`
-
-### Rerun last command
-
-`!!`, e.g. `sudo !!`
-
-### Fix last command
-
-`fc`
+`bash <script>` or  
+`./<script>`
 
 ### Find out type
 
 `type ...`, e.g. `type time`, `type ping`  
 Some commands are 'builtins': funcions inside the bash program, e.g. `type`, `alias`, `read`, `source`, `declare`, `printf`, `echo`, `cd`
 
-### Find out which binary is being used
+### Make script executable
 
-`which <command>`, e.g. `which ls`
-
-### Beginning of line
-
-`Ctrl+a`
-
-### End of line
-
-`Ctrl+e`
-
-### Clear screen
-
-`Ctrl+l`
-
-### Suspend running program
-
-`Ctrl+z`
-
-### Start suspended program in background
-
-`bg`
-
-### Bring suspended/backgrounded program to the foreground
-
-`fg`
-
-## NAVIGATING
-
-### Change to last dir
-
-`cd -`
-
-## DIRECTORIES
-
-### Create directory
-
-`mkdir <name>`
-
-### Delete directory
-
-`rmdir <name>`
+`chmod +x <script>`
 
 ## FILES
 
@@ -77,18 +23,31 @@ Some commands are 'builtins': funcions inside the bash program, e.g. `type`, `al
 
 `ls /tmp`
 
-### Create file
+## Scripting in general
 
-`touch <file>`
-`touch file-$(date -I).txt` // file-2024-07-15.txt
+### Shebang (1st line in script)
+
+`#!/bin/bash`  
+POSIX is a family of standards defined by IEEE for vendors to make operating systems compatible.. Thus, it helps us develop cross-platform software for multiple operating systems by following a set of guidelines. On most Linux systems, sh is a symlink to the actual implementation of Bourne Shell. The script will be executed by whatever the `#!/bin/bash` line points to
+
+### `set`
+
+The `set` command enables options within the script.  
+`set -o posix`  
+Runs the script in POSIX mode.
 
 ## VARIABLES / ARGUMENTS
 
 Always quote variables! `"$1"`
 
-### Running a script
+### User input
 
-`./script.sh panda banana` --> `$1` is `panda`, `$2` is `banana`
+`read -p "Enter a number: " number`
+
+### Running a script with arguments
+
+`./script.sh panda banana`  
+--> `$1` in script is `panda`, `$2` is `banana`
 
 ### Get all arguments
 
@@ -96,7 +55,12 @@ Always quote variables! `"$1"`
 
 ### Loop over all arguments
 
-`for i in "${@}" do ... done`
+```
+for i in "${@}"
+do
+    ...
+done`
+```
 
 ### Print date:
 
@@ -108,16 +72,30 @@ Always quote variables! `"$1"`
 ### Replace text in file
 
 `sed -i 's/<origin_text>/<new_text>/g' <path_to_file>`  
-e.g. `sed -i 's/World/Andy/g' ./hello.txt`
+e.g. `sed -i 's/World/Andy/g' ./hello.txt` // replace `World` with `Andy`
+
+### if-else
+
+```
+if <statement>; then
+    <something>
+else
+    <something-else>
+fi
+```
+
+Statement in `[]` or `[[]]` evaluates to true (= 1) or false (= 0).
 
 ## LOOPS
 
 ### For loops
 
-`for i in *.png  
-do  
+```
+for i in *.png
+do
     convert $i $i.jpg
-done`
+done
+```
 
 ### `{}`
 
@@ -166,6 +144,59 @@ flag `-i` ask before signalling.
 ### Brace expansion
 
 `a{.png, .svg}` --> expands to `a.png a.svg`
+
+## Arithmetics
+
+### Calculate
+
+Use double brackets: `x=$((2+2))`
+
+### Remainder
+
+`% <number>`
+
+### even-odd
+
+```
+if (( number % 2 == 0 )); then
+echo "${number} is even"
+else
+    echo "${number} is odd"
+fi
+```
+
+## Debugging
+
+### Print every line of script (2nd line in script)
+
+`set -x`  
+`bash -x <script>` does the same when running the script
+
+### Stop before every line
+
+`trap read DEBUG` (put this before the line(s) you want to debug)
+
+### Confirm every line before it runs
+
+Put this at beginning of script:  
+`trap '(read -p "[$BASH_SOURCE:$LINENO] $BASH_COMMAND")' DEBUG`  
+`read -p`: prints a message, press `Enter` to continue  
+`$BASH_SOURCE`: script filename  
+`$LINENO`: line number  
+`$BASH_COMMAND`: next command to run
+
+### Print better error messages
+
+```
+die() {
+    echo $1 >&2
+    exit 1
+}
+
+if [ ! -f "/some/important/file" ]; then
+    die "Error: The important file is missing!"
+fi
+```
 
 ## OTHER USEFUL STUFF
 
