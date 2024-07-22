@@ -188,9 +188,10 @@ Put this at beginning of script:
 ### Print better error messages
 
 ```
-die() {
-    echo $1 >&2
-    exit 1
+die() {               // definition of die()-function
+    echo $1 >&2       // print first argument
+                      // >&2 redirects output to standard error (stderr) instead of the standard output (stdout)
+    exit 1            // terminates script immediately with exit status 1
 }
 
 if [ ! -f "/some/important/file" ]; then
