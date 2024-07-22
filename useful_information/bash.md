@@ -38,7 +38,36 @@ Runs the script in POSIX mode.
 
 ## VARIABLES / ARGUMENTS
 
+Shell scripts have 2 kind ov variables:
+
+1. environment variables
+2. shell variables
+
+You access both of these in the very same way: `$VAR`
+
 Always quote variables! `"$1"`
+
+### Print all variables
+
+`env`
+
+### Set environment variable
+
+`export ANIMAL=panda`  
+Child processes inherit environment variables (this is why the variables set in your `.bashrc` work in all programs you start from your terminal).  
+You can set environment variables when starting a program: `env VAR=panda ./myprogram`
+
+### Set shell variable
+
+`ANIMAL=panda`  
+Shell variables aren't inherited.
+
+### Turn a shell variable into an environment variable
+
+```
+ANIMAL=panda
+export ANIMAL
+```
 
 ### User input
 
