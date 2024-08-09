@@ -89,4 +89,41 @@ networking, and connectivity
   }
   ```
 * These policies define the permissions of the users
-* In AWS you apply the least privilege principle: don’t give more permissions than a user needs.
+* In AWS you apply the **least privilege principle**: don’t give more permissions than a user needs.
+* An IAM user is an identity with long-term credentials that is used to interact with AWS in an account.
+* If you attach a policy at the group level --> policy gets applied to every group member.
+*  **Inline policy**: Policy only attached to a user
+
+### IAM Polices structure
+  ```json
+  {
+    "Version": "2012-10-17",
+    "Id": "S3-Account-Permissions",
+    "Statement": [
+      {
+        "Sid": "1",
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": ["arn:aws:iam::123456789012:root"]
+        },
+        "Action": [
+          "s3:GetObject",
+          "s3:PutObject"
+        ],
+        "Resource": ["arn:aws:s3:::mybucket/*"]
+      }
+    ]
+  }
+  ```
+Consists of
+* Version: policy language version, always include “2012-10-17”
+* Id (optional): an identifier for the policy
+* Statement: one or more individual statements (required)
+
+Statements consists of
+* Sid (statement ID, optional): an identifier for the statement
+* Effect: whether the statement allows or denies access (Allow, Deny)
+* Principal: account/user/role to which this policy applied to
+* Action: list of actions this policy allows or denies
+* Resource: list of resources to which the actions apply to
+* Condition (optional): conditions for when this policy is in effect
