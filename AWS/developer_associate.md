@@ -138,9 +138,25 @@ Statements consists of
 * Condition (optional): conditions for when this policy is in effect
 
 ### Security
-* In AWS, you can setup a password policy:
+* In AWS, you can set up a password policy (in IAM `Account settings`):
   - Set a minimum password length
   - Require specific character types (uppercase, lowercase, numbers, non-alphanumeric characters)
   - Allow all IAM users to change their own passwords
   - Require users to change their password after some time (password expiration)
   - Prevent password re-use
+* You can also set up MFA (Google Authenticator, Authy, YubiKey, Hardware Key Fob MFA Device, ...) (click on user in top right --> `Security credentials`)
+
+
+## How can users access AWS ?
+To access AWS, you have three options:
+* AWS Management Console (protected by password + MFA) 
+* AWS Command Line Interface (CLI): protected by access keys 
+* AWS Software Developer Kit (SDK) - for code: protected by access keys  
+Access Keys are generated through the AWS Console. Users manage their own access keys
+
+
+### AWS CLI & SDK
+* Every command begins with `aws`
+* AWS SDK is a set of libraries, enables to access and manage AWS services, and is embedded within my application
+* Example: AWS CLI is built on AWS SDK for Python (boto)
+
