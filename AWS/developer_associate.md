@@ -2,7 +2,13 @@
 
 ## AWS
 * Amazon Web Services
-* Provides servers and services that can be used on demand and that scale easily
+* Provides servers and services that can be used on demand and that scale easily.
+
+## Abbreviations
+| Abbreviation | Stands for                     |
+|--------------|--------------------------------|
+| arn          | Amazon Resource Name           |
+| IAM          | Identity and Access Management |
 
 ## Usecases
 e.g.
@@ -19,14 +25,14 @@ e.g.
 * AWS Data Centers
 * AWS Edge Locations / Points of Presence
 
-### Region
+### Region (e.g. `eu-central-1`)
 * Cluster of datacenters
 * Compliance with data governance and legal requirements: data never leaves a region without explicit permission
 * Proximity to customers: reduced latency
 * New services and new features aren't available in every region
 * Pricing: pricing varies region to region and is transparent in the service pricing page
 
-### AWS Availability Zones (AZ)
+### AWS Availability Zones (AZ) (e.g. `eu-central-1a`)
 * Each region has many availability zones (usually 3, min is 3, max is 6). Example:  
   - ap-southeast-2a
   - ap-southeast-2b
@@ -39,6 +45,9 @@ networking, and connectivity
 ### AWS Points of Presence (Edge Locations)
 * Amazon has 400+ Points of Presence (400+ Edge Locations & 10+ Regional Caches) in 90+ cities across 40+ countries
 * Content is delivered to end users with lower latency
+* Points of Presence (PoPs): General term used to describe AWS locations where AWS services are accessed. They include both edge locations and regional edge caches.
+* Edge Locations: These are specific locations where AWS deploys its content delivery and caching services. They are used primarily by Amazon CloudFront for distributing content and reducing latency for users.
+* Regional Edge Caches: These are a subset of edge locations that act as intermediate caches for CloudFront to reduce latency for frequently accessed content.
 
 ### Global Services
 * Identity and Access Management (IAM)
@@ -57,7 +66,7 @@ networking, and connectivity
 * IAM = Identity and Access Management, Global service
 * Root account created by default, shouldn’t be used or shared
 * Users are people within your organization, and can be grouped. 1 person = 1 user.
-* Groups only contain users, not other groups.
+* Groups (e.g. `admins`, `developers`, ...) only contain users, not other groups.
 * Users don’t have to belong to a group (though this is not best practice), and user can belong to multiple groups.
 
 ### IAM: Permissions
@@ -94,7 +103,7 @@ networking, and connectivity
 * If you attach a policy at the group level --> policy gets applied to every group member.
 *  **Inline policy**: Policy only attached to a user
 
-### IAM Polices structure
+### IAM Policies structure
   ```json
   {
     "Version": "2012-10-17",
@@ -124,6 +133,14 @@ Statements consists of
 * Sid (statement ID, optional): an identifier for the statement
 * Effect: whether the statement allows or denies access (Allow, Deny)
 * Principal: account/user/role to which this policy applied to
-* Action: list of actions this policy allows or denies
-* Resource: list of resources to which the actions apply to
+* Action: list of actions this policy allows or denies (`<service>:<api-call>`, can also be e.g. `ìam:Get*` --> all Get-commands are authorized)
+* Resource: list of resources to which the actions apply to. If all resources are allowed --> `"Resource": "*"`
 * Condition (optional): conditions for when this policy is in effect
+
+### Security
+* In AWS, you can setup a password policy:
+  - Set a minimum password length
+  - Require specific character types (uppercase, lowercase, numbers, non-alphanumeric characters)
+  - Allow all IAM users to change their own passwords
+  - Require users to change their password after some time (password expiration)
+  - Prevent password re-use
