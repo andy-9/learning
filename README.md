@@ -16,8 +16,6 @@
 
 - Learning <a href="https://github.com/andy-9/learning/blob/main/useful_information/what_is_json.md">JSON</a>
 
-- Learning <a href="https://github.com/andy-9/learning/blob/main/useful_linux_commands.md">Linux commands</a>
-
-- Learning <a href="https://github.com/andy-9/learning/blob/main/tarraform">Terraform</a>
+- Learning <a href="https://github.com/andy-9/learning/tree/main/terraform">Terraform</a>
 
 - Learning <a href="https://github.com/andy-9/learning/blob/main/useful_information/what_is_yml.md">YAML</a>
