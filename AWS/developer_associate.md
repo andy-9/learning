@@ -137,6 +137,17 @@ Statements consists of
 * Resource: list of resources to which the actions apply to. If all resources are allowed --> `"Resource": "*"`
 * Condition (optional): conditions for when this policy is in effect
 
+
+### Roles for Services
+* Some AWS service will need to perform actions on your behalf. E.g. Create an EC2 instance (virtual server) --> wants to perform actions on AWS --> EC2 needs permissions
+* To do so, we will assign permissions to AWS services with IAM Roles
+* Common roles:
+  - EC2 Instance Roles
+  - Lambda Function Roles
+  - Roles for CloudFormation
+* IAM --> Roles: `Create role`, Select trusted entity `AWS service` --> choose a service --> add permission --> enter role name and description --> verify trusted entities and permissions --> `Create role`
+
+
 ### Security
 * In AWS, you can set up a password policy (in IAM `Account settings`):
   - Set a minimum password length
@@ -145,6 +156,46 @@ Statements consists of
   - Require users to change their password after some time (password expiration)
   - Prevent password re-use
 * You can also set up MFA (Google Authenticator, Authy, YubiKey, Hardware Key Fob MFA Device, ...) (click on user in top right --> `Security credentials`)
+* IAM Credentials Report (account-level): a report that lists all your account's users and the status of their various credentials (click on `Credential report` in the IAM menu)
+* IAM Access Advisor (user-level) (go to user and click on `Access Advisor`)
+  - Access advisor shows the service permissions granted to a user and when those services were last accessed.
+  - You can use this information to revise your policies.
+
+
+### IAM Guidelines and Best Practices
+* One physical user = One AWS user
+* Assign users to groups and assign permissions to groups
+* Create a strong password policy
+* Use and enforce the use of Multi Factor Authentication (MFA)
+* Create and use Roles for giving permissions to AWS services
+* Use Access Keys for Programmatic Access (CLI / SDK)
+* Audit permissions of your account using IAM Credentials Report & IAM Access Advisor
+* Never share IAM users & Access Keys
+
+
+### Shared Responsibility Model for IAM
+* AWS --> responsible for infrastructure
+  - Infrastructure (global network security)
+  - Configuration and vulnerability analysis
+  - Compliance validation
+* I / user --> responsible for how this infrastructure is used
+  - Users, Groups, Roles, Policies management and monitoring
+  - Enable MFA on all accounts
+  - Rotate all your keys often
+  - Use IAM tools to apply appropriate permissions
+  - Analyze access patterns & review permissions
+
+
+### IAM Section – Summary
+* Users: mapped to a physical user, has a password for AWS Console
+* Groups: contains users only
+* Policies: JSON document that outlines permissions for users or groups
+* Roles: for EC2 instances or AWS services
+* Security: MFA + Password Policy
+* AWS CLI: manage your AWS services using the command-line
+* AWS SDK: manage your AWS services using a programming language
+* Access Keys: access AWS using the CLI or SDK
+* Audit: IAM Credential Reports & IAM Access Advisor
 
 
 ## How can users access AWS ?
@@ -160,3 +211,9 @@ Access Keys are generated through the AWS Console. Users manage their own access
 * AWS SDK is a set of libraries, enables to access and manage AWS services, and is embedded within my application
 * Example: AWS CLI is built on AWS SDK for Python (boto)
 
+### Create access keys
+* Click on your user --> `Security credentials` --> `Create access key`
+* CLI `aws configure` --> enter access key + default region name + default output format (no necessity to enter anything)
+
+### AWS CloudShell
+* CLI in the cloud of AWS
