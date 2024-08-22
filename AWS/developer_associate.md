@@ -157,7 +157,7 @@ Statements consists of
   - Prevent password re-use
 * You can also set up MFA (Google Authenticator, Authy, YubiKey, Hardware Key Fob MFA Device, ...) (click on user in top right --> `Security credentials`)
 * IAM Credentials Report (account-level): a report that lists all your account's users and the status of their various credentials (click on `Credential report` in the IAM menu)
-* IAM Access Advisor (user-level) (go to user and click on `Access Advisor`)
+* IAM Access Advisor (user-level) (go to `user` and click on `Access Advisor`)
   - Access advisor shows the service permissions granted to a user and when those services were last accessed.
   - You can use this information to revise your policies.
 
@@ -167,7 +167,7 @@ Statements consists of
 * Assign users to groups and assign permissions to groups
 * Create a strong password policy
 * Use and enforce the use of Multi Factor Authentication (MFA)
-* Create and use Roles for giving permissions to AWS services
+* Create and use roles for giving permissions to AWS services
 * Use Access Keys for Programmatic Access (CLI / SDK)
 * Audit permissions of your account using IAM Credentials Report & IAM Access Advisor
 * Never share IAM users & Access Keys
@@ -200,9 +200,9 @@ Statements consists of
 
 ## How can users access AWS ?
 To access AWS, you have three options:
-* AWS Management Console (protected by password + MFA) 
+* AWS Management Console (protected by password + MFA) (Best for users who prefer a graphical interface, need to perform manual tasks, or are exploring AWS services.)
 * AWS Command Line Interface (CLI): protected by access keys 
-* AWS Software Developer Kit (SDK) - for code: protected by access keys  
+* AWS Software Development Kit (SDK) - for code: protected by access keys (Best for developers who need to automate AWS interactions, build applications, or integrate AWS services into their software. It requires programming knowledge and is suitable for more complex, automated, or large-scale tasks.)  
 Access Keys are generated through the AWS Console. Users manage their own access keys
 
 
