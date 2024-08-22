@@ -69,3 +69,27 @@ Some commands are 'builtins': funcions inside the bash program, e.g. `type`, `al
 
 `touch <file>`  
 `touch file-$(date -I).txt` // file-2024-07-15.txt
+
+## PERMISSIONS
+
+### File permissions
+
+- r = read  
+  w = write  
+  x = execute
+- bork = user  
+  staff = group  
+  anyone
+- File permissions are 12 bits  
+  0 = not allowed  
+  1 = allowed
+- 0 = 000 = ---  
+  1 = 001 = --x  
+  2 = 010 = -w-  
+  3 = 011 = -wx  
+  4 = 100 = r--  
+  5 = 101 = r-x  
+  6 = 110 = rw-  
+  7 = 111 = rwx
+
+![alt text](images/4_unix_permissions.jpg)
