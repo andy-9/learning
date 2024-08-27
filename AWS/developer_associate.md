@@ -7,8 +7,15 @@
 ## Abbreviations
 | Abbreviation | Stands for                     |
 |--------------|--------------------------------|
+| AMI | Amazon Machine Learning Image |
 | arn          | Amazon Resource Name           |
+| ASG          | Auto-Scaling Group             |
+| EBS          | Elastic Block Store            |
+| EC2          | Elastic Compute Cloud          |
+
+| ELB          | Elastic Load Balancer          |
 | IAM          | Identity and Access Management |
+
 
 ## Usecases
 e.g.
@@ -138,7 +145,7 @@ Statements consists of
 * Condition (optional): conditions for when this policy is in effect
 
 
-### Roles for Services
+### IAM Roles for Services
 * Some AWS service will need to perform actions on your behalf. E.g. Create an EC2 instance (virtual server) --> wants to perform actions on AWS --> EC2 needs permissions
 * To do so, we will assign permissions to AWS services with IAM Roles
 * Common roles:
@@ -217,3 +224,67 @@ Access Keys are generated through the AWS Console. Users manage their own access
 
 ### AWS CloudShell
 * CLI in the cloud of AWS
+
+
+## EC2
+* EC2 is one of the most popular of AWS' offering
+* EC2 = Elastic Compute Cloud = Infrastructure as a Service
+* It mainly consists in the capability of :
+  - Renting virtual machines (EC2)
+  - Storing data on virtual drives (EBS)
+  - Distributing load across machines (ELB)
+  - Scaling the services using an auto-scaling group (ASG)
+
+### Sizing & configuration options
+* Operating System (OS): Linux, Windows or Mac OS
+* An AMI is a template that contains the software configuration (operating system, application server, and applications) required to launch your instance.
+* How much compute power & cores (CPU)
+* How much random-access memory (RAM)
+* How much storage space:
+  - Network-attached (EBS & EFS)
+  - Hardware (EC2 Instance Store)
+* Network card: speed of the card, Public IP address
+* Firewall rules: security group
+* Bootstrap script (configure at first launch): EC2 User Data
+
+### User Data
+* It is possible to bootstrap our instances using an EC2 User data script.
+* Bootstrapping means launching commands when a machine starts
+* That script is only run once at the instance first start
+* EC2 user data is used to automate boot tasks such as:
+  - Installing updates
+  - Installing software
+  - Downloading common files from the internet
+  - Anything you can think of
+• The EC2 User Data Script runs with the root user
+
+### Instance Types
+* naming convention: `m5.2xlarge`
+  - `m`: instance class
+  - `5`: generation
+  - `2xlarge`: size within the instance class
+* Example:
+  ![img.png](example_instance_types.png)
+* Great for a diversity of workloads such as web servers or code repositories
+* Balance between:
+  - Compute
+  - Memory
+  - Networking
+* Compute Optimized (`C`): Great for compute-intensive tasks that require high performance processors:
+  - Batch processing workloads
+  - Media transcoding
+  - High performance web servers
+  - High performance computing (HPC)
+  - Scientific modeling & machine learning
+  - Dedicated gaming servers
+* Memory Optimized (`R`): Fast performance for workloads that process large data sets in memory:
+  - High performance, relational/non-relational databases
+  - Distributed web scale cache stores
+  - In-memory databases optimized for BI (business intelligence)
+  - Applications performing real-time processing of big unstructured data
+* Storage Optimized (`I3`, `D`, `H`): Great for storage-intensive tasks that require high, sequential read and write access to large data sets on local storage:
+  - High frequency online transaction processing (OLTP) systems
+  - Relational & NoSQL databases
+  - Cache for in-memory databases (for example, Redis)
+  - Data warehousing applications
+  - Distributed file systems
