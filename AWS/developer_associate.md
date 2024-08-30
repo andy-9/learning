@@ -5,16 +5,19 @@
 * Provides servers and services that can be used on demand and that scale easily.
 
 ## Abbreviations
-| Abbreviation | Stands for                     |
-|--------------|--------------------------------|
-| AMI | Amazon Machine Learning Image |
-| arn          | Amazon Resource Name           |
-| ASG          | Auto-Scaling Group             |
-| EBS          | Elastic Block Store            |
-| EC2          | Elastic Compute Cloud          |
-
-| ELB          | Elastic Load Balancer          |
-| IAM          | Identity and Access Management |
+| Abbreviation | Stands for                      |
+|--------------|---------------------------------|
+| AMI          | Amazon Machine Learning Image   |
+| arn          | Amazon Resource Name            |
+| ASG          | Auto-Scaling Group              |
+| EBS          | Elastic Block Store             |
+| EC2          | Elastic Compute Cloud           |
+| ELB          | Elastic Load Balancer           |
+| FTP          | File Transfer Protocol          |
+| IAM          | Identity and Access Management  |
+| RDP          | Remote Desktop Protocol         |
+| SFTP         | Secure File Transfer Protocol   |
+| SSH          | Secure Shell                    |
 
 
 ## Usecases
@@ -265,26 +268,58 @@ Access Keys are generated through the AWS Console. Users manage their own access
   - `2xlarge`: size within the instance class
 * Example:
   ![img.png](example_instance_types.png)
-* Great for a diversity of workloads such as web servers or code repositories
-* Balance between:
+* **General Purpose (`T`)**: Great for a diversity of workloads such as web servers or code repositories. Balance between:
   - Compute
   - Memory
   - Networking
-* Compute Optimized (`C`): Great for compute-intensive tasks that require high performance processors:
+* **Compute Optimized (`C`)**: Great for compute-intensive tasks that require high performance processors:
   - Batch processing workloads
   - Media transcoding
   - High performance web servers
   - High performance computing (HPC)
   - Scientific modeling & machine learning
   - Dedicated gaming servers
-* Memory Optimized (`R`): Fast performance for workloads that process large data sets in memory:
+* **Memory Optimized (`R`, `X1`, `z1`)**: Fast performance for workloads that process large data sets in memory:
   - High performance, relational/non-relational databases
   - Distributed web scale cache stores
   - In-memory databases optimized for BI (business intelligence)
   - Applications performing real-time processing of big unstructured data
-* Storage Optimized (`I3`, `D`, `H`): Great for storage-intensive tasks that require high, sequential read and write access to large data sets on local storage:
+* **Storage Optimized (`I3`, `D`, `H`)**: Great for storage-intensive tasks that require high, sequential read and write access to large data sets on local storage:
   - High frequency online transaction processing (OLTP) systems
   - Relational & NoSQL databases
   - Cache for in-memory databases (for example, Redis)
   - Data warehousing applications
   - Distributed file systems
+
+
+## Security groups
+* Security Groups are the fundamental of network security in AWS.
+* They control how traffic is allowed into or out of our EC2 Instances.
+* Security groups only contain **allow** rules.
+* Security groups rules can reference by IP or by security group.
+* Can be attached to multiple instances.
+  Also, one instance can have multiple security groups.
+* Locked down to a region / VPC combination
+* Does live “outside” the EC2 – if traffic is blocked, the EC2 instance won’t see it.
+* It’s good to maintain one separate security group for SSH access.
+* If your application is not accessible (time out), then it’s a security group issue.
+* If your application gives a “connection refused“ error, then it’s an application error or it’s not launched.
+* All inbound traffic is blocked by default.
+* All outbound traffic is authorised by default.
+
+### Security groups on EC2 instances
+* Security groups are acting as a “firewall” on EC2 instances
+* They regulate:
+  - Access to Ports
+  - Authorised IP ranges – IPv4 and IPv6
+  - Control of inbound network (from other to the instance)
+  - Control of outbound network (from the instance to other)
+
+### Classic ports to know
+* 22 = SSH (Secure Shell) - log into a Linux instance
+* 21 = FTP (File Transfer Protocol) – upload files into a file share
+* 22 = SFTP (Secure File Transfer Protocol) – upload files using SSH
+* 80 = HTTP – access unsecured websites
+* 443 = HTTPS – access secured websites
+* 3389 = RDP (Remote Desktop Protocol) – log into a Windows instance
+
