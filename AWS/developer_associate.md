@@ -314,6 +314,8 @@ Access Keys are generated through the AWS Console. Users manage their own access
   - Authorised IP ranges – IPv4 and IPv6
   - Control of inbound network (from other to the instance)
   - Control of outbound network (from the instance to other)
+* Whenever there is a timeout, it is because of an EC2 security group.
+* An EC2 instance can have many security groups attached to it.
 
 ### Classic ports to know
 * 22 = SSH (Secure Shell) - log into a Linux instance
@@ -323,3 +325,9 @@ Access Keys are generated through the AWS Console. Users manage their own access
 * 443 = HTTPS – access secured websites
 * 3389 = RDP (Remote Desktop Protocol) – log into a Windows instance
 
+### How to connect to our servers?
+* **SSH** (Secure Shell): CLI that can be used on Mac, Linux and Windows >= 10. SSH allows you to control a remote machine with the CLI.
+* **Putty**: Valid for any version of Windows, allows to use SSH protocol
+* **EC2** Instance Connect: Webbrowser to connect to EC2 instance
+
+#### SSH for Linux/Mac
