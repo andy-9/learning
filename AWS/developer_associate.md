@@ -195,6 +195,8 @@ Statements consists of
   - Use IAM tools to apply appropriate permissions
   - Analyze access patterns & review permissions
 
+### IAM commands
+* List users: `aws iam list-users`
 
 ### IAM Section – Summary
 * Users: mapped to a physical user, has a password for AWS Console
@@ -314,7 +316,7 @@ Access Keys are generated through the AWS Console. Users manage their own access
   - Authorised IP ranges – IPv4 and IPv6
   - Control of inbound network (from other to the instance)
   - Control of outbound network (from the instance to other)
-* Whenever there is a timeout, it is because of an EC2 security group.
+* Whenever there is a timeout, it is because of an EC2 security group. It might also be a firewall issue --> use "EC2 Instance Connect" in such a case.
 * An EC2 instance can have many security groups attached to it.
 
 ### Classic ports to know
@@ -326,8 +328,17 @@ Access Keys are generated through the AWS Console. Users manage their own access
 * 3389 = RDP (Remote Desktop Protocol) – log into a Windows instance
 
 ### How to connect to our servers?
-* **SSH** (Secure Shell): CLI that can be used on Mac, Linux and Windows >= 10. SSH allows you to control a remote machine with the CLI.
-* **Putty**: Valid for any version of Windows, allows to use SSH protocol
+* **SSH** (Secure Shell): CLI that can be used on Mac, Linux and Windows >= 10. SSH allows you to control a remote machine with the CLI.  
+* **PuTTY**: Valid for any version of Windows, allows to use SSH protocol
 * **EC2** Instance Connect: Webbrowser to connect to EC2 instance
 
+#### SSH for Windows
+PowerShell: cd into directory where key (`AndreasKeys.pem`) is located, then:  `ssh -i <key>@<public-ip-address-of-ec2-instance>` (e.g. `ssh -i AndreasKeys.pem ec2-user@18.192.116.89`)
+
 #### SSH for Linux/Mac
+
+### EC2 Instance Connect
+* Browser-based session into EC2 instance. Check EC2 instance and click 2x `Connect`.
+* No need to use your key file that was downloaded. The “magic” is that a temporary key is uploaded onto EC2 by AWS.
+* Never enter "AWS Access Key ID" and/or "AWS Secret Access Key" into EC2 Instance Connect --> Anyone could use who logs into this instance!
+* Attach IAM Role to EC2 Instance Connect: `Actions` --> `Security` --> `Modify IAM Role`
