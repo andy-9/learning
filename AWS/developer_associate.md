@@ -5,21 +5,23 @@
 * Provides servers and services that can be used on demand and that scale easily.
 
 ## Abbreviations
-| Abbreviation | Stands for                     |
-|--------------|--------------------------------|
-| AMI          | Amazon Machine Learning Image  |
-| arn          | Amazon Resource Name           |
-| ASG          | Auto-Scaling Group             |
-| AZ           | Availability Zone              |
-| EBS          | Elastic Block Store            |
-| EC2          | Elastic Compute Cloud          |
-| ELB          | Elastic Load Balancer          |
-| FTP          | File Transfer Protocol         |
-| IAM          | Identity and Access Management |
-| RI           | Reserved Instance              |
-| RDP          | Remote Desktop Protocol        |
-| SFTP         | Secure File Transfer Protocol  |
-| SSH          | Secure Shell                   |
+| Abbreviation | Stands for                         |
+|--------------|------------------------------------|
+| AMI          | Amazon Machine Learning Image      |
+| arn          | Amazon Resource Name               |
+| ASG          | Auto-Scaling Group                 |
+| AZ           | Availability Zone                  |
+| CCP          | Certified Cloud Practitioner       |
+| EBS          | Elastic Block Store                |
+| EC2          | Elastic Compute Cloud              |
+| ELB          | Elastic Load Balancer              |
+| FTP          | File Transfer Protocol             |
+| IAM          | Identity and Access Management     |
+| IOPS         | Input/Output Operations per Second |
+| RI           | Reserved Instance                  |
+| RDP          | Remote Desktop Protocol            |
+| SFTP         | Secure File Transfer Protocol      |
+| SSH          | Secure Shell                       |
 
 
 ## Usecases
@@ -271,7 +273,7 @@ Access Keys are generated through the AWS Console. Users manage their own access
   - `5`: generation
   - `2xlarge`: size within the instance class
 * Example:
-  ![img.png](example_instance_types.png)
+  ![instance_types.png](example_instance_types.png)
 * **General Purpose (`T`)**: Great for a diversity of workloads such as web servers or code repositories. Balance between:
   - Compute
   - Memory
@@ -437,3 +439,29 @@ PowerShell: cd into directory where key (`AndreasKeys.pem`) is located, then:  `
 * No need to use your key file that was downloaded. The “magic” is that a temporary key is uploaded onto EC2 by AWS.
 * Never enter "AWS Access Key ID" and/or "AWS Secret Access Key" into EC2 Instance Connect --> Anyone could use who logs into this instance!
 * Attach IAM Role to EC2 Instance Connect: `Actions` --> `Security` --> `Modify IAM Role`
+
+### EC2 Instance Storage
+
+#### EBS Volume
+* An EBS (Elastic Block Store) Volume is a network drive (i.e. not a physical drive) you can attach to your instances while they run
+  - It uses the network to communicate the instance, which means there might be a bit of latency
+  - It can be detached from an EC2 instance and attached to another one quickly
+* It allows your instances to persist data, even after their termination
+* They can only be mounted to one instance at a time (at the CCP level). But there can be several EBS Volumes attached to an instance.
+![ebs_attached.png](../images/ebs_attached.png)
+* They can be unattached.
+* They are bound to a specific availability zone (AZ)
+  - An EBS Volume in `us-east-1a` cannot be attached to `us-east-1b`
+  - To move a volume across, you first need to snapshot it
+* They have a provisioned capacity (size in GBs, and IOPS)
+  - You get billed for all the provisioned capacity
+  - You can increase the capacity of the drive over time
+* Analogy: Think of them as a “network USB stick” (attached through the network)
+* Free tier: 30 GB of free EBS storage of type General Purpose (SSD) or Magnetic per month
+* Delete on Termination attribute
+![delete_on_termination.png](../images/delete_on_termination.png)
+  - Controls the EBS behaviour when an EC2 instance terminates
+    - By default, the root EBS volume is deleted (attribute enabled)
+    - By default, any other attached EBS volume is not deleted (attribute disabled)
+  - This can be controlled by the AWS console / AWS CLI
+  - Use case: preserve root volume when instance is terminated
