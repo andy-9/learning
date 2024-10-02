@@ -444,7 +444,7 @@ PowerShell: cd into directory where key (`AndreasKeys.pem`) is located, then:  `
 
 #### EBS Volume
 * An EBS (Elastic Block Store) Volume is a network drive (i.e. not a physical drive) you can attach to your instances while they run
-  - It uses the network to communicate the instance, which means there might be a bit of latency
+  - It uses the network to communicate to the instance, which means there might be a bit of latency
   - It can be detached from an EC2 instance and attached to another one quickly
 * It allows your instances to persist data, even after their termination
 * They can only be mounted to one instance at a time (at the CCP level). But there can be several EBS Volumes attached to an instance.
