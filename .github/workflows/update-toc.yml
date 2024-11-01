@@ -1,28 +1,10 @@
 name: Update TOC
 
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
-  toc:
+  generateTOC:
+    name: TOC Generator
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Generate TOC for readme
-        run: |
-          npx markdown-toc -i README.md
-      - name: Generate TOC for AWS
-        run: |
-          npx markdown-toc -i AWS/developer_associate.md
-      - name: Commit changes
-        run: |
-          git config --local user.name "Andreas Hechler"
-          git config --local user.email "andreas.hechler@partner.bmw.de"
-          git add .
-          git commit -m "Update TOCs"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: technote-space/toc-generator@v4

@@ -1,5 +1,8 @@
 # AWS Certified Developer - Associate
 
+<!-- START doctoc -->
+<!-- END doctoc -->
+
 ## AWS
 * Amazon Web Services
 * Provides servers and services that can be used on demand and that scale easily.
