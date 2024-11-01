@@ -1,5 +1,9 @@
 # AWS Certified Developer - Associate
 
+[TOC]
+
+:toc:
+
 ## AWS
 * Amazon Web Services
 * Provides servers and services that can be used on demand and that scale easily.
@@ -484,3 +488,56 @@ PowerShell: cd into directory where key (`AndreasKeys.pem`) is located, then:  `
   - Force full initialization of snapshot to have no
   latency on the first use ($$$)
 * Possible to (re)create a volume from snapshot
+
+
+### AMI (Amazon Machine Image)
+* AMI are a customization of an EC2 instance
+  - You add your own software, configuration, operating system, monitoring…
+  - Faster boot / configuration time because all your software is pre-packaged
+* AMI are built for a specific region (and can be copied across regions)
+* You can launch EC2 instances from:
+  - A Public AMI: AWS provided
+  - Your own AMI: you make and maintain them yourself
+  - An AWS Marketplace AMI: an AMI someone else made (and potentially sells)
+
+#### AMI Process (from an EC2 instance)
+* Start an EC2 instance and customize it
+* Stop the instance (for data integrity)
+* Build an AMI – this will also create EBS snapshots
+* Launch instances from other AMIs
+![img.png](../images/ami_process.png)
+
+#### EC2 Instance Store
+* EBS volumes are network drives with good but “limited” performance
+* If you need a high-performance hardware disk, use EC2 Instance
+Store
+* Better I/O performance
+* EC2 Instance Store lose their storage if they’re stopped (ephemeral) (= kurzlebig)
+* Good for buffer / cache / scratch data / temporary content
+* Risk of data loss if hardware fails
+* Backups and Replication are your responsibility
+
+#### EBS Volume Types
+* EBS Volumes come in 6 types
+  - gp2 / gp3 (SSD): General purpose SSD volume that balances price and performance for
+a wide variety of workloads
+  - io1 / io2 Block Express (SSD): Highest-performance SSD volume for mission-critical
+low-latency or high-throughput workloads
+  - st1 (HDD): Low cost HDD volume designed for frequently accessed, throughput intensive workloads
+  - sc1 (HDD): Lowest cost HDD volume designed for less frequently accessed workloads
+* EBS Volumes are characterized in Size | Throughput | IOPS (I/O Ops Per Sec)
+* When in doubt always consult the AWS documentation – it’s good!
+* Only gp2/gp3 and io1/io2 Block Express can be used as boot volumes
+
+##### General Purpose SSD
+* Cost-effective storage, low-latency
+* System boot volumes, Virtual desktops, Development and test environments
+* 1 GiB - 16 TiB
+* gp3:
+  - Baseline of 3,000 IOPS and throughput of 125 MiB/s
+  - Can increase IOPS up to 16,000 and throughput up to 1000 MiB/s independently
+* gp2:
+  - Small gp2 volumes can burst IOPS to 3,000
+  - Size of the volume and IOPS are linked, max IOPS is 16,000
+  - 3 IOPS per GB, means at 5,334 GB we are at the max IOPS
+
