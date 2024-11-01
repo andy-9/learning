@@ -1,6 +1,4 @@
-# Learning
-
-## Learning this and that...
+# Learning this and that...
 
 - Learning <a href="https://github.com/andy-9/learning/tree/main/AWS">AWS</a>
 
@@ -12,7 +10,7 @@
 
 - Learning <a href="https://github.com/andy-9/learning/tree/main/Docker">Docker</a>
 
-- Learning <a href="https://github.com/andy-9/learning/blob/main/git.md">Git</a>
+- Learning <a href="https://github.com/andy-9/learning/tree/main/Git">Git</a>
 
 - Learning <a href="https://github.com/andy-9/learning/blob/main/useful_information/what_is_json.md">JSON</a>
 
