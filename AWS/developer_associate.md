@@ -1,7 +1,6 @@
 # AWS Certified Developer - Associate
 
 <!-- START doctoc -->
-<!-- END doctoc -->
 
 ## AWS
 * Amazon Web Services
@@ -540,3 +539,4 @@ low-latency or high-throughput workloads
   - Size of the volume and IOPS are linked, max IOPS is 16,000
   - 3 IOPS per GB, means at 5,334 GB we are at the max IOPS
 
+<!-- END doctoc -->
