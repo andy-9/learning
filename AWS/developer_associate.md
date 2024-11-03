@@ -1,3 +1,19 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [AWS Certified Developer - Associate](#aws-certified-developer---associate)
+  - [AWS](#aws)
+  - [Abbreviations](#abbreviations)
+  - [Usecases](#usecases)
+  - [Global infrastructure](#global-infrastructure)
+  - [IAM: Users & Groups](#iam-users--groups)
+  - [How can users access AWS ?](#how-can-users-access-aws-)
+  - [EC2](#ec2)
+  - [Security groups](#security-groups)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # AWS Certified Developer - Associate
 
 ## AWS
