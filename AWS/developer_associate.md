@@ -1,7 +1,5 @@
 # AWS Certified Developer - Associate
 
-<!-- START doctoc -->
-
 ## AWS
 * Amazon Web Services
 * Provides servers and services that can be used on demand and that scale easily.
@@ -538,5 +536,3 @@ low-latency or high-throughput workloads
   - Small gp2 volumes can burst IOPS to 3,000
   - Size of the volume and IOPS are linked, max IOPS is 16,000
   - 3 IOPS per GB, means at 5,334 GB we are at the max IOPS
-
-<!-- END doctoc -->
