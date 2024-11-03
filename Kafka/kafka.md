@@ -5,10 +5,14 @@
 - A Kafka Cluster is made up of Brokers.
 - To get data/events into a Kafka Cluster you need a Producer (app that needs to be written).
 
+![img_5.png](images/kafka_cluster.png)
+
 ## Brokers
 
 - A Broker can be compared to an individual server. There is a Kafka process running on each one, each has its own disks / local storage. They network together.
 - Basic function: manage Partitions. Each Broker handles many Partitions. Manage log files, takes inputs from Producers, update Partitions, takes requests from Consumers, writes them out.
+
+![img_4.png](images/kafka-brokers.png)
 
 ## Producers
 
@@ -29,6 +33,8 @@
 - Slow Consumers do not affect Producers.
 - Adding Consumers does not affect Producers
 
+![img_7.png](images/kafka_producers_consumers.png)
+
 ## Consumers
 
 - Reading data is done with a Consumer.  
@@ -39,6 +45,8 @@
   - is stored in special Topic (CONSUMER OFFSET)
 - Every Consumer is a Consumer Group --> I can add additional instances of a Consumer
 - Failure of Consumers does not affect system.
+
+![img_6.png](images/kafka_consumers.png)
 
 ## Topics
 
@@ -53,6 +61,8 @@
   Messages of Topic spread across Partitions
 - Can have multiple Consumers
 
+![img_1.png](images/kafka_topics.png)
+
 ## Partitions
 
 - Is like a log
@@ -62,6 +72,8 @@
 - Is represented by multiple log Segments (= individual files on disk of that Broker)
 - Each partition has replicas (3 is typical), one is the "leader", the others are the "followers"
 
+![img_2.png](images/kafka_partitions.png)
+
 ## Structure of a Kafka message
 
 - Kafka data model for every message:
@@ -69,3 +81,5 @@
   - Value
 - Timestamp
 - (optional): Headers (String key-value pairs) (metadata)
+
+![img_3.png](images/kafka_message.png)
