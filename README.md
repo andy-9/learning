@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Learning this and that...](#learning-this-and-that)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Learning this and that...
 
 - Learning <a href="https://github.com/andy-9/learning/tree/main/AWS">AWS</a>
