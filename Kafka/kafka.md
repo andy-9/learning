@@ -83,3 +83,6 @@
 - (optional): Headers (String key-value pairs) (metadata)
 
 ![img_3.png](images/kafka_message.png)
+
+## Setup
+Setup for Kafka streams is defined in `application.properties`.
