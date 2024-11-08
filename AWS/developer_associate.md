@@ -37,7 +37,6 @@
     - [How to connect to our servers?](#how-to-connect-to-our-servers)
     - [EC2 Instance Connect](#ec2-instance-connect)
     - [EC2 Instance Storage](#ec2-instance-storage)
-    - [AMI (Amazon Machine Image)](#ami-amazon-machine-image)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
