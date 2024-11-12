@@ -37,6 +37,12 @@
     - [How to connect to our servers?](#how-to-connect-to-our-servers)
     - [EC2 Instance Connect](#ec2-instance-connect)
     - [EC2 Instance Storage](#ec2-instance-storage)
+  - [Scalability and High Availability](#scalability-and-high-availability)
+    - [Vertical Scalability](#vertical-scalability)
+    - [Horizontal Scalability](#horizontal-scalability)
+    - [High Availability](#high-availability)
+    - [High Availability & Scalability For EC2](#high-availability--scalability-for-ec2)
+    - [What is load balancing?](#what-is-load-balancing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
