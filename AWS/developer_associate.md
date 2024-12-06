@@ -329,7 +329,7 @@ Access Keys are generated through the AWS Console. Users manage their own access
   - `5`: generation
   - `2xlarge`: size within the instance class
 * Example:
-  ![instance_types.png](example_instance_types.png)
+  ![instance_types.png](images/example_instance_types.png)
 * **General Purpose (`T`)**: Great for a diversity of workloads such as web servers or code repositories. Balance between:
   - Compute
   - Memory
@@ -790,3 +790,41 @@ low-latency or high-throughput workloads
 #### Load Balancer Security Groups
 ![img.png](images/load_balancer_security_groups.png)
 * Application Security Group: Source is not an IP range, but a security group --> link security group of EC2 instance to security group of load balancer.
+
+#### Classic Load Balancers (v1)
+* Supports TCP (Layer 4), HTTP & HTTPS (Layer 7)
+* Health checks are TCP or HTTP based
+* Fixed hostname  
+  `XXX.region.elb.amazonaws.com`
+![img.png](images/classig_load_balancer_1.png)
+
+#### Application Load Balancer (v2)
+* Application load balancers is Layer 7 (HTTP)
+* Load balancing to multiple HTTP applications across machines (target groups)
+* Load balancing to multiple applications on the same machine (ex: containers)
+* Support for HTTP/2 and WebSocket
+* Support redirects (from HTTP to HTTPS for example)
+* Routing tables to different target groups:
+  - Routing based on path in URL (example.com/users & example.com/posts)
+  - Routing based on hostname in URL (one.example.com & other.example.com)
+  - Routing based on Query String, Headers (example.com/users?id=123&order=false)
+![img.png](images/alb_http_traffic.png)
+* ALB are a great fit for micro services & container-based application
+  (example: Docker & Amazon ECS)
+* Has a port mapping feature to redirect to a dynamic port in ECS
+* In comparison, we’d need multiple Classic Load Balancer per application
+* Fixed hostname (`XXX.region.elb.amazonaws.com`)
+* The application servers don’t see the IP of the client directly
+  - The true IP of the client is inserted in the header `X-Forwarded-For`
+  - We can also get Port (`X-Forwarded-Port`) and proto (`X-Forwarded-Proto`)
+![img.png](images/alb_private_ip.png)
+
+#### Target Groups
+* EC2 instances (can be managed by an Auto Scaling Group) – HTTP
+* ECS tasks (managed by ECS itself) – HTTP
+* Lambda functions – HTTP request is translated into a JSON event
+* IP Addresses – must be private IPs
+* ALB can route to multiple target groups
+![img.png](images/alb_query_string_routing.png)
+* Health checks are at the target group level
+
