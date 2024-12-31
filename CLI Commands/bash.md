@@ -8,6 +8,13 @@ Bash = Bourne Again Shell. Bash is a superset of `sh`. It's a command language p
 `bash <script>` or  
 `./<script>`
 
+### `source`
+
+`source <script>` is a Bash shell built-in command that executes the content of the file passed as an argument in the current shell. It has a synonym in `. <script>` (`. <script>` == `source script`).
+
+Note: `./` and `source` are not quite the same (`./<script>`!= `. <script>`). `./<script>` runs the script as an executable file, launching a new shell to run it.
+`source <script>` reads and executes commands from the file in the current shell environment.
+
 ### Find out type
 
 `type ...`, e.g. `type time`, `type ping`  
@@ -15,7 +22,14 @@ Some commands are 'builtins': funcions inside the bash program, e.g. `type`, `al
 
 ### Make script executable
 
-`chmod +x <script>`
+`chmod +x <script>`  
+To execute script after that: `<script>`
+
+### Make script-dir executable (Linux)
+
+Just do this once: `nano ~/.bashrc`  
+Add at the very end: `export PATH="$HOME/<path_to_script_dir>:$PATH"`  
+Then: `source ~/.bashrc)`
 
 ## FILES
 
@@ -36,9 +50,16 @@ The `set` command enables options within the script.
 `set -o posix`  
 Runs the script in POSIX mode.
 
+## Commands
+* `pwd`: print working directory, write path
+* Move in directory: `pushd`
+* Move out of directory: `popd`
+
+    
+
 ## VARIABLES / ARGUMENTS
 
-Shell scripts have 2 kind ov variables:
+Shell scripts have 2 kind of variables:
 
 1. environment variables
 2. shell variables
@@ -84,10 +105,10 @@ export ANIMAL
 
 ### Loop over all arguments
 
-```
-for i in "${@}"
+```bash
+for i in "${@}"  // or: ${name_of_array[@]}
 do
-    ...
+  <something>
 done`
 ```
 
@@ -95,6 +116,14 @@ done`
 
 `$(date)` // Mo, 15. Jul 2024 17:37:53  
 `$(date -I)` // 2024-07-15
+
+
+## DATA TYPES
+
+### Array
+
+`name_of_array=(item1 item2 item3)`
+
 
 ## WORK WITH TEXT
 
@@ -130,6 +159,14 @@ done
 
 e.g. `convert file.{jpg, png}` expands to `convert file.jpg file png`  
 `{1..5}` expands to `1 2 3 4 5`
+
+### While loops
+
+```bash
+while true; do
+  <do_stuff>
+done
+```
 
 ## PROCESSES
 
@@ -238,3 +275,25 @@ Set up shorthand commands with `alias`: `alias gc="git commit"` in `~/.bashrc` (
 
 `bash script.sh` runs `script.sh` in a subprocess, so you can't use its variables and functions.  
 `source script.sh` is like pasting the contents of `script.sh`.
+
+## Specific examples
+
+### Prompt for yes or no:
+```bash
+function yes_or_no {
+  while true; do
+    read -p "$* [y/n]: " yn
+    case $yn in
+      [Yy]*) return 0  ;;
+      [Nn]*) echo "Aborted" ; return  1 ;;
+    esac
+  done
+}
+```
+
+### Compare 2 files:
+```bash
+if cmp --silent ${USECASE_PURPOSE_MAPPING_JSON_FILE_NAME} ~/erd-uc-purpose-dist/${USECASE_PURPOSE_MAPPING_JSON_FILE_NAME}
+```
+If the files are identical --> status `0`  
+If the files are different --> status `1`
