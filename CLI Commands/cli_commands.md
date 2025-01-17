@@ -70,6 +70,10 @@ Some commands are 'builtins': funcions inside the bash program, e.g. `type`, `al
 `touch <file>`  
 `touch file-$(date -I).txt` // file-2024-07-15.txt
 
+### Edit file
+
+`nano <file>`
+
 ## PERMISSIONS
 
 ### File permissions
