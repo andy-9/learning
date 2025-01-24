@@ -774,6 +774,7 @@ low-latency or high-throughput workloads
 * The health check is done on a port and a route (/health is common)
 ![img.png](images/health_checks.png)
 * If the response is not 200 (OK), then the instance is unhealthy
+* When you enable ELB Health Checks, your ELB won't send traffic to unhealthy (crashed) EC2 instances.
 
 #### Types of load balancer on AWS
 * AWS has 4 kinds of managed Load Balancers 
@@ -787,6 +788,8 @@ low-latency or high-throughput workloads
     * Operates at layer 3 (Network layer) – IP Protocol
 * Overall, it is recommended to use the newer generation load balancers as they provide more features
 * Some load balancers can be setup as internal (private) or external (public) ELBs
+* Only Network Load Balancer provides both static DNS name and static IP. While an Application Load Balancer provides a static DNS name but it does NOT provide a static IP. The reason being that AWS wants your Elastic Load Balancer to be accessible using a static endpoint, even if the underlying infrastructure that AWS manages changes.
+
 
 #### Load Balancer Security Groups
 ![img.png](images/load_balancer_security_groups.png)
@@ -810,7 +813,8 @@ low-latency or high-throughput workloads
   - Routing based on hostname in URL (one.example.com & other.example.com)
   - Routing based on Query String, Headers (example.com/users?id=123&order=false)
 ![img.png](images/alb_http_traffic.png)
-* ALB are a great fit for micro services & container-based application
+  - In general: ALBs can route traffic to different Target Groups based on URL Path, Hostname, HTTP Headers, and Query Strings. But NOT the client's location.
+* ALB are a great fit for microservices & container-based application
   (example: Docker & Amazon ECS)
 * Has a port mapping feature to redirect to a dynamic port in ECS
 * In comparison, we’d need multiple Classic Load Balancer per application
@@ -827,6 +831,7 @@ low-latency or high-throughput workloads
 * IP Addresses – must be private IPs
 * ALB can route to multiple target groups
 ![img.png](images/alb_query_string_routing.png)
+* Registered targets in a Target Groups for an Application Load Balancer can be one of the following: Lambda functions, private IP addresses, EC2 instances. It can NOT be Network Load Balancer.
 * Health checks are at the target group level
 
 #### Network Load Balancer (v2)
@@ -871,7 +876,7 @@ low-latency or high-throughput workloads
 * It is possible to implement stickiness so that the same client is always redirected to the same instance behind a load balancer
 * This works for Classic Load Balancer, Application Load Balancer, and Network Load Balancer
 * For both CLB & ALB, the “cookie” used for stickiness has an expiration date you control (though NLB works without cookies)
-* Use case: make sure the user doesn’t lose his session data
+* Use case: make sure the user doesn’t lose his session data. ELB Sticky Session feature ensures traffic for the same client is always redirected to the same target (e.g., EC2 instance). This helps that the client does not lose his session data (does not have to log in again and again).
 * Enabling stickiness may bring imbalance to the load over the backend EC2 instances
 
 ![img.png](images/sticky_sessions.png)
@@ -922,12 +927,15 @@ low-latency or high-throughput workloads
   - You can add an optional list of certs to support multiple domains
   - Clients can use SNI (Server Name Indication) to specify the hostname they reach
   - Ability to specify a security policy to support older versions of SSL / TLS (legacy clients)
+* Application Load Balancers support the following protocols: HTTP, HTTPS, WebSocket. They do NOT support TCP.  
+  Network Load Balancers support both TCP und UDP protocols.
 
 #### SSL – Server Name Indication (SNI)
 * SNI solves the problem of loading multiple SSL certificates onto one web server (to serve multiple websites)
 * It’s a “newer” protocol, and requires the client to indicate the hostname of the target server in the initial SSL handshake
 * The server will then find the correct certificate, or return the default one  
 ![img.png](images/sni.png)
+* Allows you to expose multiple HTTPS applications each with its own SSL certificate on the same listener. Read more here: https://aws.amazon.com/blogs/aws/new-application-load-balancer-sni/
 
 Note:
 * Only works for ALB & NLB (newer generation), CloudFront
@@ -994,7 +1002,7 @@ Note:
 
 ![img.png](images/cloud_watch_alarms_for_scaling.png)
 
-Auto Scaling Groups – Scaling Policies
+#### Auto Scaling Groups – Scaling Policies
 * Dynamic Scaling
   - Target Tracking Scaling
     - Simple to set-up 
@@ -1005,4 +1013,30 @@ Auto Scaling Groups – Scaling Policies
 * Scheduled Scaling
   - Anticipate a scaling based on known usage patterns
   - Example: increase the min capacity to 10 at 5 pm on Fridays
+* Predictive scaling: continuously forecast load and schedule scaling ahead
 
+![img.png](images/predictive_scaling.png)
+
+#### Good metrics to scale on
+* CPUUtilization: Average CPU utilization across your instances
+* RequestCountPerTarget: to make sure the number of requests per EC2 instances is stable
+* Average Network In / Out (if you’re application is network bound)
+* Any custom metric (that you push using CloudWatch)
+
+![img.png](images/asg_request_count_per_target.png)
+
+#### Auto Scaling Groups - Scaling Cooldowns
+* After a scaling activity happens, you are in the cooldown period (default 300 seconds = 5 min)
+* During the cooldown period, the ASG will not launch or terminate additional instances (to allow for metrics to stabilize)
+* Advice: Use a ready-to-use AMI to reduce configuration time in order to be serving request faster and reduce the cooldown period
+
+#### Auto Scaling – Instance Refresh
+* Goal: update launch template and then re-creating all EC2 instances
+* For this we can use the native feature of Instance Refresh
+* Setting of minimum healthy percentage
+* Specify warm-up time (how long until the instance is ready to use)
+
+![img.png](images/instance_refresh.png)
+
+
+## RDS + Aurora + Elasticache
