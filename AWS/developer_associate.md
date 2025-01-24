@@ -77,6 +77,7 @@
 | RI           | Reserved Instance                  |
 | RDP          | Remote Desktop Protocol            |
 | SFTP         | Secure File Transfer Protocol      |
+| SNI          | Server Name Indication             |
 | SSH          | Secure Shell                       |
 
 
@@ -864,7 +865,7 @@ low-latency or high-throughput workloads
 * EC2 instances
 * IP Addresses – must be private IPs
 
-![img.png](glb_target_groups.png)
+![img.png](images/glb_target_groups.png)
 
 #### Sticky Sessions (Session Affinity)
 * It is possible to implement stickiness so that the same client is always redirected to the same instance behind a load balancer
@@ -873,7 +874,7 @@ low-latency or high-throughput workloads
 * Use case: make sure the user doesn’t lose his session data
 * Enabling stickiness may bring imbalance to the load over the backend EC2 instances
 
-![img.png](sticky_sessions.png)
+![img.png](images/sticky_sessions.png)
 
 #### Sticky Sessions – Cookie Names
 * Application-based Cookies
@@ -921,4 +922,87 @@ low-latency or high-throughput workloads
   - You can add an optional list of certs to support multiple domains
   - Clients can use SNI (Server Name Indication) to specify the hostname they reach
   - Ability to specify a security policy to support older versions of SSL / TLS (legacy clients)
+
+#### SSL – Server Name Indication (SNI)
+* SNI solves the problem of loading multiple SSL certificates onto one web server (to serve multiple websites)
+* It’s a “newer” protocol, and requires the client to indicate the hostname of the target server in the initial SSL handshake
+* The server will then find the correct certificate, or return the default one  
+![img.png](images/sni.png)
+
+Note:
+* Only works for ALB & NLB (newer generation), CloudFront
+* Does not work for CLB (older gen)
+
+### Elastic Load Balancers – SSL Certificates
+* Classic Load Balancer (v1)
+  - Support only one SSL certificate
+  - Must use multiple CLB for multiple hostname with multiple SSL certificates
+* Application Load Balancer (v2)
+  - Supports multiple listeners with multiple SSL certificates
+  - Uses Server Name Indication (SNI) to make it work
+* Network Load Balancer (v2)
+  - Supports multiple listeners with multiple SSL certificates
+  - Uses Server Name Indication (SNI) to make it work
+
+#### Connection Draining / Deregistration Delay
+* Feature naming
+  - Connection Draining – for CLB
+  - Deregistration Delay – for ALB & NLB
+* Time to complete “in-flight requests” while the instance is de-registering or unhealthy
+* Stops sending new requests to the EC2 instance which is de-registering, establishes new connections with other EC2 instances
+* Between 1 and 3600 seconds (default: 300 seconds)
+* Can be disabled (set value to 0)
+* Set to a low value if your requests are short
+![img.png](images/connection_draining.png)
+
+### What’s an Auto Scaling Group?
+* In real-life, the load on your websites and application can change
+* In the cloud, you can create and get rid of servers very quickly
+* The goal of an Auto Scaling Group (ASG) is to:
+  - Scale out (add EC2 instances) to match an increased load
+  - Scale in (remove EC2 instances) to match a decreased load
+  - Ensure we have a minimum and a maximum number of EC2 instances running
+  - Automatically register new instances to a load balancer
+  - Re-create an EC2 instance in case a previous one is terminated (ex: if unhealthy)
+* ASG are free (you only pay for the underlying EC2 instances)
+
+![img.png](images/auto_scaling_group.png)
+![img.png](images/asg_with_load_balancer.png)
+
+#### Auto Scaling Group Attributes
+* A Launch Template (older “Launch Configurations” are deprecated)
+  - AMI + Instance Type
+  - EC2 User Data
+  - EBS Volumes
+  - Security Groups
+  - SSH Key Pair
+  - IAM Roles for your EC2 Instances
+  - Network + Subnets Information
+  - Load Balancer Information
+* Min Size / Max Size / Initial Capacity
+* Scaling Policies
+
+![img.png](images/asg_launch_template.png)
+
+#### Auto Scaling - CloudWatch Alarms & Scaling
+* It is possible to scale an ASG based on CloudWatch alarms
+* An alarm monitors a metric (such as Average CPU, or a custom metric)
+* Metrics such as Average CPU are computed for the overall ASG instances
+* Based on the alarm:
+  - We can create scale-out policies (increase the number of instances)
+  - We can create scale-in policies (decrease the number of instances)
+
+![img.png](images/cloud_watch_alarms_for_scaling.png)
+
+Auto Scaling Groups – Scaling Policies
+* Dynamic Scaling
+  - Target Tracking Scaling
+    - Simple to set-up 
+    - Example: I want the average ASG CPU to stay at around 40%
+  - Simple / Step Scaling
+    - When a CloudWatch alarm is triggered (example CPU > 70%), then add 2 units
+    - When a CloudWatch alarm is triggered (example CPU < 30%), then remove 1
+* Scheduled Scaling
+  - Anticipate a scaling based on known usage patterns
+  - Example: increase the min capacity to 10 at 5 pm on Fridays
 
