@@ -43,6 +43,8 @@
     - [High Availability](#high-availability)
     - [High Availability & Scalability For EC2](#high-availability--scalability-for-ec2)
     - [What is load balancing?](#what-is-load-balancing)
+    - [Elastic Load Balancers – SSL Certificates](#elastic-load-balancers--ssl-certificates)
+    - [What’s an Auto Scaling Group?](#whats-an-auto-scaling-group)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
