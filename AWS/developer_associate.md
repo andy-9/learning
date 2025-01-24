@@ -76,6 +76,7 @@
 | NFS          | Network File System                |
 | RI           | Reserved Instance                  |
 | RDP          | Remote Desktop Protocol            |
+| RDS          | Relational Database Service        |
 | SFTP         | Secure File Transfer Protocol      |
 | SNI          | Server Name Indication             |
 | SSH          | Secure Shell                       |
@@ -1040,3 +1041,16 @@ Note:
 
 
 ## RDS + Aurora + Elasticache
+
+### RDS
+* RDS = Relational Database Service
+* Is a managed DB service for DB use SQL as a query language.
+* It allows you to create databases in the cloud that are managed by AWS
+  - Postgres
+  - MySQL
+  - MariaDB
+  - Oracle
+  - Microsoft SQL Server
+  - IBM DB2
+  - Aurora (AWS Proprietary database)
+
