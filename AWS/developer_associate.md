@@ -45,6 +45,8 @@
     - [What is load balancing?](#what-is-load-balancing)
     - [Elastic Load Balancers – SSL Certificates](#elastic-load-balancers--ssl-certificates)
     - [What’s an Auto Scaling Group?](#whats-an-auto-scaling-group)
+  - [RDS + Aurora + Elasticache](#rds--aurora--elasticache)
+    - [RDS](#rds)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
