@@ -1046,7 +1046,7 @@ Note:
 
 ### RDS
 * RDS = Relational Database Service
-* Is a managed DB service for DB use SQL as a query language.
+* Is a managed DB service for Databases that use SQL as a query language.
 * It allows you to create databases in the cloud that are managed by AWS
   - Postgres
   - MySQL
@@ -1055,4 +1055,87 @@ Note:
   - Microsoft SQL Server
   - IBM DB2
   - Aurora (AWS Proprietary database)
+
+### Advantage over using RDS versus deploying DB on EC2
+* RDS is a managed service:
+  - Automated provisioning, OS patching
+  - Continuous backups and restore to specific timestamp (Point in Time Restore)!
+  - Monitoring dashboards
+  - Read replicas for improved read performance
+  - Multi AZ setup for DR (Disaster Recovery)
+  - Maintenance windows for upgrades
+  - Scaling capability (vertical and horizontal)
+  - Storage backed by EBS
+* BUT you can’t SSH into your instances
+
+### RDS – Storage Auto Scaling
+* Helps you increase storage on your RDS DB instance dynamically
+* When RDS detects you are running out of free database storage, it scales automatically
+* Avoid manually scaling your database storage
+* You have to set Maximum Storage Threshold (maximum limit for DB storage)
+* Automatically modify storage if:
+  - Free storage is less than 10% of allocated storage
+  - Low-storage lasts at least 5 minutes
+  - 6 hours have passed since last modification
+
+![img.png](images/rds_storage_auto_scaling.png)
+
+* Useful for applications with unpredictable workloads
+* Supports all RDS database engines
+
+### RDS Read Replicas for read scalability
+* Up to 15 Read Replicas --> helps to scale reads from DB
+* Within AZ, Cross AZ or Cross Region
+* Replication is ASYNC, so reads are eventually consistent
+* Replicas can be promoted to their own DB (can become DBs on their own)
+* If the primary database fails, read replicas cannot automatically become the primary database (though they can be promoted manually).
+* Applications must update the connection string to leverage read replicas
+
+![img.png](images/rds_read_replicas.png)
+
+#### RDS Read Replicas – Use Cases
+* You have a production database that is taking on normal load
+* You want to run a reporting application to run some analytics
+* You create a Read Replica to run the new workload there
+* The production application is unaffected
+* Read replicas are used for SELECT (=read) only kind of statements (not INSERT, UPDATE, DELETE)
+
+![img.png](images/rds_read_replicas_use_cases.png)
+
+#### RDS Read Replicas – Network Cost
+* In AWS there’s a network cost when data goes from one AZ to another
+* For RDS Read Replicas within the same region, you don’t pay that fee
+
+![img.png](images/rds_read_replicas_network_cost.png)
+
+### RDS Multi AZ (Disaster Recovery)
+* SYNC replication
+* One DNS name – automatic app failover to standby
+* Increase availability
+* Failover in case of loss of AZ, loss of network, instance or storage failure
+* No manual intervention in apps
+* Not used for scaling
+* The standby replica is a hot standby (not readable), and replication is synchronous.
+* If the primary instance fails, the standby is automatically promoted to primary.
+*  For critical transactional databases where availability is crucial, a Multi-AZ setup ensures automatic failover to minimize downtime.
+* Note: The Read Replicas be setup as Multi AZ for Disaster Recovery (DR)
+
+![img.png](images/rds_multi_az.png)
+
+### Differences Read Replicas vs. Multi-AZ
+![img.png](images/differences_read_replicas_multi_az.png)  
+It is possible to set up both:
+* Set up Multi-AZ for high availability and disaster recovery.
+* Add Read Replicas to scale read workloads.
+
+### RDS – From Single-AZ to Multi-AZ
+* Zero downtime operation (no need to stop the DB)
+* Just click on “modify” for the database
+* The following happens internally:
+  - A snapshot is taken
+  - A new DB is restored from the snapshot in a new AZ
+  - Synchronization is established between the two databases
+
+![img.png](images/rds_single_to_multi_az.png)
+
 
