@@ -47,6 +47,18 @@
     - [What’s an Auto Scaling Group?](#whats-an-auto-scaling-group)
   - [RDS + Aurora + Elasticache](#rds--aurora--elasticache)
     - [RDS](#rds)
+    - [Advantage over using RDS versus deploying DB on EC2](#advantage-over-using-rds-versus-deploying-db-on-ec2)
+    - [RDS – Storage Auto Scaling](#rds--storage-auto-scaling)
+    - [RDS Read Replicas for read scalability](#rds-read-replicas-for-read-scalability)
+    - [RDS Multi AZ (Disaster Recovery)](#rds-multi-az-disaster-recovery)
+    - [Differences Read Replicas vs. Multi-AZ](#differences-read-replicas-vs-multi-az)
+    - [RDS – From Single-AZ to Multi-AZ](#rds--from-single-az-to-multi-az)
+    - [Aurora](#aurora)
+    - [RDS & Aurora Security](#rds--aurora-security)
+    - [Amazon RDS Proxy](#amazon-rds-proxy)
+    - [Amazon ElastiCache Overview](#amazon-elasticache-overview)
+    - [Final words of wisdom](#final-words-of-wisdom)
+    - [Amazon MemoryDB for Redis](#amazon-memorydb-for-redis)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
