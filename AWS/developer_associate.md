@@ -59,6 +59,22 @@
     - [Amazon ElastiCache Overview](#amazon-elasticache-overview)
     - [Final words of wisdom](#final-words-of-wisdom)
     - [Amazon MemoryDB for Redis](#amazon-memorydb-for-redis)
+  - [Amazon Route 53](#amazon-route-53)
+    - [What is DNS?](#what-is-dns)
+    - [DNS Terminologies](#dns-terminologies)
+    - [How DNS works](#how-dns-works)
+    - [Amazon Route 53](#amazon-route-53-1)
+    - [Route 53 – Records](#route-53--records)
+    - [Route 53 – Record Types](#route-53--record-types)
+    - [Route 53 – Hosted Zones](#route-53--hosted-zones)
+    - [Route 53 – Records TTL (Time To Live)](#route-53--records-ttl-time-to-live)
+    - [CNAME vs Alias](#cname-vs-alias)
+    - [Routing Policies](#routing-policies)
+    - [Health Checks](#health-checks)
+    - [Routing Policies – Failover (Active-Passive)](#routing-policies--failover-active-passive)
+    - [Routing Policies – Geolocation](#routing-policies--geolocation)
+    - [Routing Policies – Geoproximity](#routing-policies--geoproximity)
+    - [Route 53 – Traffic flow](#route-53--traffic-flow)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
