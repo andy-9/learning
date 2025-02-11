@@ -79,6 +79,7 @@
     - [Routing Policies – Multi-Value](#routing-policies--multi-value)
     - [Domain Registar vs. DNS Service](#domain-registar-vs-dns-service)
   - [Amazon VPC](#amazon-vpc)
+    - [VPC & Subnets](#vpc--subnets)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
