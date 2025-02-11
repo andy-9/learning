@@ -75,6 +75,10 @@
     - [Routing Policies – Geolocation](#routing-policies--geolocation)
     - [Routing Policies – Geoproximity](#routing-policies--geoproximity)
     - [Route 53 – Traffic flow](#route-53--traffic-flow)
+    - [Routing Policies – IP-based Routing](#routing-policies--ip-based-routing)
+    - [Routing Policies – Multi-Value](#routing-policies--multi-value)
+    - [Domain Registar vs. DNS Service](#domain-registar-vs-dns-service)
+  - [Amazon VPC](#amazon-vpc)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
