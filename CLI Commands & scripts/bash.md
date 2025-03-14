@@ -3,6 +3,49 @@
 A shell is a computer program that takes commands, interprets them, and passes them to the operating system to process. So, it’s an interface between the user and the operating system, through which a user can interact with the computer.  
 Bash = Bourne Again Shell. Bash is a superset of `sh`. It's a command language processor and a shell.
 
+
+## BASIC COMMANDS
+
+### Search command history
+
+`Ctrl+R`
+
+### Rerun last command
+
+`!!`, e.g. `sudo !!`
+
+### Fix last command
+
+`fc`
+
+### Find out which binary is being used
+
+`which <command>`, e.g. `which ls`
+
+### Beginning of line
+
+`Ctrl+a`
+
+### End of line
+
+`Ctrl+e`
+
+### Clear screen
+
+`Ctrl+l`
+
+### Suspend running program
+
+`Ctrl+z`
+
+### Start suspended program in background
+
+`bg`
+
+### Bring suspended/backgrounded program to the foreground
+
+`fg`
+
 ### Run file
 
 `bash <script>` or  
@@ -18,7 +61,56 @@ Note: `./` and `source` are not quite the same (`./<script>`!= `. <script>`). `.
 ### Find out type
 
 `type ...`, e.g. `type time`, `type ping`  
-Some commands are 'builtins': funcions inside the bash program, e.g. `type`, `alias`, `read`, `source`, `declare`, `printf`, `echo`, `cd`
+Some commands are 'builtins': functions inside the bash program, e.g. `type`, `alias`, `read`, `source`, `declare`, `printf`, `echo`, `cd`
+
+## DIRECTORIES
+
+### Create directory
+
+`mkdir <name>`
+
+### Delete directory
+
+`rmdir <name>`
+
+## FILES
+
+### List files in temporary folder
+
+`ls /tmp`
+
+### Edit file
+
+`nano <file>`
+
+### Create file
+
+`touch <file>`  
+`touch file-$(date -I).txt` // file-2024-07-15.txt
+
+### File permissions
+
+- r = read  
+  w = write  
+  x = execute
+- bork = user  
+  staff = group  
+  anyone
+- File permissions are 12 bits  
+  0 = not allowed  
+  1 = allowed
+- 0 = 000 = ---  
+  1 = 001 = --x  
+  2 = 010 = -w-  
+  3 = 011 = -wx  
+  4 = 100 = r--  
+  5 = 101 = r-x  
+  6 = 110 = rw-  
+  7 = 111 = rwx
+
+![alt text](images/4_unix_permissions.jpg)
+
+## Scripting in general
 
 ### Make script executable
 
@@ -30,14 +122,6 @@ To execute script after that: `<script>`
 Just do this once: `nano ~/.bashrc`  
 Add at the very end: `export PATH="$HOME/<path_to_script_dir>:$PATH"`  
 Then: `source ~/.bashrc)`
-
-## FILES
-
-### List files in temporary folder
-
-`ls /tmp`
-
-## Scripting in general
 
 ### Shebang (1st line in script)
 
@@ -127,6 +211,9 @@ done`
 
 ## WORK WITH TEXT
 
+### Wordcount
+` | wc`
+
 ### Replace text in file
 
 `sed -i 's/<origin_text>/<new_text>/g' <path_to_file>`  
@@ -212,6 +299,9 @@ flag `-i` ask before signalling.
 `a{.png, .svg}` --> expands to `a.png a.svg`
 
 ## Arithmetics
+
+### Calculator
+`bc -l`
 
 ### Calculate
 
