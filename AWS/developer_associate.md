@@ -90,44 +90,48 @@
 * Provides servers and services that can be used on demand and that scale easily.
 
 ## Abbreviations
-| Abbreviation | Stands for                         |
-|--------------|------------------------------------|
-| ACM          | AWS Certificate Manager            |
-| ALB          | Application Load Balancer          |
-| AMI          | Amazon Machine Image               |
-| arn          | Amazon Resource Name               |
-| ASG          | Auto-Scaling Group                 |
-| AZ           | Availability Zone                  |
-| CCP          | Certified Cloud Practitioner       |
-| CIDR         | Classless Inter-Domain Routing     |
-| CLB          | Classic Load Balancer              |
-| DNS Domain   | Name Service                       |
-| DR           | Disaster Recovery                  |
-| EBS          | Elastic Block Storage              |
-| EC2          | Elastic Compute Cloud              |
-| EFS          | Elastic File System                |
-| ELB          | Elastic Load Balancer              |
-| FTP          | File Transfer Protocol             |
-| FQDN         | Fully Qualified Domain Name        |
-| GWLB         | Gateway Load Balancer              |
-| IA           | Infrequent Access                  |
-| IAM          | Identity and Access Management     |
-| IOPS         | Input/Output Operations per Second |
-| ISP          | Internet Service Provider          |
-| LRU          | Least Recently Used                |
-| NLB          | Network Load Balancer              |
-| NFS          | Network File System                |
-| NS           | Name Server                        |
-| RI           | Reserved Instance                  |
-| RDP          | Remote Desktop Protocol            |
-| RDS          | Relational Database Service        |
-| SFTP         | Secure File Transfer Protocol      |
-| SLD          | Second Level Domain                | 
-| SNI          | Server Name Indication             |
-| SSH          | Secure Shell                       |
-| TLD          | Top Level Domain                   |
-| TTL          | Time-to-live                       |
-| VPC          | Virtual Private Cloud              |
+| Abbreviation | Stands for                                        |
+|--------------|---------------------------------------------------|
+| ACL          | Access Control Lists                              |
+| ACM          | AWS Certificate Manager                           |
+| ALB          | Application Load Balancer                         |
+| AMI          | Amazon Machine Image                              |
+| arn          | Amazon Resource Name                              |
+| ASG          | Auto-Scaling Group                                |
+| AZ           | Availability Zone                                 |
+| CCP          | Certified Cloud Practitioner                      |
+| CIDR         | Classless Inter-Domain Routing (IP address range) |
+| CLB          | Classic Load Balancer                             |
+| DNS Domain   | Name Service                                      |
+| DR           | Disaster Recovery                                 |
+| EBS          | Elastic Block Storage                             |
+| EC2          | Elastic Compute Cloud                             |
+| EFS          | Elastic File System                               |
+| ELB          | Elastic Load Balancer                             |
+| ENI          | Elastic Network Interface                         |
+| FTP          | File Transfer Protocol                            |
+| FQDN         | Fully Qualified Domain Name                       |
+| GWLB         | Gateway Load Balancer                             |
+| IA           | Infrequent Access                                 |
+| IAM          | Identity and Access Management                    |
+| IOPS         | Input/Output Operations per Second                |
+| ISP          | Internet Service Provider                         |
+| LRU          | Least Recently Used                               |
+| NACL         | Network ACL                                       |
+| NLB          | Network Load Balancer                             |
+| NFS          | Network File System                               |
+| NS           | Name Server                                       |
+| RI           | Reserved Instance                                 |
+| RDP          | Remote Desktop Protocol                           |
+| RDS          | Relational Database Service                       |
+| SFTP         | Secure File Transfer Protocol                     |
+| SLD          | Second Level Domain                               | 
+| SNI          | Server Name Indication                            |
+| SSH          | Secure Shell                                      |
+| TLD          | Top Level Domain                                  |
+| TTL          | Time-to-live                                      |
+| VPC          | Virtual Private Cloud                             |
+ | VPN         | Virtual Private Network                           |
 
 
 ## Usecases
@@ -1644,3 +1648,189 @@ user = save_user(17, {"name": "Nate Dogg"})
 * To define access to the internet and between subnets, we use **Route Tables**.
 ![img.png](images/vpc_subnets.png)
 
+### VPC Diagram
+![img.png](images/vpc_diagram.png)
+
+### Internet Gateway & NAT Gateways
+* Internet Gateways helps our VPC instances connect with the internet
+* Public Subnets have a route to the internet gateway.
+* NAT Gateways (AWS-managed) & NAT Instances (self-managed) allow your instances in your Private Subnets to access the internet while remaining private.
+![img.png](images/nat_gateways.png)
+
+### Network ACL & Security Groups
+* NACL (Network Access Control Lists)
+  - A firewall which controls traffic from and to subnet
+  - Can have ALLOW and DENY rules
+  - Are attached at the Subnet level
+  - Rules only include IP addresses
+* Security Groups
+  - A firewall that controls traffic to and from an ENI (Elastic Network Interface) / an EC2 Instance
+  - Can have only ALLOW rules
+  - Rules include IP addresses and other security groups
+![img.png](images/network_acl_and_security_groups.png)
+
+### Network ACLs vs Security Groups
+![img.png](images/network_acls_vs_security_groups.png)
+
+### VPC Flow Logs (information about the traffic flowing through VPC)
+* Capture information about IP traffic going into your interfaces:
+  - VPC Flow Logs
+  - Subnet Flow Logs
+  - Elastic Network Interface Flow Logs
+* Helps to monitor & troubleshoot connectivity issues. Example:
+  - Subnets to internet
+  - Subnets to subnets
+  - Internet to subnets
+* Captures network information from AWS managed interfaces too: Elastic Load Balancers, ElastiCache, RDS, Aurora, etc…
+* VPC Flow logs data can go to S3, CloudWatch Logs, and Kinesis Data Firehose.
+
+### VPC Peering
+* Connect two VPC, privately using AWS’ network
+* Make them behave as if they were in the same network
+* Must not have overlapping CIDR (IP address range)
+* VPC Peering connection is not transitive (must be established for each VPC that need to communicate with one another)
+![img.png](images/vpc_peering.png)
+
+### VPC Endpoints
+* Endpoints allow you to connect to AWS Services using a private network instead of the public www network
+* This gives you enhanced security and lower latency to access AWS services
+* VPC Endpoint Gateway: S3 & DynamoDB (these are the only AWS services that have a Gateway VPC Endpoint available!)
+* VPC Endpoint Interface powered by a private link (private IP): the rest of the AWS services
+* Only used within your VPC
+* **Connecting privately to an AWS service: Always through VPC**
+![img.png](images/vpc_endpoints.png)
+
+### Site to Site VPN & Direct Connect
+* Site to Site VPN
+  - Connect an on-premises VPN to AWS
+  - The connection is automatically encrypted
+  - Goes over the public internet
+* Direct Connect (DX)
+  - Establish a physical connection between on-premises and AWS
+  - The connection is private, secure and fast
+  - Goes over a private network
+  - Takes at least a month to establish
+
+![img.png](images/direct_connect.png)
+
+### VPC Closing Comments
+* VPC: Virtual Private Cloud
+* Subnets: Tied to an AZ, network partition of the VPC
+* Internet Gateway: at the VPC level, provide Internet Access
+* NAT Gateway / Instances: give internet access to private subnets
+* NACL: Stateless, subnet rules for inbound and outbound
+* Security Groups: Stateful, operate at the EC2 instance level or ENI. Security groups are stateful and if traffic can go out, then it can go back in.  
+ To configure an EC2 instance security group to ensure only the ALB can access them on port 80 --> add an inbound rule with port 80 and ALB's Security Group as the source. This is the most secure way of ensuring only the ALB can access the EC2 instances.
+* VPC Peering: Connect two VPC with non overlapping IP ranges, non-transitive
+* VPC Endpoints: Provide private access to AWS Services within VPC
+* VPC Flow Logs: network traffic logs
+* Site to Site VPN: VPN over public internet between on-premises DC and AWS
+* Direct Connect: direct private connection to AWS
+
+### Typical 3 tier solution architecture
+![img.png](images/typical_3_tier_solution_architecture.png)
+
+### LAMP Stack on EC2
+* **L**inux: OS for EC2 instances
+* **A**pache: Web Server that run on Linux (EC2)
+* **M**ySQL: database on RDS
+* **P**HP: Application logic (running on EC2)
+* Can add Redis / Memcached (ElastiCache) to include a caching tech
+* To store local application data & software: EBS drive (root)
+
+### WordPress on AWS
+![img.png](images/wordpress_on_aws.png)
+
+
+## S3
+
+* Amazon S3 is one of the main building blocks of AWS
+* It’s advertised as ”infinitely scaling” storage
+* Many websites use Amazon S3 as a backbone
+* Many AWS services use Amazon S3 as an integration as well
+• We’ll have a step-by-step approach to S3
+
+### Amazon S3 Use cases
+* Backup and storage
+* Disaster Recovery
+* Archive
+* Hybrid Cloud storage
+* Application hosting
+* Media hosting
+* Data lakes & big data analytics
+* Software delivery
+* Static website
+
+### Amazon S3 - Buckets
+* Amazon S3 allows people to store objects (files) in “buckets” (directories)
+* Buckets must have a globally unique name (across all regions all accounts)
+* Buckets are defined at the region level
+* S3 looks like a global service but buckets are created in a region
+* Naming convention
+  - No uppercase, No underscore
+  - 3-63 characters long
+  - Not an IP
+  - Must start with lowercase letter or number
+  - Must NOT start with the prefix xn--
+  - Must NOT end with the suffix -s3alias
+
+### Amazon S3 - Objects
+* Objects (files) have a Key
+* The key is the FULL path:
+  - s3://my-bucket/my_file.txt
+  - s3://my-bucket/my_folder1/another_folder/my_file.txt
+* The key is composed of prefix + object name
+  - s3://my-bucket/my_folder1/another_folder/my_file.txt
+* There’s no concept of “directories” within buckets (although the UI will trick you to think otherwise)
+* Just keys with very long names that contain slashes (“/”)
+* Object values are the content of the body:
+  - Max. Object Size is 5TB (5000GB)
+  - If uploading more than 5GB, must use “multi-part upload”
+* Metadata (list of text key / value pairs – system or user metadata)
+* Tags (Unicode key / value pair – up to 10) – useful for security / lifecycle
+* Version ID (if versioning is enabled)
+
+### Amazon S3 – Security
+* User-Based
+  - IAM Policies – which API calls should be allowed for a specific user from IAM
+* Resource-Based
+  - Bucket Policies – bucket wide rules from the S3 console - allows cross account
+  - Object Access Control List (ACL) – finer grain (can be disabled)
+  - Bucket Access Control List (ACL) – less common (can be disabled)
+* Note: an IAM principal can access an S3 object if
+  - The user IAM permissions ALLOW it OR the resource policy ALLOWS it
+  - AND there’s no explicit DENY
+* Encryption: encrypt objects in Amazon S3 using encryption keys
+
+### S3 Bucket Policies
+* JSON based policies
+  - Resources: buckets and objects (star * is for every object)
+  - Effect: Allow / Deny (Actions)
+  - Actions: Set of API to Allow or Deny
+  - Principal: The account or user to apply the policy to (star * allows anyone)
+![img.png](images/s3_bucket_policies.png)
+* Use S3 bucket for policy to:
+  - Grant public access to the bucket
+  - Force objects to be encrypted at upload
+  - Grant access to another account (Cross Account)
+
+### Examples
+
+#### Public Access - Use Bucket Policy
+![img.png](images/public_access_bucket_policy.png)
+
+#### User Access to S3 – IAM permissions
+![img.png](images/user_access_iam_permissions.png)
+
+#### EC2 instance access - Use IAM Roles
+Not user, but role!
+![img.png](images/ec2_instance_access_iam_roles.png)
+
+#### Advanced: Cross-Account Access – Use Bucket Policy
+![img.png](images/cross_account_access_bucket_policy.png)
+
+### Bucket settings for Block Public Access
+![img.png](images/bucket_settings_for_block_public_access.png)
+* These settings were created to prevent company data leaks 
+* If you know your bucket should never be public, leave these on 
+* Can be set at the account level
