@@ -122,6 +122,7 @@
 | CCP          | Certified Cloud Practitioner                      |
 | CIDR         | Classless Inter-Domain Routing (IP address range) |
 | CLB          | Classic Load Balancer                             |
+| CRR          | Cross-Region Replication                          |
 | DNS Domain   | Name Service                                      |
 | DR           | Disaster Recovery                                 |
 | EBS          | Elastic Block Storage                             |
@@ -147,11 +148,12 @@
 | SFTP         | Secure File Transfer Protocol                     |
 | SLD          | Second Level Domain                               | 
 | SNI          | Server Name Indication                            |
+| SRR          |   Same-Region Replication                         |
 | SSH          | Secure Shell                                      |
 | TLD          | Top Level Domain                                  |
 | TTL          | Time-to-live                                      |
 | VPC          | Virtual Private Cloud                             |
- | VPN         | Virtual Private Network                           |
+ | VPN          | Virtual Private Network                           |
 
 
 ## Usecases
@@ -1770,7 +1772,7 @@ user = save_user(17, {"name": "Nate Dogg"})
 * Many AWS services use Amazon S3 as an integration as well
 • We’ll have a step-by-step approach to S3
 
-### Amazon S3 Use cases
+### S3 Use cases
 * Backup and storage
 * Disaster Recovery
 * Archive
@@ -1781,7 +1783,7 @@ user = save_user(17, {"name": "Nate Dogg"})
 * Software delivery
 * Static website
 
-### Amazon S3 - Buckets
+### S3 - Buckets
 * Amazon S3 allows people to store objects (files) in “buckets” (directories)
 * Buckets must have a globally unique name (across all regions all accounts)
 * Buckets are defined at the region level
@@ -1794,7 +1796,7 @@ user = save_user(17, {"name": "Nate Dogg"})
   - Must NOT start with the prefix xn--
   - Must NOT end with the suffix -s3alias
 
-### Amazon S3 - Objects
+### S3 - Objects
 * Objects (files) have a Key
 * The key is the FULL path:
   - s3://my-bucket/my_file.txt
@@ -1810,7 +1812,7 @@ user = save_user(17, {"name": "Nate Dogg"})
 * Tags (Unicode key / value pair – up to 10) – useful for security / lifecycle
 * Version ID (if versioning is enabled)
 
-### Amazon S3 – Security
+### S3 – Security
 * User-Based
   - IAM Policies – which API calls should be allowed for a specific user from IAM
 * Resource-Based
@@ -1854,3 +1856,46 @@ Not user, but role!
 * These settings were created to prevent company data leaks 
 * If you know your bucket should never be public, leave these on 
 * Can be set at the account level
+
+### S3 – Static Website Hosting
+* S3 can host static websites and have them accessible on the Internet
+* The website URL will be (depending on the region)
+  - http://bucket-name.s3-website-aws-region.amazonaws.com
+  OR
+  - http://bucket-name.s3-website.aws-region.amazonaws.com
+* If you get a 403 Forbidden error, make sure the bucket policy allows public reads!
+
+### S3 - Versioning
+* You can version your files in Amazon S3
+* It is enabled at the bucket level
+* Same key overwrite will change the “version”: 1, 2, 3….
+* It is best practice to version your buckets
+  - Protect against unintended deletes (ability to restore a version)
+  - Easy roll back to previous version
+* Notes:
+  - Any file that is not versioned prior to enabling versioning will have version “null”
+  - Suspending versioning does not delete the previous versions
+
+### S3 – Replication (CRR & SRR)
+* Must enable Versioning in source and destination buckets
+* Cross-Region Replication (CRR)
+* Same-Region Replication (SRR)
+* Buckets can be in different AWS accounts
+* Copying is asynchronous
+* Must give proper IAM permissions to S3
+* Use cases:
+  - CRR – compliance, lower latency access, replication across accounts
+    ![img.png](images/cross_region_replication.png)
+  - SRR – log aggregation, live replication between production and test accounts
+
+### S3 – Replication (Notes)
+* After you enable Replication, only new objects are replicated
+* Optionally, you can replicate existing objects using **S3 Batch Replication**
+  - Replicates existing objects and objects that failed replication
+* For DELETE operations
+  - Can replicate delete markers from source to target (optional setting)
+  - Deletions with a version ID are not replicated (to avoid malicious deletes) (permanent delete)
+* There is no “chaining” of replication
+  - If bucket 1 has replication into bucket 2, which has replication into bucket 3
+  - Then objects created in bucket 1 are not replicated to bucket 3
+
