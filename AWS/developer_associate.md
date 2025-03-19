@@ -93,13 +93,17 @@
     - [LAMP Stack on EC2](#lamp-stack-on-ec2)
     - [WordPress on AWS](#wordpress-on-aws)
   - [S3](#s3)
-    - [Amazon S3 Use cases](#amazon-s3-use-cases)
-    - [Amazon S3 - Buckets](#amazon-s3---buckets)
-    - [Amazon S3 - Objects](#amazon-s3---objects)
-    - [Amazon S3 – Security](#amazon-s3--security)
+    - [S3 Use cases](#s3-use-cases)
+    - [S3 - Buckets](#s3---buckets)
+    - [S3 - Objects](#s3---objects)
+    - [S3 – Security](#s3--security)
     - [S3 Bucket Policies](#s3-bucket-policies)
     - [Examples](#examples)
     - [Bucket settings for Block Public Access](#bucket-settings-for-block-public-access)
+    - [S3 – Static Website Hosting](#s3--static-website-hosting)
+    - [S3 - Versioning](#s3---versioning)
+    - [S3 – Replication (CRR & SRR)](#s3--replication-crr--srr)
+    - [S3 – Replication (Notes)](#s3--replication-notes)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
