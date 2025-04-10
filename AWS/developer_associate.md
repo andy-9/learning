@@ -118,6 +118,11 @@
     - [S3 Event Notifications](#s3-event-notifications)
     - [S3 – Baseline Performance](#s3--baseline-performance)
     - [S3 User-Defined Object Metadata & S3 Object Tags](#s3-user-defined-object-metadata--s3-object-tags)
+  - [S3 - Security](#s3---security)
+    - [S3 – Object Encryption](#s3--object-encryption)
+    - [S3 – Encryption in transit (SSL/TLS)](#s3--encryption-in-transit-ssltls)
+    - [S3 – Default Encryption vs. Bucket Policies](#s3--default-encryption-vs-bucket-policies)
+    - [What is CORS?](#what-is-cors)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
