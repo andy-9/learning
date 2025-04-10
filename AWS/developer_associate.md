@@ -2093,3 +2093,107 @@ The Java SDK (example) will look for credentials in this order
  ![img.png](images/http_header_option.png)
 * Query String option, ex: S3 pre-signed URLs (signature in X-Amz-Signature)
 ![img.png](images/query_string_option.png)
+
+## S3 - Advanced
+
+### Amazon S3 – Moving between Storage Classes
+* You can transition objects between storage classes
+* For infrequently accessed object, move them to Standard IA
+* For archive objects that you don’t need fast access to, move them to Glacier or Glacier Deep Archive
+* Moving objects can be automated using a Lifecycle Rules
+
+![img.png](images/s3_moving_between_storage_classes.png)
+
+### Lifecycle Rules
+* **Transition Actions** – configure objects to transition to another storage class
+  - Move objects to Standard IA class 60 days after creation
+  - Move to Glacier for archiving after 6 months
+* **Expiration actions** – configure objects to expire (delete) after some time
+  - Access log files can be set to delete after a 365 days
+  - Can be used to delete old versions of files (if versioning is enabled)
+  - Can be used to delete incomplete Multi-Part uploads
+* Rules can be created for a certain prefix (example: s3://mybucket/mp3/*)
+* Rules can be created for certain objects Tags (example: Department: Finance)
+
+#### Lifecycle Rules (Scenario 1)
+* Your application on EC2 creates images thumbnails after profile photos are uploaded to Amazon S3. These thumbnails can be easily recreated, and only need to be kept for 60 days. The source images should be able to be immediately retrieved for these 60 days, and afterwards, the user can wait up to 6 hours. How would you design this?
+* S3 source images can be on Standard, with a lifecycle configuration to transition them to Glacier after 60 days
+* S3 thumbnails can be on One-Zone IA, with a lifecycle configuration to expire them (delete them) after 60 days
+
+#### Lifecycle Rules (Scenario 2)
+* A rule in your company states that you should be able to recover your deleted S3 objects immediately for 30 days, although this may happen rarely. After this time, and for up to 365 days, deleted objects should be recoverable within 48 hours.
+* Enable S3 Versioning in order to have object versions, so that “deleted objects” are in fact hidden by a “delete marker” and can be recovered
+* Transition the “noncurrent versions” of the object to Standard IA
+* Transition afterwards the “noncurrent versions” to Glacier Deep Archive
+
+#### S3 Analytics – Storage Class Analysis
+* Help you decide when to transition objects to the right storage class
+  * Recommendations for Standard and Standard IA
+  ![img.png](images/s3_analytics_storage_class_analysis.png)
+
+  Does NOT work for One-Zone IA or Glacier
+* Report is updated daily
+* 24 to 48 hours to start seeing data analysis
+* Good first step to put together Lifecycle Rules (or improve them)!
+
+### S3 Event Notifications
+* S3:ObjectCreated, S3:ObjectRemoved, S3:ObjectRestore, S3:Replication…
+* Object name filtering possible (*.jpg)
+![img.png](images/s3_event_notifications.png)
+* Use case: generate thumbnails of images uploaded to S3
+* Can create as many “S3 events” as desired
+* S3 event notifications typically deliver events in seconds but can sometimes take a minute or longer
+
+#### S3 Event Notifications – IAM Permissions
+![img.png](images/s3_event_notifications_iam_permissions.png)
+
+#### S3 Event Notifications with Amazon EventBridge
+![img.png](images/s3_event_notification_eventbridge.png)
+* Advanced filtering options with JSON rules (metadata, object size, name...)
+* Multiple Destinations – ex Step Functions, Kinesis Streams / Firehose…
+* EventBridge Capabilities – Archive, Replay Events, Reliable delivery
+
+### S3 – Baseline Performance
+* Amazon S3 automatically scales to high request rates, latency 100-200 ms
+* Your application can achieve at least 3,500 PUT/COPY/POST/DELETE or 5,500 GET/HEAD requests per second per prefix in a bucket.
+* There are no limits to the number of prefixes in a bucket.
+* Example (object path => prefix):
+  - bucket/folder1/sub1/file => /folder1/sub1/
+  - bucket/folder1/sub2/file => /folder1/sub2/
+  - bucket/1/file => /1/
+  - bucket/2/file => /2/
+* If you spread reads across all four prefixes evenly, you can achieve 22,000 requests per second for GET and HEAD
+
+#### Performance: Multi-Part upload
+* recommended for files > 100MB, must use for files > 5GB
+* Can help parallelize uploads (speed up transfers)
+![img.png](images/multi_part_upload.png)
+
+#### Performance: S3 Transfer Acceleration
+* Increase transfer speed by transferring file to an AWS edge location (more than 200) which will forward the data to the S3 bucket in the target region (is called transfer acceleration).
+* Compatible with multi-part upload
+![img.png](images/s3_transfer_acceleration.png)
+
+#### Performance – S3 Byte-Range Fetches
+* Parallelize GETs by requesting specific byte ranges
+* Better resilience in case of failures
+* Can be used to speed up downloads
+![img.png](images/s3_speed_up_downloads.png)
+* Can be used to retrieve only partial data (for example the head of a file)
+![img.png](images/s3_retrieve_partial_data.png)
+
+### S3 User-Defined Object Metadata & S3 Object Tags
+* S3 User-Defined Object Metadata
+  - When uploading an object, you can also assign metadata
+  - Name-value (key-value) pairs
+  - User-defined metadata names must begin with "x-amz-meta-”
+  - Amazon S3 stores user-defined metadata keys in lowercase
+  - Metadata can be retrieved while retrieving the object
+* S3 Object Tags
+  - Key-value pairs for objects in Amazon S3
+  - Useful for fine-grained permissions (only access specific objects with specific tags)
+  - Useful for analytics purposes (using S3 Analytics to group by tags)
+![img.png](s3_user_defined_object_metadata.png)
+* You cannot search in S3 the object metadata or object tags!
+* Instead, you must use an external DB as a search index such as DynamoDB.
+
