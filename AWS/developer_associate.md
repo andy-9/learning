@@ -112,6 +112,12 @@
     - [AWS Limits (Quotas)](#aws-limits-quotas)
     - [AWS CLI Credentials Provider Chain](#aws-cli-credentials-provider-chain)
     - [Signing AWS API requests](#signing-aws-api-requests)
+  - [S3 - Advanced](#s3---advanced)
+    - [Amazon S3 – Moving between Storage Classes](#amazon-s3--moving-between-storage-classes)
+    - [Lifecycle Rules](#lifecycle-rules)
+    - [S3 Event Notifications](#s3-event-notifications)
+    - [S3 – Baseline Performance](#s3--baseline-performance)
+    - [S3 User-Defined Object Metadata & S3 Object Tags](#s3-user-defined-object-metadata--s3-object-tags)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
