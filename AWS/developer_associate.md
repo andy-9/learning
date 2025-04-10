@@ -122,52 +122,57 @@
 * Provides servers and services that can be used on demand and that scale easily.
 
 ## Abbreviations
-| Abbreviation | Stands for                                        |
-|--------------|---------------------------------------------------|
-| ACL          | Access Control Lists                              |
-| ACM          | AWS Certificate Manager                           |
-| ALB          | Application Load Balancer                         |
-| AMI          | Amazon Machine Image                              |
-| arn          | Amazon Resource Name                              |
-| ASG          | Auto-Scaling Group                                |
-| AZ           | Availability Zone                                 |
-| CCP          | Certified Cloud Practitioner                      |
-| CIDR         | Classless Inter-Domain Routing (IP address range) |
-| CLB          | Classic Load Balancer                             |
-| CRR          | Cross-Region Replication                          |
-| DNS Domain   | Name Service                                      |
-| DR           | Disaster Recovery                                 |
-| EBS          | Elastic Block Storage                             |
-| EC2          | Elastic Compute Cloud                             |
-| EFS          | Elastic File System                               |
-| ELB          | Elastic Load Balancer                             |
-| ENI          | Elastic Network Interface                         |
-| FTP          | File Transfer Protocol                            |
-| FQDN         | Fully Qualified Domain Name                       |
-| GWLB         | Gateway Load Balancer                             |
-| IA           | Infrequent Access                                 |
-| IAM          | Identity and Access Management                    |
-| IMDS         | AWS EC2 Instance Metadata                         |
-| IOPS         | Input/Output Operations per Second                |
-| ISP          | Internet Service Provider                         |
-| LRU          | Least Recently Used                               |
-| NACL         | Network ACL                                       |
-| NLB          | Network Load Balancer                             |
-| NFS          | Network File System                               |
-| NS           | Name Server                                       |
-| RI           | Reserved Instance                                 |
-| RDP          | Remote Desktop Protocol                           |
-| RDS          | Relational Database Service                       |
-| SFTP         | Secure File Transfer Protocol                     |
-| SLD          | Second Level Domain                               | 
-| SNI          | Server Name Indication                            |
-| SRR          | Same-Region Replication                           |
-| SSH          | Secure Shell                                      |
-| TLD          | Top Level Domain                                  |
-| TTL          | Time-to-live                                      |
-| vCPU         | virtual CPU                                       |
-| VPC          | Virtual Private Cloud                             |
- | VPN          | Virtual Private Network                           |
+| Abbreviation | Stands for                                                       |
+|--------------|------------------------------------------------------------------|
+| ACL          | Access Control Lists                                             |
+| ACM          | AWS Certificate Manager                                          |
+| ALB          | Application Load Balancer                                        |
+| AMI          | Amazon Machine Image                                             |
+| arn          | Amazon Resource Name                                             |
+| ASG          | Auto-Scaling Group                                               |
+| AZ           | Availability Zone                                                |
+| CCP          | Certified Cloud Practitioner                                     |
+| CIDR         | Classless Inter-Domain Routing (IP address range)                |
+| CLB          | Classic Load Balancer                                            |
+| CORS         | Cross-Origin Resource Sharing                                    |
+| CRR          | Cross-Region Replication                                         |
+| CSE          | Client-Side Encryption                                           |
+| DNS Domain   | Name Service                                                     |
+| DR           | Disaster Recovery                                                |
+| DSSE-KMS     | Dual-layer server-side encryption with AWS Key Management System |
+| EBS          | Elastic Block Storage                                            |
+| EC2          | Elastic Compute Cloud                                            |
+| EFS          | Elastic File System                                              |
+| ELB          | Elastic Load Balancer                                            |
+| ENI          | Elastic Network Interface                                        |
+| FTP          | File Transfer Protocol                                           |
+| FQDN         | Fully Qualified Domain Name                                      |
+| GWLB         | Gateway Load Balancer                                            |
+| IA           | Infrequent Access                                                |
+| IAM          | Identity and Access Management                                   |
+| IMDS         | AWS EC2 Instance Metadata                                        |
+| IOPS         | Input/Output Operations per Second                               |
+| ISP          | Internet Service Provider                                        |
+| KMS          | Key Management System                                            |
+| LRU          | Least Recently Used                                              |
+| NACL         | Network ACL                                                      |
+| NLB          | Network Load Balancer                                            |
+| NFS          | Network File System                                              |
+| NS           | Name Server                                                      |
+| RI           | Reserved Instance                                                |
+| RDP          | Remote Desktop Protocol                                          |
+| RDS          | Relational Database Service                                      |
+| SFTP         | Secure File Transfer Protocol                                    |
+| SLD          | Second Level Domain                                              | 
+| SNI          | Server Name Indication                                           |
+| SRR          | Same-Region Replication                                          |
+| SSE          | Server-Side Encryption                                           |
+| SSH          | Secure Shell                                                     |
+| TLD          | Top Level Domain                                                 |
+| TTL          | Time-to-live                                                     |
+| vCPU         | virtual CPU                                                      |
+| VPC          | Virtual Private Cloud                                            |
+ | VPN          | Virtual Private Network                                          |
 
 
 ## Usecases
@@ -2198,7 +2203,97 @@ The Java SDK (example) will look for credentials in this order
   - Key-value pairs for objects in Amazon S3
   - Useful for fine-grained permissions (only access specific objects with specific tags)
   - Useful for analytics purposes (using S3 Analytics to group by tags)
-![img.png](s3_user_defined_object_metadata.png)
+![img.png](images/s3_user_defined_object_metadata.png)
 * You cannot search in S3 the object metadata or object tags!
 * Instead, you must use an external DB as a search index such as DynamoDB.
+
+## S3 - Security
+
+### S3 – Object Encryption
+* You can encrypt objects in S3 buckets using one of 4 methods
+* Server-Side Encryption (SSE)
+  - Server-Side Encryption with Amazon S3-Managed Keys (SSE-S3) – Enabled by Default
+    - Encrypts S3 objects using keys handled, managed, and owned by AWS
+  - Server-Side Encryption with KMS Keys stored in AWS KMS (SSE-KMS)
+    - Leverage AWS Key Management Service (AWS KMS) to manage encryption keys
+  - Server-Side Encryption with Customer-Provided Keys (SSE-C)
+    - When you want to manage your own encryption keys
+* Client-Side Encryption
+* It’s important to understand which ones are for which situation for the exam
+
+#### Amazon S3 Encryption – SSE-S3
+* Encryption using keys handled, managed, and owned by AWS
+* Object is encrypted server-side
+* Encryption type is AES-256
+* Must set header "x-amz-server-side-encryption": "AES256"
+* Enabled by default for new buckets & new objects
+![s3_encryption_sse-s3.png](images/s3_encryption_sse-s3.png)
+
+#### Amazon S3 Encryption – SSE-KMS
+* Encryption using keys handled and managed by AWS KMS (Key Management Service)
+* KMS advantages: user control + audit key usage using CloudTrail
+* Object is encrypted server side
+* Must set header "x-amz-server-side-encryption": "aws:kms"
+![img.png](images/s3_encryption_sse-kms.png)
+* Since 06/2023: new encryption option DSSE-KMS (Dual-layer server-side encryption with AWS Key Management System = double encryption based on KMS)
+
+##### SSE-KMS Limitation
+* If you use SSE-KMS, you may be impacted by the KMS limits
+* When you upload, it calls the GenerateDataKey KMS API
+* When you download, it calls the Decrypt KMS API
+![img.png](images/s3_sse-kms_limitation.png)
+* Count towards the KMS quota per second (5500, 10000, 30000 req/s based on region)
+* You can request a quota increase using the Service Quotas Console
+
+#### Amazon S3 Encryption – SSE-C
+* Server-Side Encryption using keys fully managed by the customer outside of AWS
+* Amazon S3 does NOT store the encryption key you provide
+* HTTPS must be used
+* Encryption key must be provided in HTTP headers for every HTTP request made.
+* Only possible to be done from CLI, not from the Console/AWS UI
+![img.png](images/s3_encryption_sse-c.png)
+
+#### S3 Encryption – Client-Side Encryption
+* Use client libraries such as Amazon S3 Client-Side Encryption Library
+* Clients must encrypt data themselves before sending to Amazon S3
+* Clients must decrypt data themselves when retrieving from Amazon S3
+* Customer fully manages the keys and encryption cycle
+* Not to be done from the Console/AWS UI
+![img.png](images/s3_encryption_client_side_encryption.png)
+
+### S3 – Encryption in transit (SSL/TLS)
+* Encryption in flight is also called SSL/TLS
+* Amazon S3 exposes two endpoints:
+  - HTTP Endpoint – non encrypted
+  - HTTPS Endpoint – encryption in flight
+* HTTPS is recommended
+* HTTPS is mandatory for SSE-C
+* Most clients would use the HTTPS endpoint by default
+
+#### Amazon S3 – Force Encryption in Transit aws:SecureTransport
+![img.png](images/s3_force_encryption_in_transit.png)
+SecureTransport = HTTPS. If not HTTPS: Deny GetObject.
+
+### S3 – Default Encryption vs. Bucket Policies
+* SSE-S3 encryption is automatically applied to new objects stored in S3 bucket
+* Optionally, you can “force encryption” using a bucket policy and refuse any API call to PUT an S3 object without encryption headers (SSE-KMS or SSE-C)
+![img.png](s3_default_encryption_vs_bucket_policies.png)
+* Note: Bucket Policies are evaluated before “Default Encryption”
+
+### What is CORS?
+* Cross-Origin Resource Sharing (CORS)
+* Origin = scheme (protocol) + host (domain) + port
+  - example: https://www.example.com (implied port is 443 for HTTPS, 80 for HTTP)
+* Web Browser based mechanism to allow requests to other origins while visiting the main origin
+* Same origin: http://example.com/app1 & http://example.com/app2
+* Different origins: http://www.example.com & http://other.example.com
+* The requests won’t be fulfilled unless the other origin allows for the requests, using CORS Headers (example: Access-Control-Allow-Origin)
+
+![img.png](what_is_cors.png)
+
+* If a client makes a cross-origin request on our S3 bucket, we need to enable the correct CORS headers
+* It’s a popular exam question
+* You can allow for a specific origin or for * (all origins)
+
+![img.png](img.png)
 
