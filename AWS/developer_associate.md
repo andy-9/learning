@@ -104,6 +104,9 @@
     - [S3 - Versioning](#s3---versioning)
     - [S3 – Replication (CRR & SRR)](#s3--replication-crr--srr)
     - [S3 – Replication (Notes)](#s3--replication-notes)
+    - [S3 Storage Classes](#s3-storage-classes)
+  - [AWS CLI, SDK, IAM Roles & Policies](#aws-cli-sdk-iam-roles--policies)
+    - [EC2 Instance Metadata (IMDS)](#ec2-instance-metadata-imds)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
