@@ -107,6 +107,11 @@
     - [S3 Storage Classes](#s3-storage-classes)
   - [AWS CLI, SDK, IAM Roles & Policies](#aws-cli-sdk-iam-roles--policies)
     - [EC2 Instance Metadata (IMDS)](#ec2-instance-metadata-imds)
+    - [MFA with CLI](#mfa-with-cli)
+    - [AWS SDK Overview](#aws-sdk-overview)
+    - [AWS Limits (Quotas)](#aws-limits-quotas)
+    - [AWS CLI Credentials Provider Chain](#aws-cli-credentials-provider-chain)
+    - [Signing AWS API requests](#signing-aws-api-requests)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
