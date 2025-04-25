@@ -172,6 +172,17 @@
     - [Elastic Beanstalk Migration: Load Balancer](#elastic-beanstalk-migration-load-balancer)
     - [RDS with Elastic Beanstalk](#rds-with-elastic-beanstalk)
     - [Elastic Beanstalk Migration: Decouple RDS](#elastic-beanstalk-migration-decouple-rds)
+  - [AWS CloudFormation](#aws-cloudformation)
+    - [CloudFormation – Template Example](#cloudformation--template-example)
+    - [Benefits of AWS CloudFormation](#benefits-of-aws-cloudformation)
+    - [How CloudFormation Works](#how-cloudformation-works)
+    - [Deploying CloudFormation Templates](#deploying-cloudformation-templates)
+    - [CloudFormation – Building Blocks](#cloudformation--building-blocks)
+    - [Introductory Example](#introductory-example)
+    - [YAML Crash Course](#yaml-crash-course)
+    - [CloudFormation – Resources](#cloudformation--resources)
+    - [CloudFormation – Resources FAQ](#cloudformation--resources-faq)
+    - [CloudFormation – Parameters](#cloudformation--parameters)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
