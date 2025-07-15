@@ -190,6 +190,14 @@
     - [CloudFormation – Service Role](#cloudformation--service-role)
     - [CloudFormation Capabilities](#cloudformation-capabilities)
     - [CloudFormation – DeletionPolicies](#cloudformation--deletionpolicies)
+    - [CloudFormation – Stack Policies](#cloudformation--stack-policies)
+    - [CloudFormation – Termination Protection](#cloudformation--termination-protection)
+    - [CloudFormation – Custom Resources](#cloudformation--custom-resources)
+    - [Use Case – Delete content from an S3 bucket](#use-case--delete-content-from-an-s3-bucket)
+    - [CloudFormation – StackSets](#cloudformation--stacksets)
+  - [AWS Integration & Messaging](#aws-integration--messaging)
+    - [Section Introduction](#section-introduction)
+    - [Amazon SQS - What's a queue?](#amazon-sqs---whats-a-queue)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
