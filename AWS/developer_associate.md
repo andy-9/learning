@@ -3353,5 +3353,195 @@ Resources:
 * Mappings are fixed variables within your CloudFormation template
 * They’re very handy to differentiate between different environments (dev vs prod), regions (AWS regions), AMI types…
 * All the values are hardcoded within the template
-![img.png](cloudformation_mappings.png)
+![img.png](images/cloudformation_mappings.png)
+
+#### Accessing Mapping Values (Fn::FindInMap)
+* We use Fn::FindInMap to return a named value from a specific key
+* !FindInMap [ MapName, TopLevelKey, SecondLevelKey ]
+![img.png](images/accessing_mapping_values.png)
+* Mappings work great for AMIs because AMIs are region-specific!
+
+#### When would you use Mappings vs. Parameters?
+* Mappings are great when you know in advance all the values that can be taken and that they can be deduced from variables such as
+  - Region
+  - Availability Zone
+  - AWS Account
+  - Environment (dev vs prod)
+  - etc…
+* They allow safer control over the template
+* Use parameters when the values are really user specific
+
+### CloudFormation – Outputs
+* The Outputs section declares *optional* outputs values that we can import into other stacks (if you export them first)!
+![img.png](images/cloudformation_outputs_reference.png)
+* You can also view the outputs in the AWS Console or in using the AWS CLI
+* They’re very useful for example if you define a network CloudFormation, and output the variables such as VPC ID and your Subnet IDs
+* It’s the best way to perform some collaboration cross stack, as you let expert handle their own part of the stack 
+* Creating a SSH Security Group as part of one template
+* We create an output that references that security group
+![img.png](images/cloudformation_outputs_example.png)
+
+#### CloudFormation – Outputs Cross-Stack Reference
+* We then create a second template that leverages that security group
+* For this, we use the Fn::ImportValue function
+* You can’t delete the underlying stack until all the references are deleted
+![img.png](images/cloudformation_outputs_example_reference.png)
+
+### CloudFormation – Conditions
+* Conditions are used to control the creation of resources or outputs based on a condition
+* Conditions can be whatever you want them to be, but common ones are:
+  - Environment (dev / test / prod)
+  - AWS Region
+  - Any parameter value
+* Each condition can reference another condition, parameter value or mapping
+![img.png](images/cloudformation_conditions.png)
+
+#### How to define a Condition
+```yaml
+Conditions:
+  CreateProdResources: !Equals [ !Ref EnvType, prod ]
+```
+* The logical ID is for you to choose. It’s how you name condition
+* The intrinsic function (logical) can be any of the following:
+  - Fn::And
+  - Fn::Equals
+  - Fn::If
+  - Fn::Not
+  - Fn::Or
+
+#### How to use a Condition
+* Conditions can be applied to resources / outputs / etc…
+```yaml
+Resources:
+  MountPoint:
+    Type: AWS::EC2::VolumeAttachment
+    Condition: CreateProdResources
+```
+
+### CloudFormation – Intrinsic Functions
+* Ref
+* Fn::GetAtt
+* Fn::FindInMap
+* Fn::ImportValue
+* Fn::Join
+* Fn::Sub
+* Fn::ForEach
+* Fn::ToJsonString
+* Fn::Base64
+* Fn::Cidr
+* Fn::GetAZs
+* Fn::Select
+* Fn::Split
+* Fn::Transform
+* Fn::Length
+* Condition Functions (Fn::If, Fn::Not, Fn::Equals, etc…)
+
+#### Intrinsic Functions – Fn::Ref
+* The Fn::Ref function can be leveraged to reference
+* Parameters – returns the value of the parameter
+* Resources – returns the physical ID of the underlying resource (e.g., EC2 ID)
+* The shorthand for this in YAML is !Ref
+```yaml
+Resources:
+  DBSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+```
+* Ref returns the instance ID
+
+#### Intrinsic Functions – Fn::GetAtt
+* Attributes are attached to any resources you create
+* To know the attributes of your resources, the best place to look at is the documentation
+* Example: the AZ of an EC2 instance!
+![img.png](images/cloudformation_intrinsic_functions_getatt.png)
+* Could also be e.g. the `PrivateDnsName` or `PublicIp`
+
+#### Intrinsic Functions – Fn::FindInMap
+* We use Fn::FindInMap to return a named value from a specific key
+* !FindInMap [ MapName, TopLevelKey, SecondLevelKey ]
+![img.png](images/cloudformation_intrinsic_functions_findinmap.png)
+
+#### Intrinsic Functions – Fn::ImportValue
+* Import values that are exported in other stacks
+* For this, we use the Fn::ImportValue function
+![img.png](images/cloudformation_intrinsic_functions_importvalue.png)
+
+#### Intrinsic Functions – Fn::Base64
+* Convert String to it’s Base64 representation
+```yaml
+!Base64 "ValueToEncode"
+```
+* Example: pass encoded data to EC2 Instance’s UserData property
+![img.png](images/cloudformation_intrinsic_functions_base64.png)
+
+#### Intrinsic Functions – Condition Functions
+```yaml
+Conditions:
+  CreateProdResources: !Equals [ !Ref EnvType, prod ]
+```
+* The logical ID is for you to choose. It’s how you name condition
+* The intrinsic function (logical) can be any of the following:
+  - Fn::And
+  - Fn::Equals
+  - Fn::If
+  - Fn::Not
+  - Fn::Or
+
+### CloudFormation – Rollbacks
+* Stack Creation Fails:
+  - Default: everything rolls back (gets deleted). We can look at the log (but not the resources).
+  - Option to disable rollback and troubleshoot what happened
+* Stack Update Fails:
+  - The stack automatically rolls back to the previous known working state
+  - Ability to see in the log what happened and error messages
+* Rollback Failure?  
+  --> Fix resources manually (through Console or API)  
+  --> then issue ContinueUpdateRollback API from Console (try rolling back again)  
+  --> Or from the CLI using continue-update-rollback API call
+
+### CloudFormation – Service Role
+* IAM role that allows CloudFormation to create/update/delete stack resources on your behalf
+* Give ability to users to create/update/delete the stack resources even if they don’t have permissions to work with the resources in the stack
+* Use cases:
+  - You want to achieve the least privilege principle
+  - But you don’t want to give the user all the required permissions to create the stack resources (but only the permissions to invoke a service role on CloudFormation)
+* User must have iam:PassRole permissions (necessary permission to give a role to a specific service in AWS)
+![img.png](images/cloudformation_service_role.png)
+
+### CloudFormation Capabilities
+* CAPABILITY_NAMED_IAM and CAPABILITY_IAM
+  - Necessary to enable when your CloudFormation template is creating or updating IAM resources (IAM User, Role, Group, Policy, Access Keys, Instance Profile…)
+  - Specify CAPABILITY_NAMED_IAM if the resources are named
+  - Otherwise CAPABILITY_IAM
+* CAPABILITY_AUTO_EXPAND
+  - Necessary when your CloudFormation template includes Macros or Nested Stacks (stacks within stacks) to perform dynamic transformations
+  - You’re acknowledging that your template may change before deploying
+* InsufficientCapabilitiesException
+  - Exception that will be thrown by CloudFormation if the capabilities haven’t been acknowledged when deploying a template (security measure)
+
+### CloudFormation – DeletionPolicies
+
+#### CloudFormation – DeletionPolicy Delete
+* DeletionPolicy:
+  - Control what happens when the CloudFormation template is deleted or when a resource is removed from a CloudFormation template
+  - Extra safety measure to preserve and backup resources
+* Default DeletionPolicy=Delete
+  - Instance will be deleted whenever the CloudFormation stack is deleted.
+  - ⚠ Delete won’t work on an S3 bucket if the bucket is not empty. --> implement custom resource to delete everything within the S3 bucket before automatically having the S3 bucket go away.
+![img.png](images/cloudformation_deletion_policy.png)
+
+#### CloudFormation – DeletionPolicy Retain
+* DeletionPolicy=Retain:
+  - Specify on resources to preserve in case of CloudFormation deletes
+* Works with any resources
+![img.png](images/cloudformation_deletion_policy_retain.png)
+
+#### CloudFormation – DeletionPolicy Snapshot
+* DeletionPolicy=Snapshot
+* Create one final snapshot before deleting the resource
+* Examples of supported resources:
+  - EBS Volume, ElastiCache Cluster, ElastiCache ReplicationGroup
+  - RDS DBInstance, RDS DBCluster, Redshift Cluster, Neptune DBCluster, DocumentDB DBCluster
+![img.png](images/cloudformation_deletion_policy_snapshot.png)
 
