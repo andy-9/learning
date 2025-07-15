@@ -183,6 +183,13 @@
     - [CloudFormation – Resources](#cloudformation--resources)
     - [CloudFormation – Resources FAQ](#cloudformation--resources-faq)
     - [CloudFormation – Parameters](#cloudformation--parameters)
+    - [CloudFormation – Outputs](#cloudformation--outputs)
+    - [CloudFormation – Conditions](#cloudformation--conditions)
+    - [CloudFormation – Intrinsic Functions](#cloudformation--intrinsic-functions)
+    - [CloudFormation – Rollbacks](#cloudformation--rollbacks)
+    - [CloudFormation – Service Role](#cloudformation--service-role)
+    - [CloudFormation Capabilities](#cloudformation-capabilities)
+    - [CloudFormation – DeletionPolicies](#cloudformation--deletionpolicies)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
