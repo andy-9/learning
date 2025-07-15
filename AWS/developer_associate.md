@@ -235,7 +235,7 @@
 | IMDS         | AWS EC2 Instance Metadata                                        |
 | IOPS         | Input/Output Operations per Second                               |
 | ISP          | Internet Service Provider                                        |
-| KMS          | Key Management System                                            |
+| KMS          | Key Management System/Service                                    |
 | LRU          | Least Recently Used                                              |
 | NACL         | Network ACL                                                      |
 | NLB          | Network Load Balancer                                            |
@@ -248,6 +248,7 @@
 | SFTP         | Secure File Transfer Protocol                                    |
 | SLD          | Second Level Domain                                              | 
 | SNI          | Server Name Indication                                           |
+| SQS          | Simple Queuing Service                                           |
 | SRR          | Same-Region Replication                                          |
 | SSE          | Server-Side Encryption                                           |
 | SSH          | Secure Shell                                                     |
@@ -255,7 +256,7 @@
 | TTL          | Time-to-live                                                     |
 | vCPU         | virtual CPU                                                      |
 | VPC          | Virtual Private Cloud                                            |
- | VPN          | Virtual Private Network                                          |
+| VPN          | Virtual Private Network                                          |
 
 
 ## Usecases
@@ -3225,11 +3226,13 @@ Managing your infrastructure as code
   - Leverage the documentation
 
 ### How CloudFormation Works
-* Templates must be uploaded in S3 and then referenced in CloudFormation
+* Templates must be uploaded in S3 and then referenced in CloudFormation. If you upload the template from the AWS console it gets uploaded to S3 behind the scenes, and CloudFormation references that template from there.
 ![img.png](images/cloudformation_template_stack.png)
 * Then a stack is created. A stack ist made of AWS resources. Stacks are identified by a name.
 * To update a template, we can’t edit previous ones. We have to reupload a new version of the template to AWS
 * Deleting a stack deletes every single artifact that was created by CloudFormation.
+* Q: When you write a CloudFormation template, you must specify the order in which CloudFormation should create your resources.  
+A: False
 
 ### Deploying CloudFormation Templates
 • Manual way
@@ -3348,6 +3351,7 @@ Resources:
 * Parameters can be used anywhere in a template
 * The shorthand for this in YAML is !Ref
 * The function can also reference other elements within the template, e.g. Resources --> Parameters should not have the same name as Resources!
+* Conditions cannot be references with `!Ref`
 
 #### CloudFormation – Pseudo Parameters
 * AWS offers us Pseudo Parameters in any CloudFormation template
@@ -3380,6 +3384,7 @@ Resources:
 
 ### CloudFormation – Outputs
 * The Outputs section declares *optional* outputs values that we can import into other stacks (if you export them first)!
+
 ![img.png](images/cloudformation_outputs_reference.png)
 * You can also view the outputs in the AWS Console or in using the AWS CLI
 * They’re very useful for example if you define a network CloudFormation, and output the variables such as VPC ID and your Subnet IDs
@@ -3393,6 +3398,8 @@ Resources:
 * For this, we use the Fn::ImportValue function
 * You can’t delete the underlying stack until all the references are deleted
 ![img.png](images/cloudformation_outputs_example_reference.png)
+* Q: You have 2 CloudFormation templates. Template A contains the networking components (VPC, Subnets, SGs, ...) and template B contains the application infrastructure (EC2 instances, ALB, EBS, ...). You want to attach the SGs in template A to the EC2 instances in template B. How would you achieve this task?  
+A: Export the SG IDs in the Outputs section from template A, then import exported values in template B using `Fn::ImportValue`.
 
 ### CloudFormation – Conditions
 * Conditions are used to control the creation of resources or outputs based on a condition
@@ -3506,6 +3513,8 @@ Conditions:
   --> Fix resources manually (through Console or API)  
   --> then issue ContinueUpdateRollback API from Console (try rolling back again)  
   --> Or from the CLI using continue-update-rollback API call
+* Q: An Administrator created an AWS CloudFormation template for the first time. The stack failed with a status of ROLLBACK_COMPLETE. The Administrator identified and resolved the template issue that caused the failure. How should the Administrator continue with the stack deployment?  
+  A: Delete the failed stack and create a new stack
 
 ### CloudFormation – Service Role
 * IAM role that allows CloudFormation to create/update/delete stack resources on your behalf
@@ -3551,4 +3560,132 @@ Conditions:
   - EBS Volume, ElastiCache Cluster, ElastiCache ReplicationGroup
   - RDS DBInstance, RDS DBCluster, Redshift Cluster, Neptune DBCluster, DocumentDB DBCluster
 ![img.png](images/cloudformation_deletion_policy_snapshot.png)
+
+### CloudFormation – Stack Policies
+* During a CloudFormation Stack update, all update actions are allowed on all resources (default)
+* A Stack Policy is a JSON document that defines the update actions that are allowed on specific resources during Stack updates
+* Protect resources from unintentional updates
+* When you set a Stack Policy, all resources in the Stack are protected by default
+* Specify an explicit ALLOW for the resources you want to be allowed to be updated
+![img.png](images/cloudformation_stack_policies.png)
+* Q: Your AWS infrastructure created with CloudFormation evolve over time. What should you do to update a CloudFormation stack?  
+A: Update your CloudFormation template locally, then upload and apply it in the CloudFormation console.
+
+### CloudFormation – Termination Protection
+* To prevent accidental deletes of CloudFormation Stacks, use `TerminationProtection`.
+
+### CloudFormation – Custom Resources
+* Used to
+  - define resources not yet supported by CloudFormation
+  - define custom provisioning logic for resources can that be outside of CloudFormation (on-premises resources, 3rd party resources…)
+  - have custom scripts run during create / update / delete through Lambda functions (running a Lambda function to empty an S3 bucket before being deleted)
+* Defined in the template using `AWS::CloudFormation::CustomResource` or `Custom::MyCustomResourceTypeName` (recommended)
+* Backed by a Lambda function (most common) or an SNS topic
+
+#### How to define a Custom Resource?
+* ServiceToken specifies where CloudFormation sends requests to, such as Lambda ARN or SNS ARN (required & must be in the same region)
+* Input data parameters (optional)
+![img.png](images/cloudformation_define_custom_resource.png)
+
+### Use Case – Delete content from an S3 bucket
+* You can’t delete a non-empty S3 bucket
+* To delete a non-empty S3 bucket, you must first delete all the objects inside it
+* We can use a custom resource to empty an S3 bucket before it gets deleted by CloudFormation
+![img.png](images/cloudformation_delete_content_from_s3.png)
+
+### CloudFormation – StackSets
+* Create, update, or delete stacks across multiple accounts and regions with a single operation/template
+* Target accounts to create, update, delete stack instances from StackSets
+![img.png](images/cloudformation_stacksets.png)
+* When you update a stack set, all associated stack instances are updated throughout all accounts and
+regions
+* Can be applied into all accounts of an AWS Organization
+* Only Administrator account (or Delegated Administrator) can create StackSets
+
+
+## AWS Integration & Messaging
+
+### Section Introduction
+* When we start deploying multiple applications, they will inevitably need to communicate with one another
+* There are two patterns of application communication
+![img.png](images/two_patterns_of_communication.png)
+* Synchronous between applications can be problematic if there are sudden spikes of traffic
+* What if you need to suddenly encode 1000 videos but usually it’s 10?
+* In that case, it’s better to decouple your applications,
+  - using SQS: queue model
+  - using SNS: pub/sub model
+  - using Kinesis: real-time streaming model
+* These services can scale independently of our application!
+
+### Amazon SQS - What's a queue?
+* SQS = Simple Queuing Service
+![img.png](images/sqs_queue.png)
+* The queuing service acts as a buffer to decouple between producers and consumers.
+* Oldest offering (over 10 years old)
+* Fully managed service, used to decouple applications
+* Attributes:
+  - Unlimited throughput, unlimited number of messages in queue
+  - Default retention of messages: 4 days, maximum of 14 days
+  - Low latency (<10 ms on publish and receive)
+  - Limitation of 256KB per message sent
+* Can have duplicate messages (at least once delivery, occasionally)
+* Can have out of order messages (best effort ordering)
+
+#### SQS – Producing Messages
+* Produced to SQS using the SDK (SendMessage API)
+* The message is persisted in SQS until a consumer deletes it
+* Message retention: default 4 days, up to 14 days
+* Example: send an order to be processed
+  - Order id
+  - Customer id
+  - Any attributes you want
+* SQS standard: unlimited throughput 
+![img.png](images/sqs_producing_messages.png)
+
+#### SQS – Consuming Messages
+* Consumers (running on EC2 instances, servers, or AWS Lambda)…
+* Poll SQS for messages (receive up to 10 messages at a time)
+* Process the messages (example: insert the message into an RDS database)
+* Delete the messages using the DeleteMessage API
+![img.png](images/sqs_consuming_messages.png)
+
+#### SQS – Multiple EC2 Instances Consumers
+* Consumers receive and process messages in parallel
+* At least once delivery
+* Best-effort message ordering
+* Consumers delete messages after processing them
+* We can scale consumers horizontally to improve throughput of processing
+![img.png](images/sqs_multiple_ec2_instance_consumers.png)
+
+#### SQS with Auto Scaling Group (ASG)
+![img.png](images/sqs_auto_scaling_group.png)
+* `ApproximateNumberOfMessages` is a CloudWatch metric available on any SQS queue.
+
+#### SQS to decouple between application tiers
+![img.png](images/sqs_decouple_between_application_tiers.png)
+* Scale the front-end and the back-end independently.
+
+#### SQS - Security
+* Encryption:
+  - In-flight encryption using HTTPS API
+  - At-rest encryption using KMS keys
+  - Client-side encryption if the client wants to perform encryption/decryption itself
+* Access Controls: IAM policies to regulate access to the SQS API
+* SQS Access Policies (similar to S3 bucket policies)
+  - Useful for cross-account access to SQS queues
+  - Useful for allowing other services (SNS, S3…) to write to an SQS queue
+
+#### SQS Queue Access Policy
+![img.png](images/sqs_access_policy.png)
+
+#### SQS – Message Visibility Timeout
+* After a message is polled by a consumer, it becomes invisible to other consumers
+* By default, the “message visibility timeout” is 30 seconds
+* That means the message has 30 seconds to be processed
+* After the message visibility timeout is over, the message is “visible” in SQS
+![img.png](sqs_message_visibility_timeout.png)
+* If a message is not processed within the visibility timeout, it will be processed twice
+* A consumer could call the ChangeMessageVisibility API to get more time
+* If visibility timeout is high (hours), and consumer crashes, re-processing will take time
+* If visibility timeout is too low (seconds), we may get duplicates
 
