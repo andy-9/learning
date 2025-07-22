@@ -224,6 +224,7 @@
 | CRR          | Cross-Region Replication                                         |
 | CSE          | Client-Side Encryption                                           |
 | CSI          | Container Storage Interface                                      |
+| DLQ          | Dead Letter Queue                                                |
 | DNS Domain   | Name Service                                                     |
 | DR           | Disaster Recovery                                                |
 | DSSE-KMS     | Dual-layer server-side encryption with AWS Key Management System |
@@ -235,6 +236,7 @@
 | EKS          | Elastic Kubernetes Service                                       |
 | ELB          | Elastic Load Balancer                                            |
 | ENI          | Elastic Network Interface                                        |
+| FIFO         | First In First Out                                               |
 | FTP          | File Transfer Protocol                                           |
 | FQDN         | Fully Qualified Domain Name                                      |
 | GWLB         | Gateway Load Balancer                                            |
@@ -3691,9 +3693,161 @@ regions
 * By default, the “message visibility timeout” is 30 seconds
 * That means the message has 30 seconds to be processed
 * After the message visibility timeout is over, the message is “visible” in SQS
-![img.png](sqs_message_visibility_timeout.png)
+![img.png](images/sqs_message_visibility_timeout.png)
 * If a message is not processed within the visibility timeout, it will be processed twice
 * A consumer could call the ChangeMessageVisibility API to get more time
 * If visibility timeout is high (hours), and consumer crashes, re-processing will take time
 * If visibility timeout is too low (seconds), we may get duplicates
+
+### Amazon SQS – Dead Letter Queue (DLQ)
+* If a consumer fails to process a message within the Visibility Timeout… the message goes back to the queue!
+* We can set a threshold of how many times a message can go back to the queue
+* After the MaximumReceives threshold is exceeded, the message goes into a Dead Letter Queue (DLQ)
+
+![img.png](images/sqs_dead_letter_queue.png)
+* Useful for debugging!
+* DLQ of a FIFO queue must also be a FIFO queue
+* DLQ of a Standard queue must also be a Standard queue
+* Make sure to process the messages in the DLQ before they expire:
+  - Good to set a retention of 14 days in the DLQ
+
+### SQS DLQ – Redrive to Source
+* Feature to help consume messages in the DLQ to understand what is wrong with them
+* When our code is fixed, we can redrive the messages from the DLQ back into the source queue (or any other queue) in batches without writing custom code
+![img.png](images/sqs_dlq_redrive_to_source.png)
+
+### Amazon SQS – Delay Queue
+* Delay a message (consumers don’t see it immediately) up to 15 minutes
+* Default is 0 seconds (message is available right away)
+* Can set a default at queue level
+* Can override the default on send using the DelaySeconds parameter
+![img.png](images/sqs_delay_queue.png)
+
+### Amazon SQS - Long Polling
+* When a consumer requests messages from the queue, it can optionally “wait” for messages to arrive if there are none in the queue
+* This is called Long Polling
+* LongPolling decreases the number of API calls made to SQS while increasing the efficiency and decreasing the latency of your application.
+* The wait time can be between 1 sec to 20 sec (20 sec preferable)
+* Long Polling is preferable to Short Polling
+* Long polling can be enabled at the queue level or at the API level using ReceiveMessageWaitTimeSeconds
+
+![img.png](images/sqs_long_polling.png)
+
+### SQS Extended Client
+* Message size limit is 256KB, how to send large messages, e.g. 1GB?
+* Using the SQS Extended Client (Java Library)
+![img.png](images/sqs_extended_client.png)
+
+### SQS – Must know API
+* CreateQueue (MessageRetentionPeriod), DeleteQueue
+* PurgeQueue: delete all the messages in queue
+* SendMessage (DelaySeconds), ReceiveMessage, DeleteMessage
+* MaxNumberOfMessages: default 1, max 10 (for ReceiveMessage API)
+* ReceiveMessageWaitTimeSeconds: Long Polling
+* ChangeMessageVisibility: change the message timeout (in case you need more time to process a message)
+* Batch APIs for SendMessage, DeleteMessage, ChangeMessageVisibility helps decrease your costs (by decreasing the number of API calls)
+
+### Amazon SQS – FIFO Queue
+* FIFO = First In First Out (ordering of messages in the queue)
+![img.png](images/sqs_fifo_queue.png)
+* Limited throughput: 300 msg/s without batching, 3000 msg/s with
+* Exactly-once send capability (by removing duplicates)
+* Messages are processed in order by the 
+* Ordering by Message Group ID (all messages in the same group are ordered) - mandator parameter
+* Naming of Queue has to end with `.fifo`
+
+### SQS FIFO – Deduplication
+* De-duplication interval is 5 minutes
+* Two de-duplication methods:
+  - Content-based deduplication: will do a SHA-256 hash of the message body
+  - Explicitly provide a Message Deduplication ID
+
+![img.png](images/sqs_fifo_deduplication.png)
+
+### SQS FIFO – Message Grouping
+* If you specify the same value of MessageGroupID in an SQS FIFO queue, you can only have one consumer, and all the messages are in order
+* To get ordering at the level of a subset of messages, specify different values for MessageGroupID
+  - Messages that share a common Message Group ID will be in order within the group
+  - Each Group ID can have a different consumer (parallel processing!)
+  - Ordering across groups is not guaranteed
+
+![img.png](images/sqs_fifo_message_grouping.png)
+
+## SNS
+
+What if you want to send one message to many receivers?
+![img.png](images/sns_pub_sub.png)
+Pub / Sub = publish subscribe  
+Publishing a message into a topic  
+Subscribing from that topic
+
+* The “event producer” only sends message to one SNS topic
+* As many “event receivers” (subscriptions) as we want to listen to the SNS topic notifications
+* Each subscriber to the topic will get all the messages (note: new feature to filter messages)
+* Up to 12,500,000 subscriptions per topic
+* 100,000 topics limit
+* Protocols for SNS: Amazon Kinesis Date Firehose, Amazon SQS, Amazon Lambda, Email, Email-JSON, HTTP, HTTPS, SMS
+![img.png](images/sns_publish_subscribers.png)
+
+### SNS integrates with a lot of AWS services
+* Many AWS services can send data directly to SNS for notifications
+![img.png](images/sns_integrations_aws_services.png)
+
+### Amazon SNS – How to publish
+* Topic Publish (using the SDK)
+  - Create a topic
+  - Create a subscription (or many)
+  - Publish to the topic
+* Direct Publish (for mobile apps SDK)
+  - Create a platform application
+  - Create a platform endpoint
+  - Publish to the platform endpoint
+  - Works with Google GCM, Apple APNS, Amazon ADM…
+
+### Amazon SNS – Security
+* Encryption:
+  - In-flight encryption using HTTPS API
+  - At-rest encryption using KMS keys
+  - Client-side encryption if the client wants to perform encryption/decryption itself
+* Access Controls: IAM policies to regulate access to the SNS API
+* SNS Access Policies (similar to S3 bucket policies)
+  - Useful for cross-account access to SNS topics
+  - Useful for allowing other services ( S3…) to write to an SNS topic
+
+### SNS + SQS: Fan Out
+* Push once in SNS, receive in all SQS queues that are subscribers
+* Fully decoupled, no data loss
+* SQS allows for: data persistence, delayed processing and retries of work
+* Ability to add more SQS subscribers over time
+* Make sure your SQS queue access policy allows for SNS to write
+* Cross-Region Delivery: works with SQS Queues in other regions
+![img.png](images/sns_sqs_fan_out.png)
+
+### Application: S3 Events to multiple queues
+* For the same combination of: event type (e.g. object create) and prefix (e.g. images/) you can only have one S3 Event rule
+* If you want to send the same S3 event to many SQS queues, use fan-out
+![img.png](images/s3_sns_sqs_multiple_queues.png)
+
+### Application: SNS to Amazon S3 through Kinesis Data Firehose
+* SNS can send to Kinesis and therefore we can have the following solutions architecture:
+![img.png](images/sns_s3_kinesis_firehose.png)
+
+### Amazon SNS – FIFO Topic
+* FIFO = First In First Out (ordering of messages in the topic)
+![img.png](images/sns_fifo_topic.png)
+* Similar features as SQS FIFO:
+  - Ordering by Message Group ID (all messages in the same group are ordered)
+  - Deduplication using a Deduplication ID or Content Based Deduplication
+* Can have SQS Standard and FIFO queues as subscribers
+* Limited throughput (same throughput as SQS FIFO)
+
+### SNS FIFO + SQS FIFO: Fan Out
+* In case you need fan out + ordering + deduplication
+![img.png](images/sns_fifo_sqs_fifo_fan_out.png)
+
+### SNS – Message Filtering
+* JSON policy used to filter messages sent to SNS topic’s subscriptions
+* If a subscription doesn’t have a filter policy, it receives every message
+![img.png](images/sns_message_filtering.png)
+
 
