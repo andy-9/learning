@@ -217,6 +217,20 @@
     - [Amazon SNS – FIFO Topic](#amazon-sns--fifo-topic)
     - [SNS FIFO + SQS FIFO: Fan Out](#sns-fifo--sqs-fifo-fan-out)
     - [SNS – Message Filtering](#sns--message-filtering)
+  - [Kinesis Overview](#kinesis-overview)
+    - [Kinesis Data Streams](#kinesis-data-streams)
+    - [Kinesis Data Streams – Capacity Modes](#kinesis-data-streams--capacity-modes)
+    - [Kinesis Data Streams Security](#kinesis-data-streams-security)
+    - [Kinesis Producers](#kinesis-producers)
+    - [Kinesis - ProvisionedThroughputExceeded](#kinesis---provisionedthroughputexceeded)
+    - [Kinesis Data Streams Consumers](#kinesis-data-streams-consumers)
+    - [Kinesis Consumers – Custom Consumer](#kinesis-consumers--custom-consumer)
+    - [Kinesis Client Library (KCL)](#kinesis-client-library-kcl)
+    - [Kinesis Operation](#kinesis-operation)
+  - [Amazon Data Firehose](#amazon-data-firehose)
+  - [Kinesis Data Streams vs Amazon Data Firehose](#kinesis-data-streams-vs-amazon-data-firehose)
+  - [Amazon Managed Service for Apache Flink](#amazon-managed-service-for-apache-flink)
+  - [SQS vs SNS vs Kinesis](#sqs-vs-sns-vs-kinesis)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
