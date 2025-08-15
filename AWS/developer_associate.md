@@ -231,6 +231,11 @@
   - [Kinesis Data Streams vs Amazon Data Firehose](#kinesis-data-streams-vs-amazon-data-firehose)
   - [Amazon Managed Service for Apache Flink](#amazon-managed-service-for-apache-flink)
   - [SQS vs SNS vs Kinesis](#sqs-vs-sns-vs-kinesis)
+  - [AWS Monitoring, Troubleshooting & Audit - CloudWatch, X-Ray and CloudTrail](#aws-monitoring-troubleshooting--audit---cloudwatch-x-ray-and-cloudtrail)
+    - [Why Monitoring is Important](#why-monitoring-is-important)
+    - [Monitoring in AWS](#monitoring-in-aws)
+    - [AWS CloudWatch Metrics](#aws-cloudwatch-metrics)
+    - [CloudWatch Logs for EC2](#cloudwatch-logs-for-ec2)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
