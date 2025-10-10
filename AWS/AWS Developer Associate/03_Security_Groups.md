@@ -26,7 +26,7 @@
 * All inbound traffic is blocked by default.
 * All outbound traffic is authorised by default.
 
-### Security groups on EC2 instances TEST3
+### Security groups on EC2 instances
 * Security groups are acting as a “firewall” on EC2 instances
 * They regulate:
     - Access to Ports
