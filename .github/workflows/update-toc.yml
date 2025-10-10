@@ -9,5 +9,21 @@ jobs:
     steps:
       - uses: technote-space/toc-generator@v4
         with:
-          TARGET_PATHS: AWS/01_abbreviations_infrastructure_iam.md,kafka.md
+          TARGET_PATHS: kafka.md,
+            AWS/AWS Developer Associate/01_Abbreviations_Infrastructure_IAM.md,
+            AWS/AWS Developer Associate/02_EC2.md,
+            AWS/AWS Developer Associate/03_Security_Groups.md,
+            AWS/AWS Developer Associate/04_Scalability_Availability.md,
+            AWS/AWS Developer Associate/05_RDS_Aurora_Elasticache.md,
+            AWS/AWS Developer Associate/06_Route_53.md,
+            AWS/AWS Developer Associate/07_VPC.md,
+            AWS/AWS Developer Associate/08_S3_AWS-SDK.md,
+            AWS/AWS Developer Associate/09_CloudFront.md,
+            AWS/AWS Developer Associate/10_Containers_ECS_ECR_EKS.md,
+            AWS/AWS Developer Associate/11_Elastic_Beanstalk.md,
+            AWS/AWS Developer Associate/12_CloudFormation.md,
+            AWS/AWS Developer Associate/13_SQS.md,
+            AWS/AWS Developer Associate/14_SNS.md,
+            AWS/AWS Developer Associate/15_Kinesis_Firehose.md,
+            AWS/AWS Developer Associate/16_CloudWatch_X-Ray_CloudTrail.md
           MAX_HEADER_LEVEL: 3

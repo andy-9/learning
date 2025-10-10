@@ -2,6 +2,32 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [AWS Elastic Beanstalk](#aws-elastic-beanstalk)
+  - [Typical architecture: Web App 3-tier](#typical-architecture-web-app-3-tier)
+  - [Developer problems on AWS](#developer-problems-on-aws)
+  - [Elastic Beanstalk – Overview](#elastic-beanstalk--overview)
+  - [Elastic Beanstalk – Components](#elastic-beanstalk--components)
+  - [Elastic Beanstalk – Supported Platforms](#elastic-beanstalk--supported-platforms)
+  - [Web Server Tier vs. Worker Tier](#web-server-tier-vs-worker-tier)
+  - [Elastic Beanstalk Deployment Modes](#elastic-beanstalk-deployment-modes)
+  - [Beanstalk Deployment Options for Updates](#beanstalk-deployment-options-for-updates)
+    - [Elastic Beanstalk Deployment - All at once](#elastic-beanstalk-deployment---all-at-once)
+    - [Elastic Beanstalk Deployment - Rolling](#elastic-beanstalk-deployment---rolling)
+    - [Elastic Beanstalk Deployment - Rolling with additional batches](#elastic-beanstalk-deployment---rolling-with-additional-batches)
+    - [Elastic Beanstalk Deployment - Immutable](#elastic-beanstalk-deployment---immutable)
+    - [Elastic Beanstalk Deployment - Blue / Green](#elastic-beanstalk-deployment---blue--green)
+    - [Elastic Beanstalk - Traffic Splitting](#elastic-beanstalk---traffic-splitting)
+    - [Elastic Beanstalk Deployment Summary from AWS Doc](#elastic-beanstalk-deployment-summary-from-aws-doc)
+  - [Elastic Beanstalk CLI](#elastic-beanstalk-cli)
+  - [Elastic Beanstalk Deployment Process](#elastic-beanstalk-deployment-process)
+  - [Beanstalk Lifecycle Policy](#beanstalk-lifecycle-policy)
+  - [Elastic Beanstalk Extensions](#elastic-beanstalk-extensions)
+  - [Elastic Beanstalk Under the Hood](#elastic-beanstalk-under-the-hood)
+  - [Elastic Beanstalk Cloning](#elastic-beanstalk-cloning)
+  - [Elastic Beanstalk Migration: Load Balancer](#elastic-beanstalk-migration-load-balancer)
+  - [RDS with Elastic Beanstalk](#rds-with-elastic-beanstalk)
+  - [Elastic Beanstalk Migration: Decouple RDS](#elastic-beanstalk-migration-decouple-rds)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## AWS Elastic Beanstalk

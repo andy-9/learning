@@ -2,6 +2,32 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [RDS + Aurora + Elasticache](#rds--aurora--elasticache)
+  - [RDS](#rds)
+  - [Advantage over using RDS versus deploying DB on EC2](#advantage-over-using-rds-versus-deploying-db-on-ec2)
+  - [RDS – Storage Auto Scaling](#rds--storage-auto-scaling)
+  - [RDS Read Replicas for read scalability](#rds-read-replicas-for-read-scalability)
+    - [RDS Read Replicas – Use Cases](#rds-read-replicas--use-cases)
+    - [RDS Read Replicas – Network Cost](#rds-read-replicas--network-cost)
+  - [RDS Multi AZ (Disaster Recovery)](#rds-multi-az-disaster-recovery)
+  - [Differences Read Replicas vs. Multi-AZ](#differences-read-replicas-vs-multi-az)
+  - [RDS – From Single-AZ to Multi-AZ](#rds--from-single-az-to-multi-az)
+  - [Aurora](#aurora)
+    - [Aurora High Availability and Read Scaling](#aurora-high-availability-and-read-scaling)
+    - [Features of Aurora](#features-of-aurora)
+  - [RDS & Aurora Security](#rds--aurora-security)
+  - [Amazon RDS Proxy](#amazon-rds-proxy)
+  - [Amazon ElastiCache Overview](#amazon-elasticache-overview)
+    - [ElastiCache Solution Architecture - DB Cache](#elasticache-solution-architecture---db-cache)
+    - [ElastiCache Solution Architecture – User Session Store](#elasticache-solution-architecture--user-session-store)
+    - [ElastiCache – Redis vs Memcached](#elasticache--redis-vs-memcached)
+    - [Caching Implementation Considerations](#caching-implementation-considerations)
+    - [1st strategy: Lazy Loading / Cache-Aside / Lazy Population](#1st-strategy-lazy-loading--cache-aside--lazy-population)
+    - [2nd strategy: Write Through – Add or Update cache when database is updated](#2nd-strategy-write-through--add-or-update-cache-when-database-is-updated)
+    - [Cache Evictions and Time-to-live (TTL)](#cache-evictions-and-time-to-live-ttl)
+  - [Final words of wisdom](#final-words-of-wisdom)
+  - [Amazon MemoryDB for Redis](#amazon-memorydb-for-redis)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## RDS + Aurora + Elasticache

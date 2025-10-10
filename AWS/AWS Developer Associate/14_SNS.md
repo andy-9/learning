@@ -2,6 +2,17 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [SNS](#sns)
+  - [SNS integrates with a lot of AWS services](#sns-integrates-with-a-lot-of-aws-services)
+  - [Amazon SNS – How to publish](#amazon-sns--how-to-publish)
+  - [Amazon SNS – Security](#amazon-sns--security)
+  - [SNS + SQS: Fan Out](#sns--sqs-fan-out)
+  - [Application: S3 Events to multiple queues](#application-s3-events-to-multiple-queues)
+  - [Application: SNS to Amazon S3 through Kinesis Data Firehose](#application-sns-to-amazon-s3-through-kinesis-data-firehose)
+  - [Amazon SNS – FIFO Topic](#amazon-sns--fifo-topic)
+  - [SNS FIFO + SQS FIFO: Fan Out](#sns-fifo--sqs-fifo-fan-out)
+  - [SNS – Message Filtering](#sns--message-filtering)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## SNS

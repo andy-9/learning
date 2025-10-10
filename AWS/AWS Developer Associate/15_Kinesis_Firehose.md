@@ -2,6 +2,29 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [Kinesis Overview](#kinesis-overview)
+  - [Kinesis Data Streams](#kinesis-data-streams)
+  - [Kinesis Data Streams – Capacity Modes](#kinesis-data-streams--capacity-modes)
+  - [Kinesis Data Streams Security](#kinesis-data-streams-security)
+  - [Kinesis Producers](#kinesis-producers)
+  - [Kinesis - ProvisionedThroughputExceeded](#kinesis---provisionedthroughputexceeded)
+  - [Kinesis Data Streams Consumers](#kinesis-data-streams-consumers)
+  - [Kinesis Consumers – Custom Consumer](#kinesis-consumers--custom-consumer)
+    - [Kinesis Consumers Types](#kinesis-consumers-types)
+    - [Kinesis Consumers – AWS Lambda](#kinesis-consumers--aws-lambda)
+  - [Kinesis Client Library (KCL)](#kinesis-client-library-kcl)
+    - [KCL Example: 4 shards](#kcl-example-4-shards)
+    - [KCL Example: 4 shards, Scaling KCL App](#kcl-example-4-shards-scaling-kcl-app)
+    - [KCL Example: 6 shards, Scaling Kinesis](#kcl-example-6-shards-scaling-kinesis)
+    - [KCL Example: 6 shards, Scaling KCL App](#kcl-example-6-shards-scaling-kcl-app)
+  - [Kinesis Operation](#kinesis-operation)
+    - [Kinesis Operation – Shard Splitting](#kinesis-operation--shard-splitting)
+    - [Kinesis Operation – Merging Shards](#kinesis-operation--merging-shards)
+- [Amazon Data Firehose](#amazon-data-firehose)
+- [Kinesis Data Streams vs Amazon Data Firehose](#kinesis-data-streams-vs-amazon-data-firehose)
+- [Amazon Managed Service for Apache Flink](#amazon-managed-service-for-apache-flink)
+- [SQS vs SNS vs Kinesis](#sqs-vs-sns-vs-kinesis)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Kinesis Overview

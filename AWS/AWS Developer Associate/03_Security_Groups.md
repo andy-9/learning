@@ -2,6 +2,31 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [Security groups](#security-groups)
+  - [Security groups on EC2 instances](#security-groups-on-ec2-instances)
+  - [Classic ports to know](#classic-ports-to-know)
+  - [How to connect to our servers?](#how-to-connect-to-our-servers)
+    - [SSH for Windows](#ssh-for-windows)
+    - [SSH for Linux/Mac](#ssh-for-linuxmac)
+  - [EC2 Instance Connect](#ec2-instance-connect)
+  - [EC2 Instance Storage](#ec2-instance-storage)
+    - [EBS Volume](#ebs-volume)
+    - [EBS Snapshots](#ebs-snapshots)
+    - [AMI (Amazon Machine Image)](#ami-amazon-machine-image)
+    - [AMI Process (from an EC2 instance)](#ami-process-from-an-ec2-instance)
+    - [EC2 Instance Store](#ec2-instance-store)
+    - [EBS Volume Types](#ebs-volume-types)
+    - [EBS Volume Types Use cases:](#ebs-volume-types-use-cases)
+      - [- General Purpose SSD](#--general-purpose-ssd)
+      - [- Provisioned IOPS (PIOPS) SSD](#--provisioned-iops-piops-ssd)
+      - [- Hard Disk Drives (HDD)](#--hard-disk-drives-hdd)
+    - [EBS Volume Types Summary](#ebs-volume-types-summary)
+    - [EBS Multi-Attach – io1/io2 family](#ebs-multi-attach--io1io2-family)
+    - [Amazon EFS – Elastic File System](#amazon-efs--elastic-file-system)
+    - [EFS – Performance & Storage Classes](#efs--performance--storage-classes)
+    - [EFS – Storage Classes](#efs--storage-classes)
+    - [EBS vs. EFS](#ebs-vs-efs)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Security groups

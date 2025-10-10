@@ -2,6 +2,21 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [Amazon VPC](#amazon-vpc)
+  - [VPC & Subnets](#vpc--subnets)
+  - [VPC Diagram](#vpc-diagram)
+  - [Internet Gateway & NAT Gateways](#internet-gateway--nat-gateways)
+  - [Network ACL & Security Groups](#network-acl--security-groups)
+  - [Network ACLs vs Security Groups](#network-acls-vs-security-groups)
+  - [VPC Flow Logs (information about the traffic flowing through VPC)](#vpc-flow-logs-information-about-the-traffic-flowing-through-vpc)
+  - [VPC Peering](#vpc-peering)
+  - [VPC Endpoints](#vpc-endpoints)
+  - [Site to Site VPN & Direct Connect](#site-to-site-vpn--direct-connect)
+  - [VPC Closing Comments](#vpc-closing-comments)
+  - [Typical 3 tier solution architecture](#typical-3-tier-solution-architecture)
+  - [LAMP Stack on EC2](#lamp-stack-on-ec2)
+  - [WordPress on AWS](#wordpress-on-aws)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Amazon VPC

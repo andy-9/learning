@@ -2,6 +2,37 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [Amazon Route 53](#amazon-route-53)
+  - [What is DNS?](#what-is-dns)
+  - [DNS Terminologies](#dns-terminologies)
+  - [How DNS works](#how-dns-works)
+  - [Amazon Route 53](#amazon-route-53-1)
+  - [Route 53 – Records](#route-53--records)
+  - [Route 53 – Record Types](#route-53--record-types)
+  - [Route 53 – Hosted Zones](#route-53--hosted-zones)
+    - [Route 53 – Public vs. Private Hosted Zones](#route-53--public-vs-private-hosted-zones)
+  - [Route 53 – Records TTL (Time To Live)](#route-53--records-ttl-time-to-live)
+  - [CNAME vs Alias](#cname-vs-alias)
+    - [Alias Records](#alias-records)
+    - [Alias Records Targets](#alias-records-targets)
+  - [Routing Policies](#routing-policies)
+    - [Routing Policies – Simple](#routing-policies--simple)
+    - [Routing Policies – Weighted](#routing-policies--weighted)
+    - [Routing Policies – Latency-based](#routing-policies--latency-based)
+  - [Health Checks](#health-checks)
+    - [Health Checks – Monitor an Endpoint](#health-checks--monitor-an-endpoint)
+    - [Calculated Health Checks](#calculated-health-checks)
+    - [Health Checks – Private Hosted Zones](#health-checks--private-hosted-zones)
+  - [Routing Policies – Failover (Active-Passive)](#routing-policies--failover-active-passive)
+  - [Routing Policies – Geolocation](#routing-policies--geolocation)
+  - [Routing Policies – Geoproximity](#routing-policies--geoproximity)
+  - [Route 53 – Traffic flow](#route-53--traffic-flow)
+  - [Routing Policies – IP-based Routing](#routing-policies--ip-based-routing)
+  - [Routing Policies – Multi-Value](#routing-policies--multi-value)
+  - [Domain Registar vs. DNS Service](#domain-registar-vs-dns-service)
+    - [GoDaddy as Registrar & Route 53 as DNS Service](#godaddy-as-registrar--route-53-as-dns-service)
+    - [3rd Party Registrar with Amazon Route 53](#3rd-party-registrar-with-amazon-route-53)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Amazon Route 53

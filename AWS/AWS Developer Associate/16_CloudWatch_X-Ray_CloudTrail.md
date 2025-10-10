@@ -2,6 +2,24 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [AWS Monitoring, Troubleshooting & Audit - CloudWatch, X-Ray and CloudTrail](#aws-monitoring-troubleshooting--audit---cloudwatch-x-ray-and-cloudtrail)
+  - [Why Monitoring is Important](#why-monitoring-is-important)
+  - [Monitoring in AWS](#monitoring-in-aws)
+  - [AWS CloudWatch Metrics](#aws-cloudwatch-metrics)
+    - [EC2 Detailed monitoring](#ec2-detailed-monitoring)
+    - [CloudWatch Custom Metrics](#cloudwatch-custom-metrics)
+    - [CloudWatch Logs](#cloudwatch-logs)
+    - [CloudWatch Logs - Sources](#cloudwatch-logs---sources)
+    - [CloudWatch Logs Insights](#cloudwatch-logs-insights)
+    - [CloudWatch Logs – S3 Export](#cloudwatch-logs--s3-export)
+    - [CloudWatch Logs Subscriptions](#cloudwatch-logs-subscriptions)
+    - [CloudWatch Logs Aggregation Multi-Account & Multi Region](#cloudwatch-logs-aggregation-multi-account--multi-region)
+    - [CloudWatch Logs Subscriptions](#cloudwatch-logs-subscriptions-1)
+  - [CloudWatch Logs for EC2](#cloudwatch-logs-for-ec2)
+    - [CloudWatch Logs Agent & Unified Agent](#cloudwatch-logs-agent--unified-agent)
+    - [CloudWatch Unified Agent – Metrics](#cloudwatch-unified-agent--metrics)
+    - [CloudWatch Logs Metric Filter](#cloudwatch-logs-metric-filter)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## AWS Monitoring, Troubleshooting & Audit - CloudWatch, X-Ray and CloudTrail

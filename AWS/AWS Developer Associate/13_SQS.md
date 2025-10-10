@@ -2,6 +2,27 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [AWS Integration & Messaging](#aws-integration--messaging)
+  - [Section Introduction](#section-introduction)
+  - [Amazon SQS - What's a queue?](#amazon-sqs---whats-a-queue)
+    - [SQS – Producing Messages](#sqs--producing-messages)
+    - [SQS – Consuming Messages](#sqs--consuming-messages)
+    - [SQS – Multiple EC2 Instances Consumers](#sqs--multiple-ec2-instances-consumers)
+    - [SQS with Auto Scaling Group (ASG)](#sqs-with-auto-scaling-group-asg)
+    - [SQS to decouple between application tiers](#sqs-to-decouple-between-application-tiers)
+    - [SQS - Security](#sqs---security)
+    - [SQS Queue Access Policy](#sqs-queue-access-policy)
+    - [SQS – Message Visibility Timeout](#sqs--message-visibility-timeout)
+  - [Amazon SQS – Dead Letter Queue (DLQ)](#amazon-sqs--dead-letter-queue-dlq)
+  - [SQS DLQ – Redrive to Source](#sqs-dlq--redrive-to-source)
+  - [Amazon SQS – Delay Queue](#amazon-sqs--delay-queue)
+  - [Amazon SQS - Long Polling](#amazon-sqs---long-polling)
+  - [SQS Extended Client](#sqs-extended-client)
+  - [SQS – Must know API](#sqs--must-know-api)
+  - [Amazon SQS – FIFO Queue](#amazon-sqs--fifo-queue)
+  - [SQS FIFO – Deduplication](#sqs-fifo--deduplication)
+  - [SQS FIFO – Message Grouping](#sqs-fifo--message-grouping)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## AWS Integration & Messaging
