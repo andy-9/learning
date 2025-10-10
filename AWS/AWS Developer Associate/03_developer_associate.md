@@ -61,7 +61,7 @@ PowerShell: cd into directory where key (`AndreasKeys.pem`) is located, then:  `
     - It can be detached from an EC2 instance and attached to another one quickly
 * It allows your instances to persist data, even after their termination
 * They can only be mounted to one instance at a time (at the CCP level). But there can be several EBS Volumes attached to an instance.
-  ![ebs_attached.png](images/ebs_attached.png)
+  ![ebs_attached.png](../images/ebs_attached.png)
 * They can be unattached.
 * They are bound to a specific availability zone (AZ)
     - An EBS Volume in `us-east-1a` cannot be attached to `us-east-1b`
@@ -72,7 +72,7 @@ PowerShell: cd into directory where key (`AndreasKeys.pem`) is located, then:  `
 * Analogy: Think of them as a “network USB stick” (attached through the network)
 * Free tier: 30 GB of free EBS storage of type General Purpose (SSD) or Magnetic per month
 * Delete on Termination attribute
-  ![delete_on_termination.png](images/delete_on_termination.png)
+  ![delete_on_termination.png](../images/delete_on_termination.png)
     - Controls the EBS behaviour when an EC2 instance terminates
         - By default, the root EBS volume is deleted (attribute enabled)
         - By default, any other attached EBS volume is not deleted (attribute disabled)
@@ -83,7 +83,7 @@ PowerShell: cd into directory where key (`AndreasKeys.pem`) is located, then:  `
 * Make a backup (snapshot) of your EBS volume at a point in time
 * Not necessary to detach volume to do snapshot, but recommended
 * Can copy snapshots across AZ or Region  
-  ![images/ebs_snapshots.png](images/ebs_snapshots.png)
+  ![images/ebs_snapshots.png](../images/ebs_snapshots.png)
 * EBS Snapshot Archive
     - Move a Snapshot to an ”archive tier” that is
       75% cheaper
@@ -114,7 +114,7 @@ PowerShell: cd into directory where key (`AndreasKeys.pem`) is located, then:  `
 * Stop the instance (for data integrity)
 * Build an AMI – this will also create EBS snapshots
 * Launch instances from other AMIs
-  ![img.png](images/ami_process.png)
+  ![img.png](../images/ami_process.png)
 * AMIs are built for a specific AWS Region, they're unique for each AWS Region. You can't launch an EC2 instance using an AMI in another AWS Region, but you can copy the AMI to the target AWS Region and then use it to create your EC2 instances.
 
 
@@ -179,15 +179,15 @@ PowerShell: cd into directory where key (`AndreasKeys.pem`) is located, then:  `
 
 #### EBS Volume Types Summary
 **SSD**
-![img.png](images/volume_types_ssd.png)
+![img.png](../images/volume_types_ssd.png)
 
 **HDD**
-![img.png](images/volume_types_hdd.png)
+![img.png](../images/volume_types_hdd.png)
 
 
 #### EBS Multi-Attach – io1/io2 family
 * Attach the same EBS volume to multiple EC2 instances in the same AZ (IMPORTANT!)
-  ![img.png](images/multi_attach.png)
+  ![img.png](../images/multi_attach.png)
 * Each instance has full read & write permissions to the high-performance volume
 * Use case:
     - Achieve higher application availability in clustered Linux applications (ex: Teradata)
@@ -199,7 +199,7 @@ PowerShell: cd into directory where key (`AndreasKeys.pem`) is located, then:  `
 * Managed NFS (network file system) that can be mounted on many EC2
 * EFS works with EC2 instances in multi-AZ
 * Highly available, scalable, expensive (3x gp2), pay per use
-  ![img.png](images/elastic_file_system.png)
+  ![img.png](../images/elastic_file_system.png)
 * Use cases: content management, web serving, data sharing, Wordpress
 * Uses NFSv4.1 protocol
 * Uses security group to control access to EFS
@@ -239,7 +239,7 @@ PowerShell: cd into directory where key (`AndreasKeys.pem`) is located, then:  `
     - are locked at the Availability Zone (AZ) level
     - gp2: IO increases if the disk size increases
     - gp3 & io1: can increase IO independently
-      ![img.png](images/ebs_snapshot.png)
+      ![img.png](../images/ebs_snapshot.png)
 * To migrate an EBS volume across AZ
     - Take a snapshot
     - Restore the snapshot to another AZ
@@ -248,7 +248,7 @@ PowerShell: cd into directory where key (`AndreasKeys.pem`) is located, then:  `
 * EFS (Elastic File System)
     - Mounting 100s of instances across AZ
     - EFS share website files (WordPress)
-      ![img.png](images/elastic_file_system_2.png)
+      ![img.png](../images/elastic_file_system_2.png)
     - Only for Linux Instances (POSIX)
     - EFS has a higher price point than EBS
     - Can leverage Storage Tiers for cost savings

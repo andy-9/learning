@@ -8,7 +8,7 @@
 Deploying applications in AWS safely and predictably
 
 ### Typical architecture: Web App 3-tier
-![img.png](images/beanstalk_web_app_3_tier.png)
+![img.png](../images/beanstalk_web_app_3_tier.png)
 
 ### Developer problems on AWS
 * Managing infrastructure
@@ -39,7 +39,7 @@ Deploying applications in AWS safely and predictably
     - Tiers: Web Server Environment Tier & Worker Environment Tier
     - You can create multiple environments (dev, test, prod, …)
 
-![img.png](images/beanstalk_components.png)
+![img.png](../images/beanstalk_components.png)
 
 ### Elastic Beanstalk – Supported Platforms
 * Go
@@ -57,12 +57,12 @@ Deploying applications in AWS safely and predictably
 * Preconfigured Docker
 
 ### Web Server Tier vs. Worker Tier
-![img.png](images/beanstalk_tiers.png)
+![img.png](../images/beanstalk_tiers.png)
 * Web Env: clients accessing the EC2 instances
 * Worker env: EC2 instances pull messages from SQS Queue to process them
 
 ### Elastic Beanstalk Deployment Modes
-![img.png](images/beanstalk_deployment_modes.png)
+![img.png](../images/beanstalk_deployment_modes.png)
 
 ### Beanstalk Deployment Options for Updates
 * All at once (deploy all in one go) – fastest, but instances aren’t available to serve traffic for a bit (downtime)
@@ -77,7 +77,7 @@ Deploying applications in AWS safely and predictably
 * Application has downtime
 * Great for quick iterations in development environment
 * No additional cost
-  ![img.png](images/beanstalk_deployment_all_at_once.png)
+  ![img.png](../images/beanstalk_deployment_all_at_once.png)
 
 #### Elastic Beanstalk Deployment - Rolling
 * Application is running below capacity
@@ -85,7 +85,7 @@ Deploying applications in AWS safely and predictably
 * Application is running both versions simultaneously
 * No additional cost
 * Long deployment
-  ![img.png](images/beanstalk_deployment_rolling.png)
+  ![img.png](../images/beanstalk_deployment_rolling.png)
 
 #### Elastic Beanstalk Deployment - Rolling with additional batches
 * Application is running at capacity
@@ -95,7 +95,7 @@ Deploying applications in AWS safely and predictably
 * Additional batch is removed at the end of the deployment
 * Longer deployment
 * Good for prod
-  ![img.png](images/beanstalk_deployment_rolling_batches.png)
+  ![img.png](../images/beanstalk_deployment_rolling_batches.png)
 
 #### Elastic Beanstalk Deployment - Immutable
 * Zero downtime
@@ -104,7 +104,7 @@ Deploying applications in AWS safely and predictably
 * Longest deployment
 * Quick rollback in case of failures (just terminate new ASG)
 * Great for prod
-  ![img.png](images/beanstalk_deployment_immutable.png)
+  ![img.png](../images/beanstalk_deployment_immutable.png)
 
 #### Elastic Beanstalk Deployment - Blue / Green
 * Not a “direct feature” of Elastic Beanstalk
@@ -113,7 +113,7 @@ Deploying applications in AWS safely and predictably
 * The new environment (green) can be validated independently and roll back if issues
 * Route 53 can be setup using weighted policies to redirect a little bit of traffic to the stage environment
 * Using Beanstalk, “swap URLs” when done with the environment test
-  ![img.png](images/beanstalk_deployment_blue_green.png)
+  ![img.png](../images/beanstalk_deployment_blue_green.png)
 
 #### Elastic Beanstalk - Traffic Splitting
 * Canary Testing
@@ -124,10 +124,10 @@ Deploying applications in AWS safely and predictably
 * No application downtime
 * New instances are migrated from the temporary to the original ASG
 * Old application version is then terminated
-  ![img.png](images/beanstalk_deployment_traffic_splitting.png)
+  ![img.png](../images/beanstalk_deployment_traffic_splitting.png)
 
 #### Elastic Beanstalk Deployment Summary from AWS Doc
-![img.png](images/beanstalk_deployment_summary.png)
+![img.png](../images/beanstalk_deployment_summary.png)
 
 ### Elastic Beanstalk CLI
 * We can install an additional CLI called the “EB cli” which makes working with Beanstalk from the CLI easier
@@ -198,13 +198,13 @@ Deploying applications in AWS safely and predictably
     3. perform a CNAME swap or Route
        53 update
 
-![img.png](images/beanstalk_migration_load_balancer.png)
+![img.png](../images/beanstalk_migration_load_balancer.png)
 
 ### RDS with Elastic Beanstalk
 * RDS can be provisioned with Beanstalk, which is great for dev / test
 * This is not great for prod as the database lifecycle is tied to the Beanstalk environment lifecycle
 * The best for prod is to separately create an RDS database and provide our EB application with the connection string
-  ![img.png](images/beanstalk_with_rds.png)
+  ![img.png](../images/beanstalk_with_rds.png)
 
 ### Elastic Beanstalk Migration: Decouple RDS
 1. Create a snapshot of RDS DB (as a safeguard)
@@ -213,4 +213,4 @@ Deploying applications in AWS safely and predictably
 4. perform a CNAME swap (blue/green) or Route 53 update, confirm working
 5. Terminate the old environment (RDS won’t be deleted)
 6. Delete CloudFormation stack (in DELETE_FAILED state)
-   ![img.png](images/beanstalk_migration_decouple_rds.png)
+   ![img.png](../images/beanstalk_migration_decouple_rds.png)

@@ -11,7 +11,7 @@
 * Improves users experience (lower latency)
 * 216 Point of Presence globally (edge locations)
 * DDoS protection (because worldwide), integration with Shield, AWS Web Application Firewall
-  ![img.png](images/cloudfront_edge_locations.png)
+  ![img.png](../images/cloudfront_edge_locations.png)
 
 ### Origins
 * S3 bucket
@@ -26,10 +26,10 @@
     - Any HTTP backend you want
 
 ### CloudFront at a high level
-![img.png](images/cloudfront_at_high_level.png)
+![img.png](../images/cloudfront_at_high_level.png)
 
 ### CloudFront – S3 as an Origin
-![img.png](images/cloudfront_s3_as_an_origin.png)
+![img.png](../images/cloudfront_s3_as_an_origin.png)
 Origin Access Control secures S3 bucket.
 
 ### CloudFront vs S3 Cross Region Replication
@@ -48,14 +48,14 @@ Origin Access Control secures S3 bucket.
 * CloudFront identifies each object in the cache using the Cache Key (see next slide)
 * You want to maximize the Cache Hit ratio to minimize requests to the origin
 * You can invalidate part of the cache using the CreateInvalidation API
-  ![img.png](images/cloudfront_caching.png)
+  ![img.png](../images/cloudfront_caching.png)
 
 ### What is CloudFront Cache Key?
 * A unique identifier for every object in the cache
 * By default, consists of hostname + resource portion of the URL
 * If you have an application that serves up content that varies based on user, device, language, location…
 * You can add other elements (HTTP headers, cookies, query strings) to the Cache Key using CloudFront Cache Policies
-  ![img.png](images/cloudfront_cache_key.png)
+  ![img.png](../images/cloudfront_cache_key.png)
 
 ### CloudFront Policies – Cache Policy
 * Cache based on:
@@ -74,7 +74,7 @@ Origin Access Control secures S3 bucket.
 * Whitelist:
     - only specified headers included in the Cache Key
     - Specified headers are also forwarded to Origin
-      ![img.png](images/cloudfront_cache_policy_http_headers.png)
+      ![img.png](../images/cloudfront_cache_policy_http_headers.png)
 
 #### CloudFront Cache – Cache Policy Query Strings
 * None
@@ -91,7 +91,7 @@ Origin Access Control secures S3 bucket.
     - Include all query strings in the Cache Key
     - All query strings are forwarded
     - Worst caching performance
-      ![img.png](images/cloudfront_cache_policy_query_strings.png)
+      ![img.png](../images/cloudfront_cache_policy_query_strings.png)
 
 #### CloudFront Policies – Origin Request Policy
 * Specify values that you want to include in origin requests without including them in the Cache Key (no duplicated cached content)
@@ -103,14 +103,14 @@ Origin Access Control secures S3 bucket.
 * Create your own policy or use Predefined Managed Policies
 
 #### Cache Policy vs. Origin Request Policy
-![img.png](images/cloudfront_cache_policy_vs_origin_request_policy.png)
+![img.png](../images/cloudfront_cache_policy_vs_origin_request_policy.png)
 Caching is based on caching policy, but origin may need more information than that --> enhance request to origin.
 
 ### CloudFront – Cache Invalidations
 * In case you update the back-end origin, CloudFront doesn’t know about it and will only get the refreshed content after the TTL has expired
 * However, you can force an entire or partial cache refresh (thus bypassing the TTL) by performing a CloudFront Invalidation
 * You can invalidate all files (*) or a special path (/images/*)
-  ![img.png](images/cloudfront_cache_invalidations.png)
+  ![img.png](../images/cloudfront_cache_invalidations.png)
 
 ### CloudFront – Cache Behaviors
 * Configure different settings for a given URL path pattern
@@ -121,16 +121,16 @@ Caching is based on caching policy, but origin may need more information than th
     - /* (default cache behavior)
 * When adding additional Cache Behaviors, the Default Cache Behavior is always the last to be processed and is always /*
 
-![img.png](images/cloudfront_cache_behaviors.png)
+![img.png](../images/cloudfront_cache_behaviors.png)
 
 #### CloudFront – Cache Behaviors – Sign In Page
-![img.png](images/cloudfront_cache_behaviors_sign_in_page.png)
+![img.png](../images/cloudfront_cache_behaviors_sign_in_page.png)
 
 #### CloudFront – Maximize cache hits by separating static and dynamic distributions
-![img.png](images/cloudfront_maximize_cache_hits.png)
+![img.png](../images/cloudfront_maximize_cache_hits.png)
 
 ### CloudFront – ALB or EC2 as an origin
-![img.png](images/cloudfront_alb_or_ec2_as_an_origin.png)
+![img.png](../images/cloudfront_alb_or_ec2_as_an_origin.png)
 
 ### CloudFront Geo Restriction
 * You can restrict who can access your distribution
@@ -152,7 +152,7 @@ Caching is based on caching policy, but origin may need more information than th
 * Signed Cookies = access to multiple files (one signed cookie for many files)
 
 #### CloudFront Signed URL Diagram
-![img.png](images/cloudfront_signed_url_diagram.png)
+![img.png](../images/cloudfront_signed_url_diagram.png)
 
 ### CloudFront Signed URL vs S3 Pre-Signed URL
 * CloudFront Signed URL:
@@ -160,13 +160,13 @@ Caching is based on caching policy, but origin may need more information than th
     - Account wide key-pair, only the root can manage it
     - Can filter by IP, path, date, expiration
     - Can leverage caching features
-      ![img.png](images/cloudfront_signed_url.png)
+      ![img.png](../images/cloudfront_signed_url.png)
 * S3 Pre-Signed URL:
     - Issue a request as the person who pre-signed the URL
     - Uses the IAM key of the signing IAM principal --> person who has that URL has the same rights as signing person
     - Limited lifetime
     - Client can access directly S3 bucket using the pre-signed URL
-      ![img.png](images/cloudfront_pre_signed_url.png)
+      ![img.png](../images/cloudfront_pre_signed_url.png)
 
 #### CloudFront Signed URL Process
 * Two types of signers:
@@ -183,7 +183,7 @@ Caching is based on caching policy, but origin may need more information than th
 ### CloudFront - Pricing
 * CloudFront Edge locations are all around the world
 * The cost of data out per edge location varies
-  ![img.png](images/cloudfront_pricing.png)
+  ![img.png](../images/cloudfront_pricing.png)
 
 #### CloudFront – Price Classes
 * You can reduce the number of edge locations for cost reduction
@@ -192,7 +192,7 @@ Caching is based on caching policy, but origin may need more information than th
     2. Price Class 200: most regions, but excludes the most expensive regions
     3. Price Class 100: only the least expensive regions
 
-![img.png](images/cloudfront_price_classes.png)
+![img.png](../images/cloudfront_price_classes.png)
 
 ### CloudFront – Multiple Origin
 * To route to different kind of origins based on the content type
@@ -201,21 +201,21 @@ Caching is based on caching policy, but origin may need more information than th
     - /api/*
     - /*
 
-![img.png](images/cloudfront_multiple_origin.png)
+![img.png](../images/cloudfront_multiple_origin.png)
 
 ### CloudFront – Origin Groups
 * To increase high-availability and do failover
 * Origin Group: one primary and one secondary origin
 * If the primary origin fails, the second one is used
 
-![img.png](images/cloudfront_origin_groups.png)
+![img.png](../images/cloudfront_origin_groups.png)
 
 ### CloudFront – Field Level Encryption
 * Protect user sensitive information through application stack
 * Adds an additional layer of security along with HTTPS
 * Sensitive information encrypted at the edge close to user
 * Uses asymmetric encryption
-  ![img.png](images/cloudfront_field_level_encryption.png)
+  ![img.png](../images/cloudfront_field_level_encryption.png)
 * Usage:
     - Specify set of fields in POST requests that you want to be encrypted (up to 10 fields)
     - Specify the public key to encrypt them
@@ -227,4 +227,4 @@ Caching is based on caching policy, but origin may need more information than th
     - Sampling Rate – percentage of requests for which you want to receive
     - Specific fields and specific Cache Behaviors (path patterns)
 
-![img.png](images/cloudfront_real_time_logs.png)
+![img.png](../images/cloudfront_real_time_logs.png)

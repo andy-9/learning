@@ -9,7 +9,7 @@
 ### Section Introduction
 * When we start deploying multiple applications, they will inevitably need to communicate with one another
 * There are two patterns of application communication
-![img.png](images/two_patterns_of_communication.png)
+![img.png](../images/two_patterns_of_communication.png)
 * Synchronous between applications can be problematic if there are sudden spikes of traffic
 * What if you need to suddenly encode 1000 videos but usually it’s 10?
 * In that case, it’s better to decouple your applications,
@@ -20,7 +20,7 @@
 
 ### Amazon SQS - What's a queue?
 * SQS = Simple Queuing Service
-![img.png](images/sqs_queue.png)
+![img.png](../images/sqs_queue.png)
 * The queuing service acts as a buffer to decouple between producers and consumers.
 * Oldest offering (over 10 years old)
 * Fully managed service, used to decouple applications
@@ -42,14 +42,14 @@
   - Customer id
   - Any attributes you want
 * SQS standard: unlimited throughput 
-![img.png](images/sqs_producing_messages.png)
+![img.png](../images/sqs_producing_messages.png)
 
 #### SQS – Consuming Messages
 * Consumers (running on EC2 instances, servers, or AWS Lambda)…
 * Poll SQS for messages (receive up to 10 messages at a time)
 * Process the messages (example: insert the message into an RDS database)
 * Delete the messages using the DeleteMessage API
-![img.png](images/sqs_consuming_messages.png)
+![img.png](../images/sqs_consuming_messages.png)
 
 #### SQS – Multiple EC2 Instances Consumers
 * Consumers receive and process messages in parallel
@@ -57,14 +57,14 @@
 * Best-effort message ordering
 * Consumers delete messages after processing them
 * We can scale consumers horizontally to improve throughput of processing
-![img.png](images/sqs_multiple_ec2_instance_consumers.png)
+![img.png](../images/sqs_multiple_ec2_instance_consumers.png)
 
 #### SQS with Auto Scaling Group (ASG)
-![img.png](images/sqs_auto_scaling_group.png)
+![img.png](../images/sqs_auto_scaling_group.png)
 * `ApproximateNumberOfMessages` is a CloudWatch metric available on any SQS queue.
 
 #### SQS to decouple between application tiers
-![img.png](images/sqs_decouple_between_application_tiers.png)
+![img.png](../images/sqs_decouple_between_application_tiers.png)
 * Scale the front-end and the back-end independently.
 
 #### SQS - Security
@@ -78,14 +78,14 @@
   - Useful for allowing other services (SNS, S3…) to write to an SQS queue
 
 #### SQS Queue Access Policy
-![img.png](images/sqs_access_policy.png)
+![img.png](../images/sqs_access_policy.png)
 
 #### SQS – Message Visibility Timeout
 * After a message is polled by a consumer, it becomes invisible to other consumers
 * By default, the “message visibility timeout” is 30 seconds
 * That means the message has 30 seconds to be processed
 * After the message visibility timeout is over, the message is “visible” in SQS
-![img.png](images/sqs_message_visibility_timeout.png)
+![img.png](../images/sqs_message_visibility_timeout.png)
 * If a message is not processed within the visibility timeout, it will be processed twice
 * A consumer could call the ChangeMessageVisibility API to get more time
 * If visibility timeout is high (hours), and consumer crashes, re-processing will take time
@@ -96,7 +96,7 @@
 * We can set a threshold of how many times a message can go back to the queue
 * After the MaximumReceives threshold is exceeded, the message goes into a Dead Letter Queue (DLQ)
 
-![img.png](images/sqs_dead_letter_queue.png)
+![img.png](../images/sqs_dead_letter_queue.png)
 * Useful for debugging!
 * DLQ of a FIFO queue must also be a FIFO queue
 * DLQ of a Standard queue must also be a Standard queue
@@ -106,14 +106,14 @@
 ### SQS DLQ – Redrive to Source
 * Feature to help consume messages in the DLQ to understand what is wrong with them
 * When our code is fixed, we can redrive the messages from the DLQ back into the source queue (or any other queue) in batches without writing custom code
-![img.png](images/sqs_dlq_redrive_to_source.png)
+![img.png](../images/sqs_dlq_redrive_to_source.png)
 
 ### Amazon SQS – Delay Queue
 * Delay a message (consumers don’t see it immediately) up to 15 minutes
 * Default is 0 seconds (message is available right away)
 * Can set a default at queue level
 * Can override the default on send using the `DelaySeconds` parameter
-![img.png](images/sqs_delay_queue.png)
+![img.png](../images/sqs_delay_queue.png)
 
 ### Amazon SQS - Long Polling
 * When a consumer requests messages from the queue, it can optionally “wait” for messages to arrive if there are none in the queue
@@ -123,12 +123,12 @@
 * Long Polling is preferable to Short Polling
 * Long polling can be enabled at the queue level or at the API level using ReceiveMessageWaitTimeSeconds
 
-![img.png](images/sqs_long_polling.png)
+![img.png](../images/sqs_long_polling.png)
 
 ### SQS Extended Client
 * Message size limit is 256KB, how to send large messages, e.g. 1GB?
 * Using the SQS Extended Client (Java Library)
-![img.png](images/sqs_extended_client.png)
+![img.png](../images/sqs_extended_client.png)
 
 ### SQS – Must know API
 * CreateQueue (MessageRetentionPeriod), DeleteQueue
@@ -141,7 +141,7 @@
 
 ### Amazon SQS – FIFO Queue
 * FIFO = First In First Out (ordering of messages in the queue)
-![img.png](images/sqs_fifo_queue.png)
+![img.png](../images/sqs_fifo_queue.png)
 * Limited throughput: 300 msg/s without batching, 3000 msg/s with
 * Exactly-once send capability (by removing duplicates)
 * Messages are processed in order by the 
@@ -154,7 +154,7 @@
   - Content-based deduplication: will do a SHA-256 hash of the message body
   - Explicitly provide a Message Deduplication ID
 
-![img.png](images/sqs_fifo_deduplication.png)
+![img.png](../images/sqs_fifo_deduplication.png)
 
 ### SQS FIFO – Message Grouping
 * If you specify the same value of MessageGroupID in an SQS FIFO queue, you can only have one consumer, and all the messages are in order. (10 message groups --> max 10 consumers)
@@ -163,4 +163,4 @@
   - Each Group ID can have a different consumer (parallel processing!)
   - Ordering across groups is not guaranteed
 
-![img.png](images/sqs_fifo_message_grouping.png)
+![img.png](../images/sqs_fifo_message_grouping.png)

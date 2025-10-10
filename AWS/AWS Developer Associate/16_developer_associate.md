@@ -97,34 +97,34 @@
     - Can save queries and add them to CloudWatch Dashboards
 * Can query multiple Log Groups in different AWS accounts
 * It’s a query engine, not a real-time engine
-  ![img.png](images/cloudwatch_logs_insights.png)
-  ![img.png](images/cloudwatch_logs_insights_sample_queries.png)
+  ![img.png](../images/cloudwatch_logs_insights.png)
+  ![img.png](../images/cloudwatch_logs_insights_sample_queries.png)
 
 #### CloudWatch Logs – S3 Export
-![img.png](images/cloudwatch_logs_s3_export.png)
+![img.png](../images/cloudwatch_logs_s3_export.png)
 * Log data can take up to 12 hours to become available for export
 * The API call is CreateExportTask
 * Not near-real time or real-time… use Logs Subscriptions instead
 
 #### CloudWatch Logs Subscriptions
-![cloudwatch_logs_subscriptions.png](images/cloudwatch_logs_subscriptions.png)
+![cloudwatch_logs_subscriptions.png](../images/cloudwatch_logs_subscriptions.png)
 * Get a real-time log events from CloudWatch Logs for processing and analysis
 * Send to Kinesis Data Streams, Kinesis Data Firehose, or Lambda
 * Subscription Filter – filter which logs are events delivered to your destination
 
 #### CloudWatch Logs Aggregation Multi-Account & Multi Region
-![img.png](images/cloudwatch_logs_aggregation.png)
+![img.png](../images/cloudwatch_logs_aggregation.png)
 
 #### CloudWatch Logs Subscriptions
 * Cross-Account Subscription – send log events to resources in a different AWS account (KDS, KDF)
-  ![img.png](images/cloudwatch_logs_subscriptions_cross_account.png)
+  ![img.png](../images/cloudwatch_logs_subscriptions_cross_account.png)
 
 ### CloudWatch Logs for EC2
 * By default, no logs from your EC2 machine will go to CloudWatch
 * You need to run a CloudWatch agent on EC2 to push the log files you want
 * Make sure IAM permissions are correct
 * The CloudWatch log agent can be setup on-premises too
-  ![img.png](images/cloudwatch_logs_ec2.png)
+  ![img.png](../images/cloudwatch_logs_ec2.png)
 
 #### CloudWatch Logs Agent & Unified Agent
 * For virtual servers (EC2 instances, on-premise servers…)
@@ -153,4 +153,4 @@
     - Metric filters can be used to trigger alarms
 * Filters do not retroactively filter data. Filters only publish the metric data points for events that happen after the filter was created.
 * Ability to specify up to 3 Dimensions for the Metric Filter (optional)
-  ![img.png](images/cloudwatch_logs_metric_filter.png)
+  ![img.png](../images/cloudwatch_logs_metric_filter.png)

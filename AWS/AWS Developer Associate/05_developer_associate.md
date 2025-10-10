@@ -40,7 +40,7 @@
     - Low-storage lasts at least 5 minutes
     - 6 hours have passed since last modification
 
-![img.png](images/rds_storage_auto_scaling.png)
+![img.png](../images/rds_storage_auto_scaling.png)
 
 * Useful for applications with unpredictable workloads
 * Supports all RDS database engines
@@ -53,7 +53,7 @@
 * If the primary database fails, read replicas cannot automatically become the primary database (though they can be promoted manually).
 * Applications must update the connection string to leverage read replicas, read replicas add new endpoints with their own DNS name --> We need to change our application to reference them individually to balance the read load.
 
-![img.png](images/rds_read_replicas.png)
+![img.png](../images/rds_read_replicas.png)
 
 #### RDS Read Replicas – Use Cases
 * You have a production database that is taking on normal load
@@ -62,13 +62,13 @@
 * The production application is unaffected
 * Read replicas are used for SELECT (=read) only kind of statements (not INSERT, UPDATE, DELETE)
 
-![img.png](images/rds_read_replicas_use_cases.png)
+![img.png](../images/rds_read_replicas_use_cases.png)
 
 #### RDS Read Replicas – Network Cost
 * In AWS there’s a network cost when data goes from one AZ to another
 * For RDS Read Replicas within the same region, you don’t pay that fee
 
-![img.png](images/rds_read_replicas_network_cost.png)
+![img.png](../images/rds_read_replicas_network_cost.png)
 
 ### RDS Multi AZ (Disaster Recovery)
 * SYNC replication
@@ -82,10 +82,10 @@
 *  For critical transactional databases where availability is crucial, a Multi-AZ setup ensures automatic failover to minimize downtime.
 * Note: The Read Replicas be setup as Multi AZ for Disaster Recovery (DR)
 
-![img.png](images/rds_multi_az.png)
+![img.png](../images/rds_multi_az.png)
 
 ### Differences Read Replicas vs. Multi-AZ
-![img.png](images/differences_read_replicas_multi_az.png)  
+![img.png](../images/differences_read_replicas_multi_az.png)  
 It is possible to set up both:
 * Set up Multi-AZ for high availability and disaster recovery.
 * Add Read Replicas to scale read workloads.
@@ -98,7 +98,7 @@ It is possible to set up both:
     - A new DB is restored from the snapshot in a new AZ
     - Synchronization is established between the two databases
 
-![img.png](images/rds_single_to_multi_az.png)
+![img.png](../images/rds_single_to_multi_az.png)
 
 
 ### Aurora
@@ -121,9 +121,9 @@ It is possible to set up both:
 * Master + up to 15 Aurora Read Replicas serve reads
 * Support for Cross Region Replication
 
-![img.png](images/aurora_shared_storage_volume.png)
+![img.png](../images/aurora_shared_storage_volume.png)
 
-![img.png](images/aurora_db_cluster.png)
+![img.png](../images/aurora_db_cluster.png)
 
 #### Features of Aurora
 * Automatic fail-over
@@ -158,7 +158,7 @@ It is possible to set up both:
 * Enforce IAM Authentication for DB, and securely store credentials in AWS Secrets Manager
 * RDS Proxy is never publicly accessible (must be accessed from VPC)
 
-![img.png](images/rds_proxy.png)
+![img.png](../images/rds_proxy.png)
 
 ### Amazon ElastiCache Overview
 * The same way RDS is to get managed Relational Databases…
@@ -176,7 +176,7 @@ It is possible to set up both:
 * Helps relieve load in RDS
 * Cache must have an invalidation strategy to make sure only the most current data is used in there.
 
-![img.png](images/elasticache_solution_architecture.png)
+![img.png](../images/elasticache_solution_architecture.png)
 
 #### ElastiCache Solution Architecture – User Session Store
 * User logs into any of the application
@@ -185,11 +185,11 @@ It is possible to set up both:
 * The instance retrieves the data and the user is already logged in
 * Storing Session Data in ElastiCache is a common pattern to ensuring different EC2 instances can retrieve your user's state if needed.
 
-![img.png](images/elasticache_user_session_store.png)
+![img.png](../images/elasticache_user_session_store.png)
 
 #### ElastiCache – Redis vs Memcached
 
-![img.png](images/redis_vs_memcached.png)
+![img.png](../images/redis_vs_memcached.png)
 
 #### Caching Implementation Considerations
 * Read more at: https://aws.amazon.com/caching/implementationconsiderations/
@@ -209,7 +209,7 @@ It is possible to set up both:
     - Cache miss penalty that results in 3 round trips, noticeable delay for that request
     - Stale data: data can be updated in the database and outdated in the cache
 
-![img.png](images/elasticache_lazy_loading.png)
+![img.png](../images/elasticache_lazy_loading.png)
 
 Python pseudocode:
 ```Python
@@ -238,7 +238,7 @@ user = get_user(17)
     - Missing Data until it is added / updated in the DB. Mitigation is to implement Lazy Loading strategy as well
     - Cache churn – a lot of the data will never be read
 
-![img.png](images/elasticache_write_through.png)
+![img.png](../images/elasticache_write_through.png)
 
 Python pseudocode:
 ```Python
@@ -281,4 +281,4 @@ user = save_user(17, {"name": "Nate Dogg"})
 * Scale seamlessly from 10s GBs to 100s TBs of storage
 * Use cases: web and mobile apps, online gaming, media streaming, …
 
-![img.png](images/memory_db_for_redis.png)
+![img.png](../images/memory_db_for_redis.png)

@@ -17,7 +17,7 @@ Managing your infrastructure as code
 * Then CloudFormation creates those for you, in the right order, with the exact configuration that you specify
 
 ### CloudFormation – Template Example
-![img.png](images/cloudformation_template_example.png)
+![img.png](../images/cloudformation_template_example.png)
 
 ### Benefits of AWS CloudFormation
 * Infrastructure as code
@@ -42,7 +42,7 @@ Managing your infrastructure as code
 
 ### How CloudFormation Works
 * Templates must be uploaded in S3 and then referenced in CloudFormation. If you upload the template from the AWS console it gets uploaded to S3 behind the scenes, and CloudFormation references that template from there.
-  ![img.png](images/cloudformation_template_stack.png)
+  ![img.png](../images/cloudformation_template_stack.png)
 * Then a stack is created. A stack ist made of AWS resources. Stacks are identified by a name.
 * To update a template, we can’t edit previous ones. We have to reupload a new version of the template to AWS
 * Deleting a stack deletes every single artifact that was created by CloudFormation.
@@ -54,12 +54,12 @@ Managing your infrastructure as code
 - Editing templates in Application Composer or code editor
 - Using the console to input parameters, etc…
 - We’ll mostly do this way in the course for learning purposes
-  ![img.png](images/cloudformation_template_manual.png)
+  ![img.png](../images/cloudformation_template_manual.png)
 * Automated way
     - Editing templates in a YAML file
     - Using the AWS CLI (Command Line Interface) to deploy the templates, or using a Continuous Delivery (CD) tool
     - Recommended way when you fully want to automate your flow
-      ![img.png](images/cloudformation_template_automated.png)
+      ![img.png](../images/cloudformation_template_automated.png)
 
 ### CloudFormation – Building Blocks
 * Template’s Components
@@ -119,7 +119,7 @@ with CloudFormation!
     - Some inputs can not be determined ahead of time
 * Parameters are extremely powerful, controlled, and can prevent errors from happening in your templates, thanks to types
 
-![img.png](images/cloudformation_parameters.png)
+![img.png](../images/cloudformation_parameters.png)
 
 #### When should you use a Parameter?
 ```yaml
@@ -152,7 +152,7 @@ Parameters can be controlled by all these settings:
 * AllowedPattern (regex)
 * NoEcho (Boolean)
 
-![img.png](images/cloudformation_parameters_example.png)
+![img.png](../images/cloudformation_parameters_example.png)
 
 #### How to Reference a Parameter?
 ```yaml
@@ -172,19 +172,19 @@ Resources:
 * AWS offers us Pseudo Parameters in any CloudFormation template
 * These can be used at any time and are enabled by default
 * Important pseudo parameters:
-  ![img.png](images/cloudformation_pseudo_parameters.png)
+  ![img.png](../images/cloudformation_pseudo_parameters.png)
   `AWS::AccountId` will be your accountId, etc.
 
 #### CloudFormation – Mappings
 * Mappings are fixed variables within your CloudFormation template
 * They’re very handy to differentiate between different environments (dev vs prod), regions (AWS regions), AMI types…
 * All the values are hardcoded within the template
-  ![img.png](images/cloudformation_mappings.png)
+  ![img.png](../images/cloudformation_mappings.png)
 
 #### Accessing Mapping Values (Fn::FindInMap)
 * We use Fn::FindInMap to return a named value from a specific key
 * !FindInMap [ MapName, TopLevelKey, SecondLevelKey ]
-  ![img.png](images/accessing_mapping_values.png)
+  ![img.png](../images/accessing_mapping_values.png)
 * Mappings work great for AMIs because AMIs are region-specific!
 
 #### When would you use Mappings vs. Parameters?
@@ -200,19 +200,19 @@ Resources:
 ### CloudFormation – Outputs
 * The Outputs section declares *optional* outputs values that we can import into other stacks (if you export them first)!
 
-![img.png](images/cloudformation_outputs_reference.png)
+![img.png](../images/cloudformation_outputs_reference.png)
 * You can also view the outputs in the AWS Console or in using the AWS CLI
 * They’re very useful for example if you define a network CloudFormation, and output the variables such as VPC ID and your Subnet IDs
 * It’s the best way to perform some collaboration cross stack, as you let expert handle their own part of the stack
 * Creating a SSH Security Group as part of one template
 * We create an output that references that security group
-  ![img.png](images/cloudformation_outputs_example.png)
+  ![img.png](../images/cloudformation_outputs_example.png)
 
 #### CloudFormation – Outputs Cross-Stack Reference
 * We then create a second template that leverages that security group
 * For this, we use the Fn::ImportValue function
 * You can’t delete the underlying stack until all the references are deleted
-  ![img.png](images/cloudformation_outputs_example_reference.png)
+  ![img.png](../images/cloudformation_outputs_example_reference.png)
 * Q: You have 2 CloudFormation templates. Template A contains the networking components (VPC, Subnets, SGs, ...) and template B contains the application infrastructure (EC2 instances, ALB, EBS, ...). You want to attach the SGs in template A to the EC2 instances in template B. How would you achieve this task?  
   A: Export the SG IDs in the Outputs section from template A, then import exported values in template B using `Fn::ImportValue`.
 
@@ -223,7 +223,7 @@ Resources:
     - AWS Region
     - Any parameter value
 * Each condition can reference another condition, parameter value or mapping
-  ![img.png](images/cloudformation_conditions.png)
+  ![img.png](../images/cloudformation_conditions.png)
 
 #### How to define a Condition
 ```yaml
@@ -283,18 +283,18 @@ Resources:
 * Attributes are attached to any resources you create
 * To know the attributes of your resources, the best place to look at is the documentation
 * Example: the AZ of an EC2 instance!
-  ![img.png](images/cloudformation_intrinsic_functions_getatt.png)
+  ![img.png](../images/cloudformation_intrinsic_functions_getatt.png)
 * Could also be e.g. the `PrivateDnsName` or `PublicIp`
 
 #### Intrinsic Functions – Fn::FindInMap
 * We use Fn::FindInMap to return a named value from a specific key
 * !FindInMap [ MapName, TopLevelKey, SecondLevelKey ]
-  ![img.png](images/cloudformation_intrinsic_functions_findinmap.png)
+  ![img.png](../images/cloudformation_intrinsic_functions_findinmap.png)
 
 #### Intrinsic Functions – Fn::ImportValue
 * Import values that are exported in other stacks
 * For this, we use the Fn::ImportValue function
-  ![img.png](images/cloudformation_intrinsic_functions_importvalue.png)
+  ![img.png](../images/cloudformation_intrinsic_functions_importvalue.png)
 
 #### Intrinsic Functions – Fn::Base64
 * Convert String to it’s Base64 representation
@@ -302,7 +302,7 @@ Resources:
 !Base64 "ValueToEncode"
 ```
 * Example: pass encoded data to EC2 Instance’s UserData property
-  ![img.png](images/cloudformation_intrinsic_functions_base64.png)
+  ![img.png](../images/cloudformation_intrinsic_functions_base64.png)
 
 #### Intrinsic Functions – Condition Functions
 ```yaml
@@ -338,7 +338,7 @@ Conditions:
     - You want to achieve the least privilege principle
     - But you don’t want to give the user all the required permissions to create the stack resources (but only the permissions to invoke a service role on CloudFormation)
 * User must have iam:PassRole permissions (necessary permission to give a role to a specific service in AWS)
-  ![img.png](images/cloudformation_service_role.png)
+  ![img.png](../images/cloudformation_service_role.png)
 
 ### CloudFormation Capabilities
 * CAPABILITY_NAMED_IAM and CAPABILITY_IAM
@@ -360,13 +360,13 @@ Conditions:
 * Default DeletionPolicy=Delete
     - Instance will be deleted whenever the CloudFormation stack is deleted.
     - ⚠ Delete won’t work on an S3 bucket if the bucket is not empty. --> implement custom resource to delete everything within the S3 bucket before automatically having the S3 bucket go away.
-      ![img.png](images/cloudformation_deletion_policy.png)
+      ![img.png](../images/cloudformation_deletion_policy.png)
 
 #### CloudFormation – DeletionPolicy Retain
 * DeletionPolicy=Retain:
     - Specify on resources to preserve in case of CloudFormation deletes
 * Works with any resources
-  ![img.png](images/cloudformation_deletion_policy_retain.png)
+  ![img.png](../images/cloudformation_deletion_policy_retain.png)
 
 #### CloudFormation – DeletionPolicy Snapshot
 * DeletionPolicy=Snapshot
@@ -374,7 +374,7 @@ Conditions:
 * Examples of supported resources:
     - EBS Volume, ElastiCache Cluster, ElastiCache ReplicationGroup
     - RDS DBInstance, RDS DBCluster, Redshift Cluster, Neptune DBCluster, DocumentDB DBCluster
-      ![img.png](images/cloudformation_deletion_policy_snapshot.png)
+      ![img.png](../images/cloudformation_deletion_policy_snapshot.png)
 
 ### CloudFormation – Stack Policies
 * During a CloudFormation Stack update, all update actions are allowed on all resources (default)
@@ -382,7 +382,7 @@ Conditions:
 * Protect resources from unintentional updates
 * When you set a Stack Policy, all resources in the Stack are protected by default
 * Specify an explicit ALLOW for the resources you want to be allowed to be updated
-  ![img.png](images/cloudformation_stack_policies.png)
+  ![img.png](../images/cloudformation_stack_policies.png)
 * Q: Your AWS infrastructure created with CloudFormation evolve over time. What should you do to update a CloudFormation stack?  
   A: Update your CloudFormation template locally, then upload and apply it in the CloudFormation console.
 
@@ -400,18 +400,18 @@ Conditions:
 #### How to define a Custom Resource?
 * ServiceToken specifies where CloudFormation sends requests to, such as Lambda ARN or SNS ARN (required & must be in the same region)
 * Input data parameters (optional)
-  ![img.png](images/cloudformation_define_custom_resource.png)
+  ![img.png](../images/cloudformation_define_custom_resource.png)
 
 ### Use Case – Delete content from an S3 bucket
 * You can’t delete a non-empty S3 bucket
 * To delete a non-empty S3 bucket, you must first delete all the objects inside it
 * We can use a custom resource to empty an S3 bucket before it gets deleted by CloudFormation
-  ![img.png](images/cloudformation_delete_content_from_s3.png)
+  ![img.png](../images/cloudformation_delete_content_from_s3.png)
 
 ### CloudFormation – StackSets
 * Create, update, or delete stacks across multiple accounts and regions with a single operation/template
 * Target accounts to create, update, delete stack instances from StackSets
-  ![img.png](images/cloudformation_stacksets.png)
+  ![img.png](../images/cloudformation_stacksets.png)
 * When you update a stack set, all associated stack instances are updated throughout all accounts and
   regions
 * Can be applied into all accounts of an AWS Organization

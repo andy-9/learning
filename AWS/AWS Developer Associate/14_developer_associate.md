@@ -7,7 +7,7 @@
 ## SNS
 
 What if you want to send one message to many receivers?
-![img.png](images/sns_pub_sub.png)
+![img.png](../images/sns_pub_sub.png)
 Pub / Sub = publish subscribe  
 Publishing a message into a topic  
 Subscribing from that topic
@@ -18,11 +18,11 @@ Subscribing from that topic
 * Up to 12,500,000 subscriptions per topic
 * 100,000 topics limit
 * Protocols for SNS: Amazon Kinesis Date Firehose, Amazon SQS, Amazon Lambda, Email, Email-JSON, HTTP, HTTPS, SMS. But not for: Kinesis Data Streams!
-  ![img.png](images/sns_publish_subscribers.png)
+  ![img.png](../images/sns_publish_subscribers.png)
 
 ### SNS integrates with a lot of AWS services
 * Many AWS services can send data directly to SNS for notifications
-  ![img.png](images/sns_integrations_aws_services.png)
+  ![img.png](../images/sns_integrations_aws_services.png)
 
 ### Amazon SNS – How to publish
 * Topic Publish (using the SDK)
@@ -52,20 +52,20 @@ Subscribing from that topic
 * Ability to add more SQS subscribers over time
 * Make sure your SQS queue access policy allows for SNS to write
 * Cross-Region Delivery: works with SQS Queues in other regions
-  ![img.png](images/sns_sqs_fan_out.png)
+  ![img.png](../images/sns_sqs_fan_out.png)
 
 ### Application: S3 Events to multiple queues
 * For the same combination of: event type (e.g. object create) and prefix (e.g. images/) you can only have one S3 Event rule
 * If you want to send the same S3 event to many SQS queues, use fan-out
-  ![img.png](images/s3_sns_sqs_multiple_queues.png)
+  ![img.png](../images/s3_sns_sqs_multiple_queues.png)
 
 ### Application: SNS to Amazon S3 through Kinesis Data Firehose
 * SNS can send to Kinesis and therefore we can have the following solutions architecture:
-  ![img.png](images/sns_s3_kinesis_firehose.png)
+  ![img.png](../images/sns_s3_kinesis_firehose.png)
 
 ### Amazon SNS – FIFO Topic
 * FIFO = First In First Out (ordering of messages in the topic)
-  ![img.png](images/sns_fifo_topic.png)
+  ![img.png](../images/sns_fifo_topic.png)
 * Similar features as SQS FIFO:
     - Ordering by Message Group ID (all messages in the same group are ordered)
     - Deduplication using a Deduplication ID or Content Based Deduplication
@@ -74,9 +74,9 @@ Subscribing from that topic
 
 ### SNS FIFO + SQS FIFO: Fan Out
 * In case you need fan out + ordering + deduplication
-  ![img.png](images/sns_fifo_sqs_fifo_fan_out.png)
+  ![img.png](../images/sns_fifo_sqs_fifo_fan_out.png)
 
 ### SNS – Message Filtering
 * JSON policy used to filter messages sent to SNS topic’s subscriptions
 * If a subscription doesn’t have a filter policy, it receives every message
-  ![img.png](images/sns_message_filtering.png)
+  ![img.png](../images/sns_message_filtering.png)

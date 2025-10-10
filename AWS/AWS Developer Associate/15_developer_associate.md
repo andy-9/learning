@@ -13,7 +13,7 @@
 * Kinesis Video Streams: capture, process, and store video streams
 
 ### Kinesis Data Streams
-![img.png](images/kinesis_data_streams.png)
+![img.png](../images/kinesis_data_streams.png)
 * Retention between 1 day to 365 days
 * Ability to reprocess (replay) data
 * Once data is inserted in Kinesis, it can’t be deleted (immutability)
@@ -43,7 +43,7 @@
 * You can implement encryption/decryption of data on client side (harder)
 * VPC Endpoints available for Kinesis to access within VPC
 * Monitor API calls using CloudTrail
-  ![img.png](images/kinesis_data_streams_security.png)
+  ![img.png](../images/kinesis_data_streams_security.png)
 
 ### Kinesis Producers
 * Puts data records into data streams
@@ -58,10 +58,10 @@
 * Write throughput: 1 MB/sec or 1000 records/sec per shard
 * PutRecord API
 * Use batching with PutRecords API to reduce costs & increase throughput
-  ![img.png](images/kinesis_producers.png)
+  ![img.png](../images/kinesis_producers.png)
 
 ### Kinesis - ProvisionedThroughputExceeded
-![img.png](images/kinesis_provisioned_throughput_exceeded.png)
+![img.png](../images/kinesis_provisioned_throughput_exceeded.png)
 
 Q: You have a Kinesis Data Stream where you intermittently get a ProvisionedThroughputExceededException exception in your producers' applications. The following can be used to resolve the error:
 A: 1.) Use a highly distributes partition key, 2.) Retry with exponential backoff, 3.) Add more shards
@@ -75,7 +75,7 @@ A: 1.) Use a highly distributes partition key, 2.) Retry with exponential backof
 * Kinesis Client Library (KCL): library to simplify reading from data stream
 
 ### Kinesis Consumers – Custom Consumer
-![img.png](images/kinesis_consumers_custom_consumer.png)
+![img.png](../images/kinesis_consumers_custom_consumer.png)
 
 #### Kinesis Consumers Types
 **Shared (Classic) Fan-out Consumer - pull**
@@ -101,7 +101,7 @@ A: 1.) Use a highly distributes partition key, 2.) Retry with exponential backof
 * Can configure batch size and batch window
 * If error occurs, Lambda retries until succeeds or data expired
 * Can process up to 10 batches per shard simultaneously
-  ![img.png](images/kinesis_consumers_aws_lambda.png)
+  ![img.png](../images/kinesis_consumers_aws_lambda.png)
 
 ### Kinesis Client Library (KCL)
 * A Java library that helps read record from a Kinesis Data Stream with distributed applications sharing the read workload
@@ -118,16 +118,16 @@ A: 1.) Use a highly distributes partition key, 2.) Retry with exponential backof
     - KCL 2.x (supports shared & enhanced fan-out consumer)
 
 #### KCL Example: 4 shards
-![img.png](images/kcl_example_4_shards.png)
+![img.png](../images/kcl_example_4_shards.png)
 
 #### KCL Example: 4 shards, Scaling KCL App
-![img.png](images/kcl_example_4_shards_scaling.png)
+![img.png](../images/kcl_example_4_shards_scaling.png)
 
 #### KCL Example: 6 shards, Scaling Kinesis
-![img.png](images/kcl_example_6_shards_scaling.png)
+![img.png](../images/kcl_example_6_shards_scaling.png)
 
 #### KCL Example: 6 shards, Scaling KCL App
-![img.png](migration/kcl_example_6_shards_scaling_kcl.png)
+![img.png](../migration/kcl_example_6_shards_scaling_kcl.png)
 
 ### Kinesis Operation
 
@@ -137,19 +137,19 @@ A: 1.) Use a highly distributes partition key, 2.) Retry with exponential backof
 * The old shard is closed and will be deleted once the data is expired
 * No automatic scaling (manually increase/decrease capacity)
 * Can’t split into more than two shards in a single operation
-  ![img.png](images/kinesis_operation_shard_splitting.png)
+  ![img.png](../images/kinesis_operation_shard_splitting.png)
 
 #### Kinesis Operation – Merging Shards
 * Decrease the Stream capacity and save costs
 * Can be used to group two shards with low traffic (cold shards)
 * Old shards are closed and will be deleted once the data is expired
 * Can’t merge more than two shards in a single operation
-  ![img.png](images/kinesis_operation_merging_shards.png)
+  ![img.png](../images/kinesis_operation_merging_shards.png)
 
 ## Amazon Data Firehose
 * Send data from sources to target destinations
 
-![img.png](images/amazon_data_firehose.png)
+![img.png](../images/amazon_data_firehose.png)
 * Used to be called "Kinesis Data Firehose"
 * Fully Managed Service, no administration, automatic scaling, serverless
     - AWS: Redshift / Amazon S3 / OpenSearch
@@ -185,7 +185,7 @@ A: Kinesis Data Streams & Kinesis Data Firehose are a perfect combo of technolog
 ## Amazon Managed Service for Apache Flink
 * Previously named: Kinesis Data Analytics for Apache Flink
 * Flink (Java, Scala or SQL) is a framework for processing data streams
-  ![img.png](images/amazon_managed_service_for_apache_flink.png)
+  ![img.png](../images/amazon_managed_service_for_apache_flink.png)
 * Run any Apache Flink application on a managed cluster on AWS
     - Provisioned compute resources, parallel computation, automatic scaling
     - Application backups (implemented as checkpoints and snapshots)
@@ -193,4 +193,4 @@ A: Kinesis Data Streams & Kinesis Data Firehose are a perfect combo of technolog
     - Important: Flink does not read from Amazon Data Firehose
 
 ## SQS vs SNS vs Kinesis
-![img.png](images/sqs_vs_sns_vs_kinesis.png)
+![img.png](../images/sqs_vs_sns_vs_kinesis.png)

@@ -42,7 +42,7 @@
     - `5`: generation
     - `2xlarge`: size within the instance class
 * Example:
-  ![instance_types.png](images/example_instance_types.png)
+  ![instance_types.png](../images/example_instance_types.png)
 * **General Purpose (`T`)**: Great for a diversity of workloads such as web servers or code repositories. Balance between:
     - Compute
     - Memory
@@ -131,7 +131,7 @@
 * Useful for software that have complicated licensing model (BYOL – Bring Your Own License)
 * Or for companies that have strong regulatory or compliance needs
 
-![dedicated_instances.png](images/dedicated_instances.png)
+![dedicated_instances.png](../images/dedicated_instances.png)
 
 #### EC2 Dedicated Instances
 * Instances run on hardware that’s dedicated to you
@@ -158,4 +158,4 @@
 * Dedicated Hosts: We book an entire building of the resort
 * Capacity Reservations: you book a room for a period with full price even you don’t stay in it
 
-![price_comparison.png](images/price_comparison.png)
+![price_comparison.png](../images/price_comparison.png)

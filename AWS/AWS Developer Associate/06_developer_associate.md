@@ -28,11 +28,11 @@
 * Protocol: `http`
 * URL: `http://api.www.example.com`
 
-![img_1.png](images/dns_terminology.png)
+![img_1.png](../images/dns_terminology.png)
 
 ### How DNS works
 
-![img.png](images/how_dns_works.png)
+![img.png](../images/how_dns_works.png)
 
 ### Amazon Route 53
 * A highly available, scalable, fully managed and Authoritative DNS
@@ -42,7 +42,7 @@
 * The only AWS service which provides 100% availability SLA
 * Why Route 53? 53 is a reference to the traditional DNS port used by DNS services
 
-![img.png](images/amazon_route_53.png)
+![img.png](../images/amazon_route_53.png)
 
 ### Route 53 – Records
 * How you want to route traffic for a domain
@@ -75,7 +75,7 @@
 * You pay $0.50 per month per hosted zone
 
 #### Route 53 – Public vs. Private Hosted Zones
-![img.png](images/public_private_hosted_zone.png)
+![img.png](../images/public_private_hosted_zone.png)
 
 ### Route 53 – Records TTL (Time To Live)
 * High TTL – e.g., 24 hr
@@ -87,7 +87,7 @@
     - Easy to change records
 * Except for Alias records, TTL is mandatory for each DNS record
 
-![img.png](images/records_ttl.png)
+![img.png](../images/records_ttl.png)
 
 ### CNAME vs Alias
 * AWS Resources (Load Balancer, CloudFront...) expose an AWS hostname:  
@@ -108,7 +108,7 @@
 * Unlike CNAME, it can be used for the top node of a DNS namespace (Zone Apex), e.g.: `example.com`
 * Alias Record is always of type A/AAAA for AWS resources (IPv4 / IPv6)
 * You can’t set the TTL  
-  ![img.png](images/alias_record.png)
+  ![img.png](../images/alias_record.png)
 
 #### Alias Records Targets
 * Elastic Load Balancers
@@ -120,7 +120,7 @@
 * Global Accelerator
 * Route 53 record in the same hosted zone
 * You cannot set an ALIAS record for an EC2 DNS name!
-  ![img.png](images/alias_record_targets.png)
+  ![img.png](../images/alias_record_targets.png)
 
 ### Routing Policies
 * Define how Route 53 responds to DNS queries
@@ -138,10 +138,10 @@
 
 #### Routing Policies – Simple
 * Typically, route traffic to a single resource
-  ![img.png](images/routing_single_value.png)
+  ![img.png](../images/routing_single_value.png)
 * Can specify multiple values in the same record
 * If multiple values are returned, a random one is chosen by the client
-  ![img.png](images/routing_multiple_values.png)
+  ![img.png](../images/routing_multiple_values.png)
 
 * When Alias enabled, specify only one AWS resource
 * Can’t be associated with Health Checks
@@ -152,7 +152,7 @@
     - traffic (%) = Weight for a specific record / Sum of all the weights for all records
     - Weights don’t need to sum up to 100
     - Common use case: send part of traffic to a new version of my application
-      ![img.png](images/routing_polices_weighted.png)
+      ![img.png](../images/routing_polices_weighted.png)
 
 * DNS records must have the same name and type
 * Can be associated with Health Checks
@@ -162,7 +162,7 @@
 
 #### Routing Policies – Latency-based
 * Redirect to the resource that has the least latency close to us
-  ![img.png](images/routing_policies_latency.png)
+  ![img.png](../images/routing_policies_latency.png)
 * Super helpful when latency for users is a priority
 * Latency is based on traffic between users and AWS Regions
 * Germany users may be directed to the US (if that’s the lowest latency)
@@ -175,7 +175,7 @@
     2. Health checks that monitor other health checks (Calculated Health Checks)
     3. Health checks that monitor CloudWatch Alarms (full control !!) – e.g., throttles of DynamoDB, alarms on RDS, custom metrics, … (helpful for private resources)
 * Health Checks are integrated with CW metrics
-  ![img.png](images/route_53_health_checks.png)
+  ![img.png](../images/route_53_health_checks.png)
 
 #### Health Checks – Monitor an Endpoint
 * About 15 global health checkers will check the endpoint health
@@ -187,7 +187,7 @@
 * Health Checks pass only when the endpoint responds with the 2xx and 3xx status codes
 * Health Checks can be setup to pass / fail based on the text in the first 5120 bytes of the response
 * Configure your router/firewall to allow incoming requests from Route 53 Health Checkers
-  ![img.png](images/health_checks_endpoint.png)
+  ![img.png](../images/health_checks_endpoint.png)
 
 #### Calculated Health Checks
 * Combine the results of multiple Health Checks into a single Health Check
@@ -195,17 +195,17 @@
 * Can monitor up to 256 Child Health Checks
 * Specify how many of the health checks need to pass to make the parent pass
 * Usage: perform maintenance to your website without causing all health checks to fail
-  ![img.png](images/calculated_health_checks.png)
+  ![img.png](../images/calculated_health_checks.png)
 
 #### Health Checks – Private Hosted Zones
 * Route 53 health checkers are outside the VPC
 * They can’t access private endpoints (private VPC or on-premises resource)
 * You can create a CloudWatch Metric and associate a CloudWatch Alarm, then create a Health Check that checks the alarm itself.
-  ![img.png](images/health_checks_private_hosted_zones.png)
+  ![img.png](../images/health_checks_private_hosted_zones.png)
 
 
 ### Routing Policies – Failover (Active-Passive)
-![img.png](images/routing_policies_failover.png)
+![img.png](../images/routing_policies_failover.png)
 
 ### Routing Policies – Geolocation
 * Different from Latency-based!
@@ -214,16 +214,16 @@
 * Should create a “Default” record (in case there’s no match on location)
 * Use cases: website localization, restrict content distribution, load balancing, …
 * Can be associated with Health Checks
-  ![img.png](images/routing_policies_geolocation.png)
+  ![img.png](../images/routing_policies_geolocation.png)
 
 ### Routing Policies – Geoproximity
 * Route traffic to your resources based on the geographic location of users and resources
-  ![img.png](images/routing_policies_geoproximity_no_bias.png)
+  ![img.png](../images/routing_policies_geoproximity_no_bias.png)
 * Ability to shift more traffic to resources based on the defined bias
 * To change the size of the geographic region, specify bias values:
     - To expand (1 to 99) – more traffic to the resource
     - To shrink (-1 to -99) – less traffic to the resource
-      ![img.png](images/routing_policies_geoproximity_biased.png)
+      ![img.png](../images/routing_policies_geoproximity_biased.png)
 * Resources can be:
     - AWS resources (specify AWS region)
     - Non-AWS resources (specify Latitude and Longitude)
@@ -241,7 +241,7 @@
 * You provide a list of CIDRs for your clients and the corresponding endpoints/locations (user-IP-to-endpoint mappings)
 * Use cases: Optimize performance, reduce network costs…
 * Example: route end users from a particular ISP to a specific endpoint
-  ![img.png](images/ip_based_routing.png)
+  ![img.png](../images/ip_based_routing.png)
 
 ### Routing Policies – Multi-Value
 * Use when routing traffic to multiple resources
@@ -249,17 +249,17 @@
 * Can be associated with Health Checks (return only values for healthy resources)
 * Up to 8 healthy records are returned for each Multi-Value query
 * Multi-Value is not a substitute for having an ELB. The idea is a client-side load balancing.
-  ![img.png](images/routing_polices_multi_value.png)
+  ![img.png](../images/routing_polices_multi_value.png)
 
 ### Domain Registar vs. DNS Service
 * You buy or register your domain name with a Domain Registrar typically by paying annual charges (e.g., GoDaddy, Amazon Registrar Inc., …)
 * The Domain Registrar usually provides you with a DNS service to manage your DNS records
 * But you can use another DNS service to manage your DNS records
 * Example: purchase the domain from GoDaddy and use Route 53 to manage your DNS records
-  ![img.png](images/manage_dns_records.png)
+  ![img.png](../images/manage_dns_records.png)
 
 #### GoDaddy as Registrar & Route 53 as DNS Service
-![img.png](images/registrar_route_53_dns_service.png)
+![img.png](../images/registrar_route_53_dns_service.png)
 
 #### 3rd Party Registrar with Amazon Route 53
 * If you buy your domain on a 3rd party registrar, you can still use Route 53 as the DNS Service provider

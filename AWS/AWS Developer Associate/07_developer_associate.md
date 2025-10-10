@@ -12,16 +12,16 @@
 * A **public subnet** is a subnet that is accessible from the internet
 * A **private subnet** is a subnet that is not accessible from the internet
 * To define access to the internet and between subnets, we use **Route Tables**.
-  ![img.png](images/vpc_subnets.png)
+  ![img.png](../images/vpc_subnets.png)
 
 ### VPC Diagram
-![img.png](images/vpc_diagram.png)
+![img.png](../images/vpc_diagram.png)
 
 ### Internet Gateway & NAT Gateways
 * Internet Gateways helps our VPC instances connect with the internet
 * Public Subnets have a route to the internet gateway.
 * NAT Gateways (AWS-managed) & NAT Instances (self-managed) allow your instances in your Private Subnets to access the internet while remaining private.
-  ![img.png](images/nat_gateways.png)
+  ![img.png](../images/nat_gateways.png)
 
 ### Network ACL & Security Groups
 * NACL (Network Access Control Lists)
@@ -33,10 +33,10 @@
     - A firewall that controls traffic to and from an ENI (Elastic Network Interface) / an EC2 Instance
     - Can have only ALLOW rules
     - Rules include IP addresses and other security groups
-      ![img.png](images/network_acl_and_security_groups.png)
+      ![img.png](../images/network_acl_and_security_groups.png)
 
 ### Network ACLs vs Security Groups
-![img.png](images/network_acls_vs_security_groups.png)
+![img.png](../images/network_acls_vs_security_groups.png)
 
 ### VPC Flow Logs (information about the traffic flowing through VPC)
 * Capture information about IP traffic going into your interfaces:
@@ -55,7 +55,7 @@
 * Make them behave as if they were in the same network
 * Must not have overlapping CIDR (IP address range)
 * VPC Peering connection is not transitive (must be established for each VPC that need to communicate with one another)
-  ![img.png](images/vpc_peering.png)
+  ![img.png](../images/vpc_peering.png)
 
 ### VPC Endpoints
 * Endpoints allow you to connect to AWS Services using a private network instead of the public www network
@@ -64,7 +64,7 @@
 * VPC Endpoint Interface powered by a private link (private IP): the rest of the AWS services
 * Only used within your VPC
 * **Connecting privately to an AWS service: Always through VPC**
-  ![img.png](images/vpc_endpoints.png)
+  ![img.png](../images/vpc_endpoints.png)
 
 ### Site to Site VPN & Direct Connect
 * Site to Site VPN
@@ -77,7 +77,7 @@
     - Goes over a private network
     - Takes at least a month to establish
 
-![img.png](images/direct_connect.png)
+![img.png](../images/direct_connect.png)
 
 ### VPC Closing Comments
 * VPC: Virtual Private Cloud
@@ -94,7 +94,7 @@
 * Direct Connect: direct private connection to AWS
 
 ### Typical 3 tier solution architecture
-![img.png](images/typical_3_tier_solution_architecture.png)
+![img.png](../images/typical_3_tier_solution_architecture.png)
 
 ### LAMP Stack on EC2
 * **L**inux: OS for EC2 instances
@@ -105,4 +105,4 @@
 * To store local application data & software: EBS drive (root)
 
 ### WordPress on AWS
-![img.png](images/wordpress_on_aws.png)
+![img.png](../images/wordpress_on_aws.png)

@@ -70,7 +70,7 @@
     - Effect: Allow / Deny (Actions)
     - Actions: Set of API to Allow or Deny
     - Principal: The account or user to apply the policy to (star * allows anyone)
-      ![img.png](images/s3_bucket_policies.png)
+      ![img.png](../images/s3_bucket_policies.png)
 * Use S3 bucket for policy to:
     - Grant public access to the bucket
     - Force objects to be encrypted at upload
@@ -79,20 +79,20 @@
 ### Examples
 
 #### Public Access - Use Bucket Policy
-![img.png](images/public_access_bucket_policy.png)
+![img.png](../images/public_access_bucket_policy.png)
 
 #### User Access to S3 – IAM permissions
-![img.png](images/user_access_iam_permissions.png)
+![img.png](../images/user_access_iam_permissions.png)
 
 #### EC2 instance access - Use IAM Roles
 Not user, but role!
-![img.png](images/ec2_instance_access_iam_roles.png)
+![img.png](../images/ec2_instance_access_iam_roles.png)
 
 #### Advanced: Cross-Account Access – Use Bucket Policy
-![img.png](images/cross_account_access_bucket_policy.png)
+![img.png](../images/cross_account_access_bucket_policy.png)
 
 ### Bucket settings for Block Public Access
-![img.png](images/bucket_settings_for_block_public_access.png)
+![img.png](../images/bucket_settings_for_block_public_access.png)
 * These settings were created to prevent company data leaks
 * If you know your bucket should never be public, leave these on
 * Can be set at the account level
@@ -122,7 +122,7 @@ Not user, but role!
 * Must give proper IAM permissions to S3
 * Use cases:
     - CRR – compliance, lower latency access, replication across accounts
-      ![img.png](images/cross_region_replication.png)
+      ![img.png](../images/cross_region_replication.png)
     - SRR – log aggregation, live replication between production and test accounts
 
 ### S3 – Replication (Notes)
@@ -199,10 +199,10 @@ Not user, but role!
 * *Deep Archive Access tier (optional)*: config. from 180 days to 700+ days
 
 #### S3 Storage Classes Comparison
-![img.png](images/s3_storage_classes_comparison.png)
+![img.png](../images/s3_storage_classes_comparison.png)
 
 Specific example (us-east-1):
-![img.png](images/s3_price_comparison_specific_example.png)
+![img.png](../images/s3_price_comparison_specific_example.png)
 
 Switch between classes is done with a lifecycle rule on the bucket.
 
@@ -269,7 +269,7 @@ Switch between classes is done with a lifecycle rule on the bucket.
 * Must implement yourself if using the AWS API as-is or in specific cases
     - Must only implement the retries on 5xx server errors and throttling
     - Do not implement on 4xx client errors
-      ![img.png](images/exponential_backoff.png)
+      ![img.png](../images/exponential_backoff.png)
       The more we retry, the more we wait: 1st retry 1s, 2nd retry 2s, 3rd retry 4s, 4th retry 8s, 5h retry 16s.
     - --> Less and less load on server, allowing the server to serve as many answers as possible.
 
@@ -317,13 +317,13 @@ The Java SDK (example) will look for credentials in this order
 * Note: some requests to Amazon S3 don’t need to be signed
 * If you use the SDK or CLI, the HTTP requests are signed for you
 * You should sign an AWS HTTP request using Signature v4 (SigV4)
-  ![img.png](images/signing_aws_api_requests.png)
+  ![img.png](../images/signing_aws_api_requests.png)
 
 #### SigV4 Request examples
 * HTTP Header option (signature in Authorization header)
-  ![img.png](images/http_header_option.png)
+  ![img.png](../images/http_header_option.png)
 * Query String option, ex: S3 pre-signed URLs (signature in X-Amz-Signature)
-  ![img.png](images/query_string_option.png)
+  ![img.png](../images/query_string_option.png)
 
 ## S3 - Advanced
 
@@ -333,7 +333,7 @@ The Java SDK (example) will look for credentials in this order
 * For archive objects that you don’t need fast access to, move them to Glacier or Glacier Deep Archive
 * Moving objects can be automated using a Lifecycle Rules
 
-![img.png](images/s3_moving_between_storage_classes.png)
+![img.png](../images/s3_moving_between_storage_classes.png)
 
 ### Lifecycle Rules
 * **Transition Actions** – configure objects to transition to another storage class
@@ -360,7 +360,7 @@ The Java SDK (example) will look for credentials in this order
 #### S3 Analytics – Storage Class Analysis
 * Help you decide when to transition objects to the right storage class
     * Recommendations for Standard and Standard IA
-      ![img.png](images/s3_analytics_storage_class_analysis.png)
+      ![img.png](../images/s3_analytics_storage_class_analysis.png)
 
   Does NOT work for One-Zone IA or Glacier
 * Report is updated daily
@@ -370,16 +370,16 @@ The Java SDK (example) will look for credentials in this order
 ### S3 Event Notifications
 * S3:ObjectCreated, S3:ObjectRemoved, S3:ObjectRestore, S3:Replication…
 * Object name filtering possible (*.jpg)
-  ![img.png](images/s3_event_notifications.png)
+  ![img.png](../images/s3_event_notifications.png)
 * Use case: generate thumbnails of images uploaded to S3
 * Can create as many “S3 events” as desired
 * S3 event notifications typically deliver events in seconds but can sometimes take a minute or longer
 
 #### S3 Event Notifications – IAM Permissions
-![img.png](images/s3_event_notifications_iam_permissions.png)
+![img.png](../images/s3_event_notifications_iam_permissions.png)
 
 #### S3 Event Notifications with Amazon EventBridge
-![img.png](images/s3_event_notification_eventbridge.png)
+![img.png](../images/s3_event_notification_eventbridge.png)
 * Advanced filtering options with JSON rules (metadata, object size, name...)
 * Multiple Destinations – ex Step Functions, Kinesis Streams / Firehose…
 * EventBridge Capabilities – Archive, Replay Events, Reliable delivery
@@ -398,20 +398,20 @@ The Java SDK (example) will look for credentials in this order
 #### Performance: Multi-Part upload
 * recommended for files > 100MB, must use for files > 5GB
 * Can help parallelize uploads (speed up transfers)
-  ![img.png](images/multi_part_upload.png)
+  ![img.png](../images/multi_part_upload.png)
 
 #### Performance: S3 Transfer Acceleration
 * Increase transfer speed by transferring file to an AWS edge location (more than 200) which will forward the data to the S3 bucket in the target region (is called transfer acceleration).
 * Compatible with multi-part upload
-  ![img.png](images/s3_transfer_acceleration.png)
+  ![img.png](../images/s3_transfer_acceleration.png)
 
 #### Performance – S3 Byte-Range Fetches
 * Parallelize GETs by requesting specific byte ranges
 * Better resilience in case of failures
 * Can be used to speed up downloads
-  ![img.png](images/s3_speed_up_downloads.png)
+  ![img.png](../images/s3_speed_up_downloads.png)
 * Can be used to retrieve only partial data (for example the head of a file)
-  ![img.png](images/s3_retrieve_partial_data.png)
+  ![img.png](../images/s3_retrieve_partial_data.png)
 
 ### S3 User-Defined Object Metadata & S3 Object Tags
 * S3 User-Defined Object Metadata
@@ -424,7 +424,7 @@ The Java SDK (example) will look for credentials in this order
     - Key-value pairs for objects in Amazon S3
     - Useful for fine-grained permissions (only access specific objects with specific tags)
     - Useful for analytics purposes (using S3 Analytics to group by tags)
-      ![img.png](images/s3_user_defined_object_metadata.png)
+      ![img.png](../images/s3_user_defined_object_metadata.png)
 * You cannot search in S3 the object metadata or object tags!
 * Instead, you must use an external DB as a search index such as DynamoDB.
 
@@ -448,21 +448,21 @@ The Java SDK (example) will look for credentials in this order
 * Encryption type is AES-256
 * Must set header "x-amz-server-side-encryption": "AES256"
 * Enabled by default for new buckets & new objects
-  ![s3_encryption_sse-s3.png](images/s3_encryption_sse-s3.png)
+  ![s3_encryption_sse-s3.png](../images/s3_encryption_sse-s3.png)
 
 #### Amazon S3 Encryption – SSE-KMS
 * Encryption using keys handled and managed by AWS KMS (Key Management Service)
 * KMS advantages: user control + audit key usage using CloudTrail + full control over the rotation policy of the encryption key
 * Object is encrypted server side
 * Must set header "x-amz-server-side-encryption": "aws:kms"
-  ![img.png](images/s3_encryption_sse-kms.png)
+  ![img.png](../images/s3_encryption_sse-kms.png)
 * Since 06/2023: new encryption option DSSE-KMS (Dual-layer server-side encryption with AWS Key Management System = double encryption based on KMS)
 
 ##### SSE-KMS Limitation
 * If you use SSE-KMS, you may be impacted by the KMS limits
 * When you upload, it calls the GenerateDataKey KMS API
 * When you download, it calls the Decrypt KMS API
-  ![img.png](images/s3_sse-kms_limitation.png)
+  ![img.png](../images/s3_sse-kms_limitation.png)
 * Count towards the KMS quota per second (5500, 10000, 30000 req/s based on region)
 * You can request a quota increase using the Service Quotas Console
 
@@ -472,7 +472,7 @@ The Java SDK (example) will look for credentials in this order
 * HTTPS must be used
 * Encryption key must be provided in HTTP headers for every HTTP request made.
 * Only possible to be done from CLI, not from the Console/AWS UI
-  ![img.png](images/s3_encryption_sse-c.png)
+  ![img.png](../images/s3_encryption_sse-c.png)
 
 #### S3 Encryption – Client-Side Encryption
 * Use client libraries such as Amazon S3 Client-Side Encryption Library
@@ -480,7 +480,7 @@ The Java SDK (example) will look for credentials in this order
 * Clients must decrypt data themselves when retrieving from Amazon S3
 * Customer fully manages the keys and encryption cycle
 * Not to be done from the Console/AWS UI
-  ![img.png](images/s3_encryption_client_side_encryption.png)
+  ![img.png](../images/s3_encryption_client_side_encryption.png)
 
 ### S3 – Encryption in transit (SSL/TLS)
 * Encryption in flight is also called SSL/TLS
@@ -492,13 +492,13 @@ The Java SDK (example) will look for credentials in this order
 * Most clients would use the HTTPS endpoint by default
 
 #### Amazon S3 – Force Encryption in Transit aws:SecureTransport
-![img.png](images/s3_force_encryption_in_transit.png)
+![img.png](../images/s3_force_encryption_in_transit.png)
 SecureTransport = HTTPS. If not HTTPS: Deny GetObject.
 
 ### S3 – Default Encryption vs. Bucket Policies
 * SSE-S3 encryption is automatically applied to new objects stored in S3 bucket
 * Optionally, you can “force encryption” using a bucket policy and refuse any API call to PUT an S3 object without encryption headers (SSE-KMS or SSE-C)
-  ![img.png](images/s3_default_encryption_vs_bucket_policies.png)
+  ![img.png](../images/s3_default_encryption_vs_bucket_policies.png)
 * Note: Bucket Policies are evaluated before “Default Encryption”
 
 ### What is CORS?
@@ -511,13 +511,13 @@ SecureTransport = HTTPS. If not HTTPS: Deny GetObject.
 * Different origins: http://www.example.com & http://other.example.com
 * The requests won’t be fulfilled unless the other origin allows for the requests, using CORS Headers (example: Access-Control-Allow-Origin)
 
-![img.png](images/what_is_cors.png)
+![img.png](../images/what_is_cors.png)
 
 * If a client makes a cross-origin request on our S3 bucket, we need to enable the correct CORS headers
 * It’s a popular exam question
 * You can allow for a specific origin or for * (all origins)
 
-![img.png](images/cors_2_buckets.png)
+![img.png](../images/cors_2_buckets.png)
 
 ### S3 – MFA Delete
 * MFA (Multi-Factor Authentication) – force users to generate a code on a device (usually a mobile phone or hardware) before doing important operations on S3. It's an extra level of security to prevent accidental deletions.
@@ -539,7 +539,7 @@ SecureTransport = HTTPS. If not HTTPS: Deny GetObject.
 * **Warning**:
     - Do not set your logging bucket to be the monitored bucket!
     - It will create a logging loop, and your bucket will grow exponentially
-      ![img_1.png](images/s3_logging_loop.png)
+      ![img_1.png](../images/s3_logging_loop.png)
 
 ### S3 – Pre-Signed URLs
 * Generate pre-signed URLs using the S3 Console, AWS CLI or SDK
@@ -547,14 +547,14 @@ SecureTransport = HTTPS. If not HTTPS: Deny GetObject.
     - S3 Console – 1 min up to 720 mins (12 hours)
     - AWS CLI – configure expiration with --expires-in parameter in seconds (default 3600 secs, max. 604800 secs ~ 168 hours)
 * Users given a pre-signed URL inherit the permissions of the user that generated the URL for GET / PUT
-  ![pre-signed.png](images/pre-signed.png)
+  ![pre-signed.png](../images/pre-signed.png)
 * Examples:
     - Allow only logged-in users to download a premium video from your S3 bucket
     - Allow an ever-changing list of users to download files by generating URLs dynamically
     - Allow temporarily a user to upload a file to a precise location in your S3 bucket
 
 ### S3 – Access Points
-![img.png](images/s3_access_points.png)
+![img.png](../images/s3_access_points.png)
 * Access Points simplify security management for S3 Buckets
 * Each Access Point has:
     - its own DNS name (Internet Origin or VPC Origin)
@@ -564,12 +564,12 @@ SecureTransport = HTTPS. If not HTTPS: Deny GetObject.
 * We can define the access point to be accessible only from within the VPC
 * You must create a VPC Endpoint to access the Access Point (Gateway or Interface Endpoint)
 * The VPC Endpoint Policy must allow access to the target bucket and Access Point
-  ![img.png](images/s3_access_points_vpc_origin.png)
+  ![img.png](../images/s3_access_points_vpc_origin.png)
 
 ### S3 Object Lambda
 * Use AWS Lambda Functions to change the object before it is retrieved by the caller application
 * Only one S3 bucket is needed, on top of which we create S3 Access Point and S3 Object Lambda Access Points.
-  ![img.png](images/s3_object_lambda.png)
+  ![img.png](../images/s3_object_lambda.png)
 * Use Cases:
     - Redacting personally identifiable information for analytics or nonproduction environments.
     - Converting across data formats, such as converting XML to JSON.

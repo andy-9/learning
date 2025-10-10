@@ -16,14 +16,14 @@
 * Vertically scalability means increasing the size of the instance
     - For example, your application runs on a t2.micro
     - Scaling that application vertically means running it on a t2.large
-      ![img.png](images/vertical_salability.png)
+      ![img.png](../images/vertical_salability.png)
 * Vertical scalability is very common for non-distributed systems, such as a database.  
   RDS, ElastiCache are services that can scale vertically.
 * There’s usually a limit to how much you can vertically scale (hardware limit)
 
 ### Horizontal Scalability
 * Horizontal Scalability means increasing the number of instances / systems for your application
-  ![img.png](images/horizontal_scalability.png)
+  ![img.png](../images/horizontal_scalability.png)
 * Horizontal scaling implies distributed systems.
 * This is very common for web applications / modern applications
 * It’s easy to horizontally scale thanks to cloud offerings such as Amazon EC2
@@ -31,7 +31,7 @@
 ### High Availability
 * High Availability usually goes hand in hand with horizontal scaling
 * High availability means running your application / system in at least 2 data centers (== Availability Zones)
-  ![img.png](images/high_availability.png)
+  ![img.png](../images/high_availability.png)
 * The goal of high availability is to survive a data center loss
 * The high availability can be passive (for RDS Multi AZ for example)
 * The high availability can be active (for horizontal scaling)
@@ -49,7 +49,7 @@
 
 ### What is load balancing?
 * Load Balancers are servers that forward traffic to multiple servers (e.g., EC2 instances) downstream
-  ![img.png](images/load_balancing.png)
+  ![img.png](../images/load_balancing.png)
 * The more users I have, the more the load is going to be balanced.
 
 #### Why use a load balancer?
@@ -77,7 +77,7 @@
 * Health Checks are crucial for Load Balancers
 * They enable the load balancer to know if instances it forwards traffic to are available to reply to requests
 * The health check is done on a port and a route (/health is common)
-  ![img.png](images/health_checks.png)
+  ![img.png](../images/health_checks.png)
 * If the response is not 200 (OK), then the instance is unhealthy
 * When you enable ELB Health Checks, your ELB won't send traffic to unhealthy (crashed) EC2 instances.
 
@@ -97,7 +97,7 @@
 
 
 #### Load Balancer Security Groups
-![img.png](images/load_balancer_security_groups.png)
+![img.png](../images/load_balancer_security_groups.png)
 * Application Security Group: Source is not an IP range, but a security group --> link security group of EC2 instance to security group of load balancer.
 
 #### Classic Load Balancers (v1)
@@ -105,7 +105,7 @@
 * Health checks are TCP or HTTP based
 * Fixed hostname  
   `XXX.region.elb.amazonaws.com`
-  ![img.png](images/classig_load_balancer_1.png)
+  ![img.png](../images/classig_load_balancer_1.png)
 
 #### Application Load Balancer (v2)
 * Application load balancers is Layer 7 (HTTP)
@@ -117,7 +117,7 @@
     - Routing based on path in URL (example.com/users & example.com/posts)
     - Routing based on hostname in URL (one.example.com & other.example.com)
     - Routing based on Query String, Headers (example.com/users?id=123&order=false)
-      ![img.png](images/alb_http_traffic.png)
+      ![img.png](../images/alb_http_traffic.png)
     - In general: ALBs can route traffic to different Target Groups based on URL Path, Hostname, HTTP Headers, and Query Strings. But NOT the client's location.
 * ALB are a great fit for microservices & container-based application
   (example: Docker & Amazon ECS)
@@ -127,7 +127,7 @@
 * The application servers don’t see the IP of the client directly
     - The true IP of the client is inserted in the header `X-Forwarded-For`
     - We can also get Port (`X-Forwarded-Port`) and proto (`X-Forwarded-Proto`)
-      ![img.png](images/alb_private_ip.png)
+      ![img.png](../images/alb_private_ip.png)
 
 #### Application Load Balancer - Target Groups
 * EC2 instances (can be managed by an Auto Scaling Group) – HTTP
@@ -135,7 +135,7 @@
 * Lambda functions – HTTP request is translated into a JSON event
 * IP Addresses – must be private IPs
 * ALB can route to multiple target groups
-  ![img.png](images/alb_query_string_routing.png)
+  ![img.png](../images/alb_query_string_routing.png)
 * Registered targets in a Target Groups for an Application Load Balancer can be one of the following: Lambda functions, private IP addresses, EC2 instances. It can NOT be Network Load Balancer.
 * Health checks are at the target group level
 
@@ -149,7 +149,7 @@
 * NLB are used for extreme performance, TCP or UDP traffic
 * Not included in the AWS free tier
 
-![img.png](images/network_load_balancer.png)
+![img.png](../images/network_load_balancer.png)
 
 #### Network Load Balancer: Target Groups
 * EC2 instances
@@ -157,7 +157,7 @@
 * Application Load Balancer
 * Health Checks support the TCP, HTTP and HTTPS Protocols
 
-![img.png](images/target_groups.png)
+![img.png](../images/target_groups.png)
 
 #### Gateway Load Balancer
 * Analyze network traffic
@@ -169,13 +169,13 @@
     - Load Balancer – distributes traffic to your virtual appliances
 * Uses the GENEVE protocol on port 6081
 
-![img.png](images/gateway_load_balancer.png)
+![img.png](../images/gateway_load_balancer.png)
 
 #### Gateway Load Balancer: Target Groups
 * EC2 instances
 * IP Addresses – must be private IPs
 
-![img.png](images/glb_target_groups.png)
+![img.png](../images/glb_target_groups.png)
 
 #### Sticky Sessions (Session Affinity)
 * It is possible to implement stickiness so that the same client is always redirected to the same instance behind a load balancer
@@ -184,7 +184,7 @@
 * Use case: make sure the user doesn’t lose his session data. ELB Sticky Session feature ensures traffic for the same client is always redirected to the same target (e.g., EC2 instance). This helps that the client does not lose his session data (does not have to log in again and again).
 * Enabling stickiness may bring imbalance to the load over the backend EC2 instances
 
-![img.png](images/sticky_sessions.png)
+![img.png](../images/sticky_sessions.png)
 
 #### Sticky Sessions – Cookie Names
 * Application-based Cookies
@@ -201,7 +201,7 @@
     - Cookie name is AWSALB for ALB, AWSELB for CLB
 
 #### Cross-Zone Load Balancing
-![images/cross_zone_load_balancing.png](images/cross_zone_load_balancing.png)
+![images/cross_zone_load_balancing.png](../images/cross_zone_load_balancing.png)
 
 * Application Load Balancer
     - Enabled by default (can be disabled at the Target Group level)
@@ -223,7 +223,7 @@
 * SSL certificates have an expiration date (you set) and must be renewed
 
 #### Load Balancer - SSL Certificates
-![img.png](images/load_balancer_https.png)
+![img.png](../images/load_balancer_https.png)
 * The load balancer uses an X.509 certificate (SSL/TLS server certificate)
 * You can manage certificates using ACM (AWS Certificate Manager)
 * You can create upload your own certificates alternatively
@@ -239,7 +239,7 @@
 * SNI solves the problem of loading multiple SSL certificates onto one web server (to serve multiple websites)
 * It’s a “newer” protocol, and requires the client to indicate the hostname of the target server in the initial SSL handshake
 * The server will then find the correct certificate, or return the default one  
-  ![img.png](images/sni.png)
+  ![img.png](../images/sni.png)
 * Allows you to expose multiple HTTPS applications each with its own SSL certificate on the same listener. Read more here: https://aws.amazon.com/blogs/aws/new-application-load-balancer-sni/
 
 Note:
@@ -266,7 +266,7 @@ Note:
 * Between 1 and 3600 seconds (default: 300 seconds)
 * Can be disabled (set value to 0)
 * Set to a low value if your requests are short
-  ![img.png](images/connection_draining.png)
+  ![img.png](../images/connection_draining.png)
 
 ### What’s an Auto Scaling Group?
 * In real-life, the load on your websites and application can change
@@ -279,8 +279,8 @@ Note:
     - Re-create an EC2 instance in case a previous one is terminated (ex: if unhealthy)
 * ASG are free (you only pay for the underlying EC2 instances)
 
-![img.png](images/auto_scaling_group.png)
-![img.png](images/asg_with_load_balancer.png)
+![img.png](../images/auto_scaling_group.png)
+![img.png](../images/asg_with_load_balancer.png)
 
 #### Auto Scaling Group Attributes
 * A Launch Template (older “Launch Configurations” are deprecated)
@@ -295,7 +295,7 @@ Note:
 * Min Size / Max Size / Initial Capacity
 * Scaling Policies
 
-![img.png](images/asg_launch_template.png)
+![img.png](../images/asg_launch_template.png)
 
 #### Auto Scaling - CloudWatch Alarms & Scaling
 * It is possible to scale an ASG based on CloudWatch alarms
@@ -305,7 +305,7 @@ Note:
     - We can create scale-out policies (increase the number of instances)
     - We can create scale-in policies (decrease the number of instances)
 
-![img.png](images/cloud_watch_alarms_for_scaling.png)
+![img.png](../images/cloud_watch_alarms_for_scaling.png)
 
 #### Auto Scaling Groups – Scaling Policies
 * Dynamic Scaling
@@ -320,7 +320,7 @@ Note:
     - Example: increase the min capacity to 10 at 5 pm on Fridays
 * Predictive scaling: continuously forecast load and schedule scaling ahead
 
-![img.png](images/predictive_scaling.png)
+![img.png](../images/predictive_scaling.png)
 
 #### Good metrics to scale on
 * CPUUtilization: Average CPU utilization across your instances
@@ -328,7 +328,7 @@ Note:
 * Average Network In / Out (if you’re application is network bound)
 * Any custom metric (that you push using CloudWatch)
 
-![img.png](images/asg_request_count_per_target.png)
+![img.png](../images/asg_request_count_per_target.png)
 
 #### Auto Scaling Groups - Scaling Cooldowns
 * After a scaling activity happens, you are in the cooldown period (default 300 seconds = 5 min)
@@ -341,4 +341,4 @@ Note:
 * Setting of minimum healthy percentage
 * Specify warm-up time (how long until the instance is ready to use)
 
-![img.png](images/instance_refresh.png)
+![img.png](../images/instance_refresh.png)
