@@ -18,7 +18,7 @@ jobs:
       - uses: technote-space/toc-generator@v4
         with:
           TARGET_PATHS: |
-            kafka.md,
+            kafka.md
             "AWS/AWS Developer Associate/01_Abbreviations_Infrastructure_IAM.md"
             "AWS/AWS Developer Associate/02_EC2.md"
             "AWS/AWS Developer Associate/03_Security_Groups.md"
