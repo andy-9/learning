@@ -1,3 +1,43 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Docker](#docker)
+  - [Why?](#why)
+  - [Structure](#structure)
+  - [Containers](#containers)
+  - [VMs](#vms)
+  - [Images](#images)
+  - [Repository](#repository)
+  - [Docker Editions](#docker-editions)
+  - [Docker commands](#docker-commands)
+    - [Setup](#setup)
+    - [Containers](#containers-1)
+    - [Images](#images-1)
+    - [Flags](#flags)
+    - [Specific commands (examples):](#specific-commands-examples)
+  - [Port mapping](#port-mapping)
+  - [Volume mapping](#volume-mapping)
+  - [Create image](#create-image)
+  - [Environment variables](#environment-variables)
+  - [CMD and ENTRYPOINT](#cmd-and-entrypoint)
+  - [Docker compose](#docker-compose)
+    - [Specific example 1](#specific-example-1)
+    - [Versions](#versions)
+    - [Specific example 2](#specific-example-2)
+  - [Docker Registry](#docker-registry)
+  - [Docker engine](#docker-engine)
+    - [Containerization](#containerization)
+  - [Docker storage](#docker-storage)
+  - [Docker networking](#docker-networking)
+  - [Docker on Windows](#docker-on-windows)
+  - [Docker on Mac](#docker-on-mac)
+  - [Container Orchestration - Docker Swarm & Kubernetes](#container-orchestration---docker-swarm--kubernetes)
+    - [Docker Swarm](#docker-swarm)
+    - [Docker Kubernetes](#docker-kubernetes)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Docker
 
 ## Why?

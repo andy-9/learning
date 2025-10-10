@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Kafka](#kafka)
+  - [Cluster](#cluster)
+  - [Brokers](#brokers)
+  - [Producers](#producers)
+  - [Producers & Consumers](#producers--consumers)
+  - [Consumers](#consumers)
+  - [Topics](#topics)
+  - [Partitions](#partitions)
+  - [Structure of a Kafka message](#structure-of-a-kafka-message)
+  - [Setup](#setup)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Kafka
 
 ## Cluster

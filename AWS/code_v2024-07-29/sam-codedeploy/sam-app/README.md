@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [sam-app](#sam-app)
+  - [Deploy the sample application](#deploy-the-sample-application)
+  - [Use the SAM CLI to build and test locally](#use-the-sam-cli-to-build-and-test-locally)
+  - [Add a resource to your application](#add-a-resource-to-your-application)
+  - [Fetch, tail, and filter Lambda function logs](#fetch-tail-and-filter-lambda-function-logs)
+  - [Unit tests](#unit-tests)
+  - [Cleanup](#cleanup)
+  - [Resources](#resources)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # sam-app
 
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.

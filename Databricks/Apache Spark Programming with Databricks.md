@@ -1,3 +1,19 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Apache Spark Programming with Databricks](#apache-spark-programming-with-databricks)
+  - [Dataframes](#dataframes)
+    - [Databricks ecosystem](#databricks-ecosystem)
+    - [Spark overview](#spark-overview)
+    - [Databricks overview](#databricks-overview)
+    - [Access DBFS (Databricks File System)](#access-dbfs-databricks-file-system)
+    - [Create table](#create-table)
+    - [Query table and plot results](#query-table-and-plot-results)
+    - [Add notebook parameters with widgets](#add-notebook-parameters-with-widgets)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Apache Spark Programming with Databricks
 
 ## Dataframes

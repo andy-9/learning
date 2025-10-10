@@ -1,3 +1,45 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Introduction to Apache Spark Architecture](#introduction-to-apache-spark-architecture)
+  - [High-level components](#high-level-components)
+    - [Driver](#driver)
+    - [Executors](#executors)
+    - [Spark Cluster](#spark-cluster)
+    - [Nodes](#nodes)
+    - [Shared Resources](#shared-resources)
+    - [Parallelization](#parallelization)
+    - [Workflow](#workflow)
+    - [Partitions](#partitions)
+    - [Task](#task)
+    - [Slots/Threads/Cores](#slotsthreadscores)
+    - [Spark Job (with only 1 stage)](#spark-job-with-only-1-stage)
+    - [Stage](#stage)
+    - [Spark Application](#spark-application)
+  - [Stages](#stages)
+  - [Shuffling](#shuffling)
+  - [Transformations, Actions and Executions](#transformations-actions-and-executions)
+    - [Lazy evaluation](#lazy-evaluation)
+    - [Transformations](#transformations)
+    - [Actions](#actions)
+    - [Examples](#examples)
+  - [Performance](#performance)
+    - [Pipelining](#pipelining)
+    - [Catalyst Optimizer](#catalyst-optimizer)
+    - [Adaptive Query Execution (AQE)](#adaptive-query-execution-aqe)
+    - [Dynamic Partition Pruning (DPP)](#dynamic-partition-pruning-dpp)
+    - [Join Hints](#join-hints)
+    - [Caching](#caching)
+  - [Usability Improvements in v3.0](#usability-improvements-in-v30)
+    - [SQL Improvements](#sql-improvements)
+    - [Structured Streaming](#structured-streaming)
+    - [Panda's UDFs](#pandas-udfs)
+    - [Data Source V2](#data-source-v2)
+    - [Migration from v2 to v3](#migration-from-v2-to-v3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Introduction to Apache Spark Architecture
 Spark uses clusters of machines to process big data by breaking a large task into smaller ones and distributing the work among several machines. 
 

@@ -1,3 +1,34 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Git Commands](#git-commands)
+  - [Change repo to SSH](#change-repo-to-ssh)
+  - [Create a Remote Repository](#create-a-remote-repository)
+  - [Create GitHub repository](#create-github-repository)
+  - [Clone](#clone)
+  - [Connect to the Original Repository:](#connect-to-the-original-repository)
+    - [cloning @Spiced](#cloning-spiced)
+  - [Branches](#branches)
+  - [Remotes](#remotes)
+  - [Pull Requests](#pull-requests)
+  - [Rebase](#rebase)
+  - [Merge](#merge)
+  - [Tagging](#tagging)
+  - [Go back in Git-history](#go-back-in-git-history)
+  - [Restore last commit](#restore-last-commit)
+  - [See differences](#see-differences)
+  - [Stashing](#stashing)
+  - [Undo all committed changes](#undo-all-committed-changes)
+  - [Get a nice view](#get-a-nice-view)
+  - [Useful commands](#useful-commands)
+    - [merging / `git pull main`](#merging--git-pull-main)
+    - [remove previously committed file which is now in `.gitignore`](#remove-previously-committed-file-which-is-now-in-gitignore)
+    - [update local file strucure (on computer) with repo on GitHub](#update-local-file-strucure-on-computer-with-repo-on-github)
+  - [Forks](#forks)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Git Commands
 
 Verify Git (version)

@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [What is JSON?](#what-is-json)
+  - [JSON Path](#json-path)
+    - [Criteria](#criteria)
+    - [Wildcards](#wildcards)
+    - [Lists](#lists)
+  - [Kubecontrol](#kubecontrol)
+    - [KubeCtl](#kubectl)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # What is JSON?
 
 ```

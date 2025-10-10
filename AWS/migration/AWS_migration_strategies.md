@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [AWS migration strategies](#aws-migration-strategies)
+  - [<a name='7rs'></a>7 Rs:](#a-name7rsa7-rs)
+  - [<a name='important'></a>Important information](#a-nameimportantaimportant-information)
+  - [<a name='retire'></a>1. Retire](#a-nameretirea1-retire)
+  - [<a name='retain'></a>2. Retain](#a-nameretaina2-retain)
+  - [<a name='rehost'></a>3. Rehost](#a-namerehosta3-rehost)
+  - [<a name='relocate'></a>4. Relocate](#a-namerelocatea4-relocate)
+  - [<a name='repurchase'></a>5. Repurchase](#a-namerepurchasea5-repurchase)
+  - [<a name='replatform'></a>6. Replatform](#a-namereplatforma6-replatform)
+  - [<a name='refactor'></a>7. Refactor or re-architect](#a-namerefactora7-refactor-or-re-architect)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # AWS migration strategies
 Link to source: <a href=https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html target="_blank" rel="noopener">AWS migration strategies</a>
 
