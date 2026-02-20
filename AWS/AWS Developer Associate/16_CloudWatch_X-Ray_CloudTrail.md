@@ -62,7 +62,7 @@
 ## CloudWatch Custom Metrics
 * Possibility to define and send your own custom metrics to CloudWatch
 * Example: memory (RAM) usage, disk space, number of logged in users …
-* Use API call PutMetricData
+* Use API call `PutMetricData`
 * Ability to use dimensions (attributes) to segment metrics
     - Instance.id
     - Environment.name
@@ -83,6 +83,7 @@
     - OpenSearch
 * Logs are encrypted by default
 * Can setup KMS-based encryption with your own keys
+* Retention Policy in CloudWatch Logs is defined at the Log Groups level
 
 ### CloudWatch Logs - Sources
 * SDK, CloudWatch Logs Agent, CloudWatch Unified Agent
@@ -240,8 +241,7 @@ ALARM --state-reason "testing purposes"`
 ### Amazon EventBridge – Schema Registry
 * EventBridge can analyze the events in your bus and infer the schema
 * The Schema Registry allows you to generate code for your application, that will know in advance how data is structured in the event bus
-* Schema can be versioned
-![img.png](../images/amazon_eventbridge_schema_registry.png)
+* Schema can be versioned![img.png](../images/amazon_eventbridge_schema_registry.png)
 
 ### Amazon EventBridge – Resource-based Policy
 * Manage permissions for a specific Event Bus
@@ -306,6 +306,7 @@ I) Your code (Java, Python, Go, Node.js, .NET) must import the AWS X-Ray SDK
 * X-Ray daemon works as a low level UDP packet interceptor (Linux / Windows / Mac…)
 * AWS Lambda / other AWS services already run the X-Ray daemon for you
 * Each application must have the IAM rights to write data to X-Ray
+
 ![img.png](../images/aws_x_ray_enable.png)
 
 ### The X-Ray magic
@@ -327,6 +328,7 @@ I) Your code (Java, Python, Go, Node.js, .NET) must import the AWS X-Ray SDK
 * To instrument your application code, you use the X-Ray SDK
 * Many SDK require only configuration changes
 * You can modify your application code to customize and annotation the data that the SDK sends to XRay, using interceptors, filters, handlers, middleware…
+
 ![img.png](../images/x_ray_instrumentation.png)
 
 ### X-Ray Concepts
@@ -352,18 +354,131 @@ I) Your code (Java, Python, Go, Node.js, .NET) must import the AWS X-Ray SDK
 ![img.png](../images/x_ray_custom_sampling_rules.png)
 
 ### X-Ray Write APIs (used by the X-Ray daemon)
-* PutTraceSegments: Uploads segment documents to AWS X-Ray
-* PutTelemetryRecords: Used by the AWS X-Ray daemon to upload telemetry.
+* `PutTraceSegments`: Uploads segment documents to AWS X-Ray
+* `PutTelemetryRecords`: Used by the AWS X-Ray daemon to upload telemetry.
   - SegmentsReceivedCount, SegmentsRejectedCounts, BackendConnectionErrors…
-* GetSamplingRules: Retrieve all sampling rules (to know what/when to send)
-* GetSamplingTargets & GetSamplingStatisticSummaries: advanced
+* `GetSamplingRules`: Retrieve all sampling rules (to know what/when to send)
+* `GetSamplingTargets` & `GetSamplingStatisticSummaries`: advanced
 * The X-Ray daemon needs to have an IAM policy authorizing the correct API calls to function correctly
 ![img.png](../images/x_ray_write_apis.png)
 
 ### X-Ray Read APIs
-* GetServiceGraph: main graph
-* BatchGetTraces: Retrieves a list of traces specified by ID. Each trace is a collection of segment documents that originates from a single request.
-* GetTraceSummaries: Retrieves IDs and annotations for traces available for a specified time frame using an optional filter. To get the full traces, pass the trace IDs to BatchGetTraces.
-* GetTraceGraph: Retrieves a service graph for one or more specific trace IDs.
+* `GetServiceGraph`: main graph
+* `BatchGetTraces`: Retrieves a list of traces specified by ID. Each trace is a collection of segment documents that originates from a single request.
+* `GetTraceSummaries`: Retrieves IDs and annotations for traces available for a specified time frame using an optional filter. To get the full traces, pass the trace IDs to BatchGetTraces.
+* `GetTraceGraph`: Retrieves a service graph for one or more specific trace IDs.
 ![img.png](../images/x_ray_read_apis.png)
 
+### X-Ray with Elastic Beanstalk
+* AWS Elastic Beanstalk platforms include the X-Ray daemon
+* You can run the daemon by setting an option in the Elastic Beanstalk console or with a configuration file (in .ebextensions/xray-daemon.config)
+
+![img.png](../images/beanstalk_xray.png)
+* Make sure to give your instance profile the correct IAM permissions so that the X-Ray daemon can function correctly
+* Then make sure your application code is instrumented with the X-Ray SDK
+* Note: The X-Ray daemon is not provided for multicontainer Docker
+
+### ECS + X-Ray integration options
+![img.png](../images/ecs_xray_integration_options.png)
+
+#### ECS + X-Ray: Example Task Definition
+![img.png](../images/ecx_xray_example.png)
+
+### AWS Distro for OpenTelemetry
+* Secure, production-ready AWS-supported distribution of the open-source project OpenTelemetry project
+* Provides a single set of APIs, libraries, agents, and collector services
+* Collects distributed traces and metrics from your apps
+* Collects metadata from your AWS resources and services
+* Similar to X-Ray, but open source
+* Auto-instrumentation Agents to collect traces without changing your code
+* Send traces and metrics to multiple AWS services and partner solutions
+  - X-Ray, CloudWatch, Prometheus…
+* Instrument your apps running on AWS (e.g., EC2, ECS, EKS, Fargate, Lambda) as well as on-premises
+* Migrate from X-Ray to AWS Distro for Telemetry if you want to standardize with open-source APIs from Telemetry or send traces to multiple destinations simultaneously
+![img.png](../images/aws_distro_for_open_telemetry.png)
+
+## AWS CloudTrail
+* Provides governance, compliance and audit for your AWS Account
+* CloudTrail is enabled by default!
+* Get an history of events / API calls made within your AWS Account by:
+  - Console
+  - SDK
+  - CLI
+  - AWS Services
+* Can put logs from CloudTrail into CloudWatch Logs or S3
+* A trail can be applied to All Regions (default) or a single Region.
+* If a resource is deleted in AWS, investigate CloudTrail first!
+![img.png](../images/cloudtrail_diagram.png)
+
+### CloudTrail Events
+* Management Events:
+  - Operations that are performed on resources in your AWS account
+  - Examples:
+    * Configuring security (IAM AttachRolePolicy)
+    * Configuring rules for routing data (Amazon EC2 CreateSubnet)
+    * Setting up logging (AWS CloudTrail CreateTrail)
+  - By default, trails are configured to log management events.
+  - Can separate Read Events (that don’t modify resources) from Write Events (that may modify resources)
+* Data Events:
+  - By default, data events are not logged (because high volume operations)
+  - Amazon S3 object-level activity (ex: GetObject, DeleteObject, PutObject): can separate Read and Write Events
+  - AWS Lambda function execution activity (the Invoke API)
+* CloudTrail Insights Events:
+  - Enable CloudTrail Insights to detect unusual activity in your account:
+    * inaccurate resource provisioning
+    * hitting service limits
+    * Bursts of AWS IAM actions
+    * Gaps in periodic maintenance activity
+  - CloudTrail Insights analyzes normal management events to create a baseline
+  - And then continuously analyzes write events to detect unusual patterns
+    *  Anomalies appear in the CloudTrail console
+    * Event is sent to Amazon S3
+    * An EventBridge event is generated (for automation needs)
+
+![img.png](../images/cloudtrail_insights.png)
+
+### CloudTrail Events Retention
+* Events are stored for 90 days in CloudTrail
+* To keep events beyond this period, log them to S3 and use Athena
+![img.png](../images/cloudtrail_events_retention.png)
+
+### Amazon EventBridge – Intercept API Calls
+![img.png](../images/eventbridge_intercept_api_calls.png)
+
+### Amazon EventBridge + CloudTrail
+![img.png](../images/eventbridge_cloudtrail.png)
+
+## CloudTrail vs CloudWatch vs X-Ray
+* CloudTrail:
+  - Audit API calls made by users / services / AWS console
+  - Useful to detect unauthorized calls or root cause of changes
+* CloudWatch:
+  - CloudWatch Metrics over time for monitoring
+  - CloudWatch Logs for storing application log
+  - CloudWatch Alarms to send notifications in case of unexpected metrics
+* X-Ray:
+  - Automated Trace Analysis & Central Service Map Visualization
+  - Latency, Errors and Fault analysis
+  - Request tracking across distributed systems
+
+==> CloudWatch: overall metrics, X-Ray: more granular trace oriented, CloudTrail: auditing API calls
+
+# Questions
+* What should you do to configure X-Ray Daemon to send traces from multiple AWS accounts to a central AWS account?  
+==> Create an IAM role in the central account, then create IAM roles in the other accounts to assume this IAM role.
+* The following APIs can be used to write to X-Ray, except
+==> `BatchGetTraces`
+* You would like to add additional information to your X-Ray traces with the ability to search and filter through this information efficiently. What should you use?
+==> Annotations
+* You want to continuously monitor RAM usage for an application hosted on an EC2 instance. By default, CloudWatch doesn't push RAM usage, so you will use a CloudWatch custom metric. Which API call allows you to push custom metric data to CloudWatch?
+==> `PutMetricData`
+* You would like to test out a complex CloudWatch Alarm that responds to globally increased traffic on your application. You are in a test environment. How can you test out this alarm in a cost-effective manner and efficiently?
+==> Use the `set-alarm-state` CLI command.
+* You have made a configuration change and would like to evaluate the impact of it on the performance of your application. Which AWS service should you use?
+==> Amazon CloudWatch
+* A CloudWatch Alarm set on a High-Resolution Custom Metric can be triggered as often as ......................
+==> 10 seconds
+* You have an application hosted on a fleet of EC2 instances managed by an Auto Scaling Group that you configured its minimum capacity to 2. Also, you have created a CloudWatch Alarm that is configured to scale in your ASG when CPU Utilization is below 60%. Currently, your application runs on 2 EC2 instances and has low traffic and the CloudWatch Alarm is in the ALARM state. What will happen?
+==> The CloudWatch Alarm will remain in ALARM state but never decrease the number of EC2 instances in the ASG.
+* You have a couple of EC2 instances in which you would like their Standard CloudWatch Metrics to be collected every 1 minute. What should you do?
+==> Enable Detailed Monitoring
