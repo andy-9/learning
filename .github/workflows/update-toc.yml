@@ -17,9 +17,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Automatically scan all Markdown files in the repo
-      - uses: technote-space/toc-generator@v4
+      - uses: actions/setup-node@v4
         with:
-          TARGET_PATHS: "**/*.md"
-          MAX_HEADER_LEVEL: 3
-          COMMIT_MESSAGE: "docs: update TOC automatically"
+          node-version: "24"
+
+      - name: Generate TOCs
+        shell: bash
+        run: |
+          git ls-files -z -- '*.md' |
+            xargs -0 -r npx --yes doctoc@2.3.0 --github --maxlevel 3 --title "**Table of Contents**"
+
+      - name: Commit and push TOC changes
+        shell: bash
+        run: |
+          git add -- '*.md'
+          if git diff --cached --quiet; then
+            echo "No TOC changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "docs: update TOC automatically" \
+            -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

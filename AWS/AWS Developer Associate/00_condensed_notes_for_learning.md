@@ -1,5 +1,41 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [ALB](#alb)
+- [Amplify](#amplify)
+- [Api Gateway](#api-gateway)
+- [AppConfig](#appconfig)
+- [Auto Scaling Group](#auto-scaling-group)
+- [CDK (Cloud Development Kit)](#cdk-cloud-development-kit)
+- [AWS CLI](#aws-cli)
+- [CloudFormation](#cloudformation)
+- [CloudFront](#cloudfront)
+- [CloudWatch](#cloudwatch)
+- [CodeBuild](#codebuild)
+- [CodeDeploy](#codedeploy)
+- [Cognito](#cognito)
+- [DynamoDB](#dynamodb)
+- [EC2](#ec2)
+- [ECS](#ecs)
+- [Elastic Beanstalk](#elastic-beanstalk)
+- [Elasticache](#elasticache)
+- [IAM](#iam)
+- [Kinesis – EC2](#kinesis--ec2)
+- [KMS](#kms)
+- [Lambda](#lambda)
+- [Lambda – API Gateway](#lambda--api-gateway)
+- [RDS](#rds)
+- [SQS](#sqs)
+- [S3](#s3)
+- [SAM](#sam)
+- [Step Functions](#step-functions)
+- [VPC](#vpc)
+- [X-Ray](#x-ray)
+- [Moving into the cloud](#moving-into-the-cloud)
+  - [LAMP](#lamp)
+  - [S3](#s3-1)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
