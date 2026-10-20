@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Lambda](#lambda)
+  - [What’s serverless?](#whats-serverless)
+  - [Serverless in AWS](#serverless-in-aws)
+  - [Why AWS Lambda](#why-aws-lambda)
+  - [Benefits of AWS Lambda](#benefits-of-aws-lambda)
+  - [AWS Lambda language support](#aws-lambda-language-support)
+  - [AWS Lambda Integrations - Main ones](#aws-lambda-integrations---main-ones)
+    - [Example: Serverless Thumbnail creation](#example-serverless-thumbnail-creation)
+    - [Example: Serverless CRON Job](#example-serverless-cron-job)
+  - [AWS Lambda Pricing: example](#aws-lambda-pricing-example)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Lambda
 
 ## What’s serverless?

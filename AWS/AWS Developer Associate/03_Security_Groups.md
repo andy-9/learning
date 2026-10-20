@@ -3,7 +3,7 @@
 **Table of Contents**
 
 - [Security groups](#security-groups)
-  - [Security groups on EC2 instances TEST3](#security-groups-on-ec2-instances-test3)
+  - [Security groups on EC2 instances](#security-groups-on-ec2-instances)
   - [Classic ports to know](#classic-ports-to-know)
   - [How to connect to our servers?](#how-to-connect-to-our-servers)
   - [EC2 Instance Connect](#ec2-instance-connect)

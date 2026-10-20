@@ -73,7 +73,7 @@
     - [Print better error messages](#print-better-error-messages)
   - [OTHER USEFUL STUFF](#other-useful-stuff)
     - [Alias](#alias)
-    - [Source](#source-1)
+    - [Source](#source)
   - [Specific examples](#specific-examples)
     - [Prompt for yes or no:](#prompt-for-yes-or-no)
     - [Compare 2 files:](#compare-2-files)

@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Terraform Provider for Docker](#terraform-provider-for-docker)
+  - [Documentation](#documentation)
+  - [Example usage](#example-usage)
+  - [Building The Provider](#building-the-provider)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Stargazers over time](#stargazers-over-time)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 <a href="https://docker.com">
     <img src="https://raw.githubusercontent.com/kreuzwerker/terraform-provider-docker/master/assets/docker-logo.png" alt="Docker logo" title="Docker" align="right" height="100" />
 </a>
